@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.25">
+
+  <meta name="author" content="Joshua J Bon">
+  <title>Persuasive Privacy</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
+  <link rel="stylesheet" href="style.css">
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <link href="index_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+  <script src="index_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Persuasive Privacy</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Joshua J Bon 
+</div>
+        <p class="quarto-title-affiliation">
+            Adelaide University
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="my-research" class="slide level2">
+<h2>My research</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="960" height="480" viewbox="0.00 0.00 130.21 99.41" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 95.41)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-95.41 126.21,-95.41 126.21,4 -4,4"></polygon>
+<!-- SBI -->
+<g id="node1" class="node">
+<title>SBI</title>
+<ellipse fill="none" stroke="black" cx="25" cy="-76.43" rx="25" ry="14.5"></ellipse>
+<text text-anchor="middle" x="25" y="-72.23" font-family="Times,serif" font-size="14.00">SBI</text>
+</g>
+<!-- SMC -->
+<g id="node2" class="node">
+<title>SMC</title>
+<ellipse fill="none" stroke="black" cx="97.21" cy="-76.91" rx="25" ry="14.5"></ellipse>
+<text text-anchor="middle" x="97.21" y="-72.71" font-family="Times,serif" font-size="14.00">SMC</text>
+</g>
+<!-- SBI&#45;&#45;SMC -->
+<g id="edge1" class="edge">
+<title>SBI--SMC</title>
+<path fill="none" stroke="black" d="M50.25,-76.6C57.25,-76.65 64.84,-76.7 71.84,-76.74"></path>
+</g>
+<!-- Privacy -->
+<g id="node3" class="node">
+<title>Privacy</title>
+<ellipse fill="none" stroke="black" cx="61.59" cy="-14.5" rx="25" ry="14.5"></ellipse>
+<text text-anchor="middle" x="61.59" y="-10.3" font-family="Times,serif" font-size="14.00">Privacy</text>
+</g>
+<!-- SMC&#45;&#45;Privacy -->
+<g id="edge2" class="edge">
+<title>SMC--Privacy</title>
+<path fill="none" stroke="black" d="M89.3,-63.06C83.4,-52.72 75.37,-38.64 69.47,-28.31"></path>
+</g>
+<!-- Privacy&#45;&#45;SBI -->
+<g id="edge3" class="edge">
+<title>Privacy--SBI</title>
+<path fill="none" stroke="black" d="M53.47,-28.25C47.49,-38.37 39.39,-52.09 33.35,-62.3"></path>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="my-research-1" class="slide level2">
+<h2>My research</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><strong>Statistics</strong></p>
+<ul>
+<li>Bayesian modelling<sup>1</sup> <sup>2</sup></li>
+<li>Efficient computation<sup>3</sup> <sup>4</sup> <sup>5</sup></li>
+<li>Approximate models<sup>3</sup> <sup>4</sup></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="960" height="480" viewbox="0.00 0.00 129.21 47.64" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 43.64)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-43.64 125.21,-43.64 125.21,4 -4,4"></polygon>
+<!-- SBI -->
+<g id="node1" class="node">
+<title>SBI</title>
+<ellipse fill="none" stroke="black" cx="25" cy="-25.14" rx="25" ry="14.5"></ellipse>
+<text text-anchor="middle" x="25" y="-20.94" font-family="Times,serif" font-size="14.00">SBI</text>
+</g>
+<!-- SMC -->
+<g id="node2" class="node">
+<title>SMC</title>
+<ellipse fill="none" stroke="black" cx="96.21" cy="-14.5" rx="25" ry="14.5"></ellipse>
+<text text-anchor="middle" x="96.21" y="-10.3" font-family="Times,serif" font-size="14.00">SMC</text>
+</g>
+<!-- SBI&#45;&#45;SMC -->
+<g id="edge1" class="edge">
+<title>SBI--SMC</title>
+<path fill="none" stroke="black" d="M49.51,-21.48C56.75,-20.4 64.67,-19.21 71.9,-18.13"></path>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div></div>
+<aside><ol class="aside-footnotes"><li id="fn1"><p><span class="citation" data-cites="oflaherty2021teen">O’Flaherty, Kalucza, and Bon (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span> <em>Demography</em></p></li><li id="fn2"><p><span class="citation" data-cites="bon2019polling">Bon, Ballard, and Baffour (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span> <em>JRSS A</em></p></li><li id="fn3"><p><span class="citation" data-cites="bon2021dasmc">Bon, Lee, and Drovandi (<a href="#/references" role="doc-biblioref" onclick="">2021</a>)</span> <em>Stat &amp; Comp</em></p></li><li id="fn4"><p><span class="citation" data-cites="bon2025cal">Bon et al. (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span> <em>JMLR</em></p></li><li id="fn5"><p><span class="citation" data-cites="bon2025rbsmc">Bon and Lee (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span> <em>arXiv</em></p></li></ol></aside></section>
+<section id="my-research-2" class="slide level2">
+<h2>My research</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><strong>Privacy</strong></p>
+<ul>
+<li>Federated &amp; transfer learning<sup>1</sup> <sup>2</sup></li>
+<li>Private (Bayesian) computation<sup>3</sup></li>
+<li>Approximate models<sup>4</sup></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="960" height="480" viewbox="0.00 0.00 125.85 162.63" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 158.63)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-158.63 121.85,-158.63 121.85,4 -4,4"></polygon>
+<!-- Privacy -->
+<g id="node1" class="node">
+<title>Privacy</title>
+<ellipse fill="none" stroke="black" cx="48.96" cy="-82.71" rx="25" ry="14.5"></ellipse>
+<text text-anchor="middle" x="48.96" y="-78.51" font-family="Times,serif" font-size="14.00">Privacy</text>
+</g>
+<!-- SMC -->
+<g id="node2" class="node">
+<title>SMC</title>
+<ellipse fill="none" stroke="black" cx="92.85" cy="-140.13" rx="25" ry="14.5"></ellipse>
+<text text-anchor="middle" x="92.85" y="-135.93" font-family="Times,serif" font-size="14.00">SMC</text>
+</g>
+<!-- Privacy&#45;&#45;SMC -->
+<g id="edge1" class="edge">
+<title>Privacy--SMC</title>
+<path fill="none" stroke="black" d="M59.14,-96.02C66.13,-105.17 75.38,-117.27 82.42,-126.48"></path>
+</g>
+<!-- SBI -->
+<g id="node3" class="node">
+<title>SBI</title>
+<ellipse fill="none" stroke="black" cx="25" cy="-14.5" rx="25" ry="14.5"></ellipse>
+<text text-anchor="middle" x="25" y="-10.3" font-family="Times,serif" font-size="14.00">SBI</text>
+</g>
+<!-- Privacy&#45;&#45;SBI -->
+<g id="edge2" class="edge">
+<title>Privacy--SBI</title>
+<path fill="none" stroke="black" d="M43.88,-68.24C39.81,-56.67 34.14,-40.51 30.07,-28.94"></path>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div></div>
+<aside><ol class="aside-footnotes"><li id="fn6"><p><span class="citation" data-cites="hassan2024federated">Hassan et al. (<a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span> <em>arXiv</em></p></li><li id="fn7"><p><span class="citation" data-cites="bretherton2026principled">Bretherton et al. (<a href="#/references" role="doc-biblioref" onclick="">2026</a>)</span> <em>Bayesian Analysis</em></p></li><li id="fn8"><p><span class="citation" data-cites="bon2026priv">Bon, Rousseau, and Robert (<a href="#/references" role="doc-biblioref" onclick="">2026</a>)</span> <em>arXiv</em></p></li><li id="fn9"><p><span class="citation" data-cites="bon2020acld">Bon et al. (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span> <em>J Official Statistics</em></p></li></ol></aside></section>
+<section id="todays-talk" class="slide level2">
+<h2>Today’s talk</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="960" height="480" viewbox="0.00 0.00 130.21 99.41" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 95.41)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-95.41 126.21,-95.41 126.21,4 -4,4"></polygon>
+<!-- SBI -->
+<g id="node1" class="node">
+<title>SBI</title>
+<ellipse fill="none" stroke="black" cx="25" cy="-76.43" rx="25" ry="14.5"></ellipse>
+<text text-anchor="middle" x="25" y="-72.23" font-family="Times,serif" font-size="14.00">SBI</text>
+</g>
+<!-- SMC -->
+<g id="node2" class="node">
+<title>SMC</title>
+<ellipse fill="none" stroke="black" cx="97.21" cy="-76.91" rx="25" ry="14.5"></ellipse>
+<text text-anchor="middle" x="97.21" y="-72.71" font-family="Times,serif" font-size="14.00">SMC</text>
+</g>
+<!-- SBI&#45;&#45;SMC -->
+<g id="edge1" class="edge">
+<title>SBI--SMC</title>
+<path fill="none" stroke="black" d="M50.25,-76.6C57.25,-76.65 64.84,-76.7 71.84,-76.74"></path>
+</g>
+<!-- Privacy -->
+<g id="node3" class="node">
+<title>Privacy</title>
+<ellipse fill="none" stroke="red" cx="61.59" cy="-14.5" rx="25" ry="14.5"></ellipse>
+<text text-anchor="middle" x="61.59" y="-10.3" font-family="Times,serif" font-size="14.00">Privacy</text>
+</g>
+<!-- SMC&#45;&#45;Privacy -->
+<g id="edge2" class="edge">
+<title>SMC--Privacy</title>
+<path fill="none" stroke="black" d="M89.3,-63.06C83.4,-52.72 75.37,-38.64 69.47,-28.31"></path>
+</g>
+<!-- Privacy&#45;&#45;SBI -->
+<g id="edge3" class="edge">
+<title>Privacy--SBI</title>
+<path fill="none" stroke="black" d="M53.47,-28.25C47.49,-38.37 39.39,-52.09 33.35,-62.3"></path>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="todays-talk-1" class="slide level2">
+<h2>Today’s talk</h2>
+<ol type="1">
+<li>Differential privacy</li>
+<li>Privacy from the ground up</li>
+<li>Persuasive privacy</li>
+<li>Differential privacy redux</li>
+<li>Privacy without noise</li>
+</ol>
+<p>See: <strong>Bon</strong>, Bailie, Rousseau &amp; Robert (2026) arXiv 2601.22945</p>
+<p><em>Under review at ICML 2026</em></p>
+</section>
+<section id="differential-privacy" class="title-slide slide level1 center">
+<h1>Differential privacy</h1>
+
+</section>
+
+<section>
+<section id="privacy-from-the-ground-up" class="title-slide slide level1 center">
+<h1>Privacy from the ground up</h1>
+
+</section>
+<section id="overview-of-statistical-data-privacy" class="slide level2">
+<h2>Overview of statistical data privacy</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Statistician</strong></p>
+</div>
+<div class="callout-content">
+<div class="fragment">
+<p>Government agency release <strong>small area statistics</strong> on a disease.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Adversary</strong></p>
+</div>
+<div class="callout-content">
+<div class="fragment">
+<p>Insurance company <strong>raises premiums</strong> based on inferred prevalence in a small town.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Effect on data privacy</strong></p>
+</div>
+<div class="callout-content">
+<div class="fragment">
+<p>Statistic release <span class="math inline">\longrightarrow</span> adversarial decisions <span class="math inline">\longrightarrow</span> privacy effect</p>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="anatomy-of-statistical-data-privacy" class="title-slide slide level1 center">
+<h1>Anatomy of statistical data privacy</h1>
+
+</section>
+<section id="privacy-function" class="slide level2">
+<h2>Privacy function</h2>
+<p>We measure the privacy effect with a <strong>privacy function</strong></p>
+<p><span class="math display">\rho:\mathcal{D} \times \mathsf{X} \rightarrow \mathbb{R}</span></p>
+<ul>
+<li class="fragment"><p>Adversarial decision <span class="math inline">\quad d_i \in \mathcal{D}</span></p></li>
+<li class="fragment"><p>Data value <span class="math inline">\quad x \in \mathsf{X}</span></p></li>
+</ul>
+<div class="fragment">
+<p><span class="math inline">\rho</span> orders preferences of decisions for a given dataset</p>
+</div>
+<ul>
+<li class="fragment">If <span class="math inline">d_1</span> is preferred to <span class="math inline">d_2</span> then <span class="math inline">\rho(d_1,x) &gt; \rho(d_2,x)</span></li>
+</ul>
+</section>
+<section id="example-1-privacy-function" class="slide level2">
+<h2>Example 1: Privacy function</h2>
+<p>For some fixed <span class="math inline">\kappa&gt;0</span>,</p>
+<p><span class="math display">\rho(d,x) = \begin{cases}
+  0, &amp; \text{if } x \in d, \vert d \vert &lt; \kappa\\
+  1, &amp; \text{otherwise},
+\end{cases}</span></p>
+<ul>
+<li><p><span class="math inline">x \in \mathsf{X} = \mathbb{R}</span></p></li>
+<li><p><span class="math inline">d \in \mathcal{D} = \{[a,b]:a,b\in \mathbb{R}, a\leq b\}</span></p></li>
+</ul>
+</section>
+<section id="example-2-privacy-function" class="slide level2">
+<h2>Example 2: Privacy function</h2>
+<p><br></p>
+<p><span class="math display">\rho(d,x) = -\log d(x)</span></p>
+<ul>
+<li><p><span class="math inline">x \in \mathsf{X} = \mathbb{R}</span></p></li>
+<li><p><span class="math inline">d \in \mathcal{D} = \{\text{probability density functions on } \mathbb{R}\}</span></p></li>
+</ul>
+</section>
+<section id="the-statistic" class="slide level2">
+<h2>The statistic</h2>
+<p>A statistic <span class="math inline">T \in \mathsf{T}</span> is output from a mechanism <span class="math inline">M</span> given <span class="math inline">x</span></p>
+<p><span class="math display">T \sim M(~\cdot \mid x)</span></p>
+<ul>
+<li class="fragment"><span class="math inline">M:\mathcal{T} \times \mathsf{X} \rightarrow [0,1]</span> for <span class="math inline">(\mathsf{T},\mathcal{T})</span> measurable space</li>
+</ul>
+</section>
+<section id="the-statistic-1" class="slide level2">
+<h2>The statistic</h2>
+<p><span class="math inline">M</span> can be deterministic or randomised</p>
+<ul>
+<li class="fragment">Summary statistics <span class="math inline">\quad\tau:\mathsf{X}\rightarrow\mathsf{T}</span>
+<ul>
+<li class="fragment"><span class="math inline">M(~\cdot \mid x) = \delta_{\tau(x)}(\cdot)</span></li>
+</ul></li>
+<li class="fragment">Noisy summary statistics
+<ul>
+<li class="fragment"><span class="math inline">M(~\cdot \mid x) = \mathcal{N}(~\cdot \mid  \tau(x), \sigma^2)</span></li>
+</ul></li>
+<li class="fragment">Composition of multiple mechanisms</li>
+</ul>
+</section>
+<section id="the-statistic-2" class="slide level2">
+<h2>The statistic</h2>
+<p><span class="math inline">M</span> can be deterministic or randomised</p>
+<ul>
+<li class="fragment">Result of optimisation
+<ul>
+<li class="fragment">MLE: <span class="math inline">\quad M(~\cdot \mid x) = \delta_{\tau(x)}(\cdot)</span></li>
+<li class="fragment"><span class="math inline">\tau(x) = \arg\max_{\theta \in \Theta} \log L(x \mid \theta)</span></li>
+</ul></li>
+<li class="fragment">Monte Carlo output
+<ul>
+<li class="fragment">MCMC: <span class="math inline">\quad M(\mathrm{d}t_{1:N} \mid x) = \prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)</span></li>
+</ul></li>
+<li class="fragment">Noisy optimisation
+<ul>
+<li class="fragment">SGD: <span class="math inline">\quad M(\mathrm{d}t_N \mid x) = \int_{\mathsf{T}_{-n}}\prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="the-adversary" class="slide level2">
+<h2>The adversary</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Assumption 1: A Bayesian adversary</strong></p>
+</div>
+<div class="callout-content">
+<p>The adversary makes Bayesian decisions</p>
+</div>
+</div>
+</div>
+<ol type="1">
+<li class="fragment">Holds a prior distribution over the data <span class="math inline">Q</span></li>
+<li class="fragment">Constructs a posterior distribution <span class="math inline">Q_T</span> from <span class="math inline">(M,T)</span></li>
+<li class="fragment">Make Bayesian decisions
+<ul>
+<li class="fragment">loss function <span class="math inline">\ell: \mathcal{D} \times \mathsf{X} \rightarrow \mathbb{R}</span></li>
+</ul></li>
+</ol>
+</section>
+<section id="anatomy-of-statistical-data-privacy-1" class="slide level2">
+<h2>Anatomy of statistical data privacy</h2>
+
+<img data-src="index_files/figure-revealjs/dtp-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="adversarys-optimal-decision" class="slide level2">
+<h2>Adversary’s optimal decision</h2>
+<p>From Assumption 1:</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Adversary’s optimal decision</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">
+d^{P} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim P}[ \ell(d,z)]
+</span> Prior to release <span class="math inline">P = Q</span>, post-release <span class="math inline">P = Q_T</span>.</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>To measure privacy: <strong>We need assumptions on <span class="math inline">Q</span> and <span class="math inline">\ell</span></strong></p>
+</div>
+</section>
+<section id="unknown-adversaries" class="slide level2">
+<h2>Unknown adversaries</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Assumption 2: Adversarial loss function</strong></p>
+</div>
+<div class="callout-content">
+<p>The adversary has loss function <span class="math inline">\ell(d,x) = \rho(d,x)</span></p>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">Interpretation 1: Adversary targets privacy</li>
+</ul>
+<div class="fragment">
+<p>If <span class="math inline">d^P_{\ell^\prime}</span> is the adversary’s optimal decision under <span class="math inline">(P,\ell^\prime)</span> then</p>
+</div>
+<div class="fragment">
+<p><span class="math display">\mathbb{E}_{x \sim P}[ \rho(d^{P}_\rho,x)] \leq \mathbb{E}_{x \sim P}[ \rho(d^P_{\ell^\prime},x)]</span></p>
+</div>
+<ul>
+<li class="fragment">Interpretation 2: data-averaged <strong>worst-case</strong> for statistician</li>
+</ul>
+</section>
+<section id="unknown-adversaries-1" class="slide level2">
+<h2>Unknown adversaries</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Assumption 3: Adversarial prior class</strong></p>
+</div>
+<div class="callout-content">
+<p>Let the data-prior <span class="math inline">Q \in \mathcal{Q}_x</span></p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Defines class of posteriors and privacy can be measured:</p>
+</div>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Privacy outcome</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">
+d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
+</span></p>
+<p><span class="math display">
+\inf_{Q \in \mathcal{Q}_x} \rho(d^{Q_T},x)
+</span></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="anatomy-of-statistical-data-privacy-2" class="slide level2">
+<h2>Anatomy of statistical data privacy</h2>
+
+<img data-src="index_files/figure-revealjs/dtp1-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="anatomy-of-statistical-data-privacy-3" class="slide level2">
+<h2>Anatomy of statistical data privacy</h2>
+
+<img data-src="index_files/figure-revealjs/dtp2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="privacy-guarantees-and-leakage" class="slide level2">
+<h2>Privacy guarantees and leakage</h2>
+<p>Consider a set of “private” mechanisms <span class="math inline">\mathcal{M}</span>.</p>
+<p>A privacy guarantee is the communication of <span class="math inline">(M,\mathcal{M})</span> such that <span class="math inline">M \in \mathcal{M}</span>. For example,</p>
+<p><span class="math display">M \in \mathcal{M}_{x} = \{M \in \mathcal{M}: M(~\cdot\mid x) \text{ is private}\}</span></p>
+<ul>
+<li class="fragment">A privacy guarantee needs to be transparent to be trusted</li>
+<li class="fragment">A guarantee only for <span class="math inline">x</span> reveals information about <span class="math inline">x</span>
+<ul>
+<li class="fragment">Extra privacy loss: <span class="math inline">x \in \{z\in \mathsf{X}: M \in \mathcal{M}_{z}\}  \subset \mathsf{X}</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="privacy-guarantees-and-leakage-1" class="slide level2">
+<h2>Privacy guarantees and leakage</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Assumption 4: Protected set</strong></p>
+</div>
+<div class="callout-content">
+<p>The statistician announces a protected set <span class="math inline">\mathsf{E} \subset \mathsf{X}</span> where the mechanism satisfies</p>
+<p><span class="math display">M \in \mathcal{M}_{\mathsf{E}} = \{M \in \mathcal{M}: M(~\cdot\mid x) \text{ is private } \forall x \in \mathsf{E}\}</span></p>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">Information about <span class="math inline">x</span> obscured by protecting all <span class="math inline">x \in \mathsf{E}</span></li>
+<li class="fragment">But the adversary learns <span class="math inline">x \in \mathsf{E}</span></li>
+</ul>
+</section>
+<section id="anatomy-of-statistical-data-privacy-4" class="slide level2">
+<h2>Anatomy of statistical data privacy</h2>
+
+<img data-src="index_files/figure-revealjs/dtp3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="anatomy-of-statistical-data-privacy-5" class="slide level2">
+<h2>Anatomy of statistical data privacy</h2>
+
+<img data-src="index_files/figure-revealjs/dtp5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section></section>
+<section>
+<section id="measuring-privacy" class="title-slide slide level1 center">
+<h1>Measuring privacy</h1>
+
+</section>
+<section id="measuring-privacy-1" class="slide level2">
+<h2>Measuring privacy</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Privacy outcome</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">
+\inf_{Q \in \mathcal{Q}_x} \rho(d^{Q_T},x),\quad d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
+</span></p>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">Let <span class="math inline">S: \mathcal{P} \times \mathsf{X} \rightarrow \mathbb{R}</span> such that <span class="math inline">S(Q_T,x) = \rho(d^{Q_T},x)</span></li>
+<li class="fragment"><span class="math inline">S</span> is a (negatively-orientated) proper scoring rule<sup>1</sup>
+<ul>
+<li class="fragment">A “privacy score”</li>
+</ul></li>
+</ul>
+<aside><ol class="aside-footnotes"><li id="fn10"><p><span class="citation" data-cites="grunwald2004game">Grünwald and Dawid (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span></p></li></ol></aside></section>
+<section id="measuring-privacy-2" class="slide level2">
+<h2>Measuring privacy</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Privacy outcome</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">
+\inf_{Q \in \mathcal{Q}_x} S(Q_T,x)
+</span></p>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">Use known proper scoring rules to measure privacy outcome</li>
+<li class="fragment">Create new proper scoring rules from <span class="math inline">\rho</span></li>
+<li class="fragment">For example when <span class="math inline">d</span> is a PDF/PMF:</li>
+</ul>
+<div class="fragment">
+<p><span class="math inline">\rho(d,x) = -\log d(x)</span> then <span class="math inline">S(Q_T,x)=-\log q_T(x)</span>.</p>
+</div>
+<div class="fragment">
+<p>Without loss of generality, we focus on proper scoring rules.</p>
+</div>
+</section>
+<section id="detour-proper-scoring-rules" class="slide level2">
+<h2>Detour: Proper scoring rules</h2>
+<p>Proper scoring rules<sup>1</sup> provide a convenient (and rich) class of functions to assess privacy!</p>
+<ul>
+<li class="fragment"><p>Consider space of probability distributions <span class="math inline">\mathscr{P}</span> on <span class="math inline">(\mathsf{X},\mathcal{X})</span>.</p></li>
+<li class="fragment"><p>A scoring rule is a function <span class="math inline">S:\mathscr{P} \times \mathsf{X} \rightarrow \mathbb{R}</span></p></li>
+<li class="fragment"><p>Expected score <span class="math inline">S(P,Q)</span></p>
+<ul>
+<li class="fragment">If <span class="math inline">P,Q \in \mathscr{P}</span> define <span class="math inline">S(P,Q) = \mathbb{E}_{z\sim Q} S(P,z)</span></li>
+</ul></li>
+</ul>
+<aside><ol class="aside-footnotes"><li id="fn11"><p><span class="citation" data-cites="gneiting2007strictly">Gneiting and Raftery (<a href="#/references" role="doc-biblioref" onclick="">2007</a>)</span></p></li></ol></aside></section>
+<section id="detour-proper-scoring-rules-1" class="slide level2">
+<h2>Detour: Proper scoring rules</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Definition 1: Proper scoring rules<sup>1</sup></strong></p>
+</div>
+<div class="callout-content">
+<p>A scoring rule <span class="math inline">S</span> is proper with respect to <span class="math inline">\mathscr{P}</span> if for all <span class="math inline">P,Q \in \mathscr{P}</span></p>
+<p><span class="math display">S(P,P) \leq S(P,Q).</span></p>
+<p>In addition, it is <em>strictly</em> proper if <span class="math inline">S(P,P) = S(P,Q) \Leftrightarrow P = Q</span>.</p>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn12"><p>Negatively-orientated</p></li></ol></aside></section>
+<section id="scoring-rules-and-privacy" class="slide level2">
+<h2>Scoring rules and privacy</h2>
+<p><strong>Forecasting</strong></p>
+<ul>
+<li class="fragment"><p><span class="math inline">S(P,x)</span> compares a forecast <span class="math inline">P</span> to a ground truth <span class="math inline">x</span></p></li>
+<li class="fragment"><p>Propriety encourages truthful reporting of the forecast</p></li>
+</ul>
+<p><strong>Privacy</strong></p>
+<ul>
+<li class="fragment"><p><span class="math inline">S(Q,x)</span> compares uncertain adversarial knowledge of the data <span class="math inline">Q</span> to the true data <span class="math inline">x</span></p></li>
+<li class="fragment"><p>Propriety ensures coherent assessment of the privacy</p></li>
+</ul>
+</section>
+<section id="measuring-privacy-3" class="slide level2">
+<h2>Measuring privacy</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Privacy outcome</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">
+\inf_{Q \in \mathcal{Q}_x} S(Q_T,x)
+</span></p>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">This is an absolute measure of privacy</li>
+<li class="fragment">We will look at a relative measure of privacy</li>
+</ul>
+</section>
+<section id="measuring-privacy-4" class="slide level2">
+<h2>Measuring privacy</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Relative privacy outcome</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">
+\inf_{Q \in \mathcal{Q}_x} \left[ S(Q_T,x) - S(Q,x) \right]
+</span></p>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">Considers adversary’s information gain</li>
+<li class="fragment">Statistician’s relative privacy change (worst-case)</li>
+</ul>
+</section>
+<section id="measuring-privacy-5" class="slide level2">
+<h2>Measuring privacy</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Relative privacy outcome</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">
+\inf_{Q \in \mathcal{Q}_x} \left[ S(Q_T,x) - S(Q,x) \right]
+</span></p>
+</div>
+</div>
+</div>
+<p>But…</p>
+<ul>
+<li class="fragment"><span class="math inline">Q_T</span> may be random since <span class="math inline">T\sim M(~\cdot\mid x)</span></li>
+<li class="fragment">We need to protect all <span class="math inline">x \in \mathsf{E}</span></li>
+</ul>
+</section></section>
+<section>
+<section id="defining-privacy" class="title-slide slide level1 center">
+<h1>Defining privacy</h1>
+
+</section>
+<section id="a-privacy-definition" class="slide level2">
+<h2>A privacy definition</h2>
+<ul>
+<li class="fragment"><p>Let <span class="math inline">\mathcal{Q}_x \subset \mathscr{P}(\mathsf{X},\mathcal{X})</span> and <span class="math inline">\mathsf{E} \subset \mathsf{X}</span> be the protected set,</p></li>
+<li class="fragment"><p><span class="math inline">M^\mathsf{E}: \mathcal{T}\times \mathsf{E} \rightarrow \mathbb{R}_+</span> be a mechanism,</p></li>
+<li class="fragment"><p><span class="math inline">S</span> be a privacy score, constants <span class="math inline">\kappa \geq 0</span>, <span class="math inline">0\leq\delta \ll 1</span>.</p></li>
+</ul>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Definition 2: Scoring rule privacy I</strong></p>
+</div>
+<div class="callout-content">
+<p>We say <span class="math inline">M^\mathsf{E}</span> is <span class="math inline">(\mathcal{Q}_x, S, \kappa, \delta)</span>-SRP if</p>
+<p><span class="math display">\inf_{x\in\mathsf{E}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q_{T}, x) \geq S(Q, x) - \kappa \right] \geq 1 - \delta,</span></p>
+<p>where the probability <span class="math inline">\mathbb{P}_x</span> is w.r.t. <span class="math inline">T \sim M^\mathsf{E}(~\cdot\mid x)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="a-privacy-definition-1" class="slide level2">
+<h2>A privacy definition</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Definition 2: Scoring rule privacy I</strong></p>
+</div>
+<div class="callout-content">
+<p>We say <span class="math inline">M^\mathsf{E}</span> is <span class="math inline">(\mathcal{Q}_x, S, \kappa, \delta)</span>-SRP if</p>
+<p><span class="math display">\inf_{x\in\mathsf{E}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q_{T}, x) \geq S(Q, x) - \kappa \right] \geq 1 - \delta,</span></p>
+<p>where the probability <span class="math inline">\mathbb{P}_x</span> is w.r.t. <span class="math inline">T \sim M^\mathsf{E}(~\cdot\mid x)</span>.</p>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment"><span class="math inline">S(Q, x) - \kappa\quad</span> is the minimum required privacy score</li>
+<li class="fragment"><span class="math inline">\delta\quad</span> is maximum probability of privacy leakage</li>
+</ul>
+</section>
+<section id="scoring-rule-privacy-example-1" class="slide level2">
+<h2>Scoring rule privacy: Example 1</h2>
+<p>Consider priors with probability on true <span class="math inline">x</span> and alternative <span class="math inline">x^\prime</span></p>
+<div class="fragment">
+<p>Let <span class="math inline">H</span> be the Hamming distance. For some fixed <span class="math inline">x \in \mathsf{E} = \mathsf{X}</span>,</p>
+<p><span class="math display">\mathcal{Q}_x = \bigcup_{\substack{x^{\prime} \in \mathsf{X}\\ H(x,x^{\prime}) = 1}} \left\{Q \in \mathscr{P}(\mathsf{X}): Q(\{x\}) + Q(\{x^\prime\})=1\right\}</span></p>
+</div>
+<div class="fragment">
+<p>Further, for <span class="math inline">p \in (0,1)</span>, consider the restriction</p>
+<p><span class="math display">\mathcal{Q}_x^p = \{Q\in\mathcal{Q}_x:Q(\{x\}) \geq p\}</span></p>
+</div>
+</section>
+<section id="scoring-rule-privacy-example-1-1" class="slide level2">
+<h2>Scoring rule privacy: Example 1</h2>
+<p><strong>Scoring rule</strong></p>
+<p>Let <span class="math inline">p = \frac{\mathrm{d}P}{\mathrm{d}\mu}</span> be the Radon–Nikodym derivative of <span class="math inline">P</span> w.r.t. some base measure <span class="math inline">\mu</span>, take</p>
+<p><span class="math display">S(P,x) = -\log p(x)</span></p>
+<div class="fragment">
+<p><strong>Mechanism</strong></p>
+<p>Consider random algorithm <span class="math inline">M</span> with <span class="math inline">m = \frac{\mathrm{d}M}{\mathrm{d}\mu^\prime}</span></p>
+</div>
+</section>
+<section id="scoring-rule-privacy-example-1-2" class="slide level2">
+<h2>Scoring rule privacy: Example 1</h2>
+<p>It is straightforward to show</p>
+<p><span class="math display">\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x^p}\mathbb{P}_x\left[S(Q_{T}, x) \geq S(Q, x) - \kappa \right] \geq 1 - \delta,</span></p>
+<p>is equivalent to</p>
+<div class="fragment">
+<p><span class="math display">\inf_{\substack{x,x^{\prime}\in\mathsf{X}\\H(x,x^{\prime}) = 1}}\mathbb{P}_x\left[m(T \mid x) \geq e^\epsilon m(T \mid x^{\prime})\right] \leq \delta</span></p>
+<p>with <span class="math inline">\epsilon = \log (1-p) - \log(e^{-\kappa} - p)</span></p>
+</div>
+</section>
+<section id="interpretation-example-1" class="slide level2">
+<h2>Interpretation: Example 1</h2>
+<p><span class="math display">\inf_{\substack{x,x^{\prime}\in\mathsf{X}\\H(x,x^{\prime}) = 1}}\mathbb{P}_x\left[m(T \mid x) \geq e^\epsilon m(T \mid x^{\prime})\right] \leq \delta</span></p>
+<ul>
+<li class="fragment">This is Probabilistic Differential Privacy (PrDP)<sup>1</sup></li>
+<li class="fragment">Scoring rule privacy contains PrDP as a special case</li>
+<li class="fragment">PrDP <span class="math inline">\Rightarrow</span> Approximate Differential Privacy (ADP)<sup>2</sup></li>
+</ul>
+<aside><ol class="aside-footnotes"><li id="fn13"><p><span class="citation" data-cites="guingona2023comparing">Guingona et al. (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span></p></li><li id="fn14"><p><span class="citation" data-cites="dwork2006approxdp">Dwork et al. (<a href="#/references" role="doc-biblioref" onclick="">2006</a>)</span></p></li></ol></aside></section>
+<section id="interpretation-example-1-1" class="slide level2">
+<h2>Interpretation: Example 1</h2>
+<ul>
+<li class="fragment">PrDP and ADP are relative notions of privacy</li>
+<li class="fragment">Can be derived by considering adversarial decisions</li>
+<li class="fragment">PrDP and ADP assume a minimum strength of the adversary
+<ul>
+<li class="fragment"><span class="math inline">\mathcal{Q}_x^p = \{Q\in\mathcal{Q}_x:Q(\{x\}) \geq p\}</span></li>
+</ul></li>
+<li class="fragment">ADP has post-processing invariance property, PrDP <strong>does not</strong></li>
+<li class="fragment">From our theory: post-processing by the
+<ul>
+<li class="fragment">adversary <strong>will not</strong> change their posterior distribution</li>
+<li class="fragment">statistician <strong>will</strong> change the privacy guarantee</li>
+</ul></li>
+</ul>
+</section>
+<section id="scoring-rule-privacy" class="slide level2">
+<h2>Scoring rule privacy</h2>
+<ul>
+<li class="fragment">Let <span class="math inline">S_I = \{S_i\}_{i \in I}</span> be a set of privacy scores</li>
+</ul>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Definition 3: Scoring rule privacy II</strong></p>
+</div>
+<div class="callout-content">
+<p>We say <span class="math inline">M^\mathsf{E}</span> is <span class="math inline">(\mathcal{Q}_x, S_I, \kappa, \delta)</span>-SRP if</p>
+<p><span class="math display">\inf_{i \in I}\inf_{x\in\mathsf{E}}\inf_{Q\in\mathcal{Q}_x}
+\mathbb{P}_x\left[S_i(Q_{T}, x) \geq S_i(Q, x) - \kappa \right] \geq 1 - \delta,</span></p>
+<p>where the probability <span class="math inline">\mathbb{P}_x</span> is w.r.t. <span class="math inline">T \sim M^\mathsf{E}(~\cdot\mid x)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">SRP has composition property if the class of priors is closed under <span class="math inline">M</span>-updating (i.e.&nbsp;conjugate).</li>
+</ul>
+</section>
+<section id="scoring-rule-privacy-example-2" class="slide level2">
+<h2>Scoring rule privacy: Example 2</h2>
+<ul>
+<li class="fragment">DP can’t be defined for deterministic mechanisms</li>
+<li class="fragment">SRP are flexible enough to handle this</li>
+<li class="fragment">We will consider the mean of the data <span class="math inline">\bar x</span></li>
+</ul>
+<div class="fragment">
+<p><span class="math display">M(~\cdot\mid x) = \delta_{\bar x}(\cdot)</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\mathcal{Q}_x = \{\mathcal{N}(\mu, \Sigma): \mu \in \mathbb{R}^n, \Sigma \in \text{PD}(\mathbb{R}^n)\}</span></p>
+</div>
+</section>
+<section id="scoring-rule-privacy-example-2-1" class="slide level2">
+<h2>Scoring rule privacy: Example 2</h2>
+<ul>
+<li class="fragment">Prior <span class="math inline">Q \in \mathcal{Q}_x</span> with <span class="math inline">\mu,\Sigma</span>
+<ul>
+<li class="fragment">such that <span class="math inline">[\Sigma]_{ij} = \sigma_i\sigma_j\rho_{ij}</span></li>
+</ul></li>
+<li class="fragment">Data posterior after observing <span class="math inline">\bar x</span> is multivariate normal but degenerate</li>
+<li class="fragment">Support only on subspace <span class="math inline">\{z\in \mathbb{R}^n: \bar z = \bar x\}</span></li>
+</ul>
+</section>
+<section id="scoring-rule-privacy-example-2-2" class="slide level2">
+<h2>Scoring rule privacy: Example 2</h2>
+<p>The <span class="math inline">i</span>th marginal data-posterior distribution is <span class="math inline">{Q_{\bar{x},i} =  \mathcal{N}(\tilde{\mu}_i, \tilde{\sigma}_i^2)}</span> with</p>
+<p><span class="math display">\tilde{\mu}_i = \mu_i + \sigma_i\frac{\nu_i}{\nu}(\bar{x} - \bar{\mu} ), \qquad \tilde{\sigma}_i^2 = \sigma_i^2\left[1 - \frac{\nu_i^2}{\nu}\right]</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\nu_i = \frac{1}{n}\sum_{j=1}^n \rho_{ij}\sigma_j</span></li>
+<li class="fragment"><span class="math inline">\nu = \frac{1}{n^2}\sum_{j=1}^n\sum_{k=1}^n \rho_{jk}\sigma_j\sigma_k</span></li>
+</ul>
+</section>
+<section id="scoring-rule-privacy-example-2-3" class="slide level2">
+<h2>Scoring rule privacy: Example 2</h2>
+<p>One choice: entropy scoring rule</p>
+<p><span class="math display">S(P,x) = \log \sigma_P^2 + \frac{(x-\mu_P)^2}{\sigma_P^2}</span></p>
+<p>then we can show</p>
+<div class="fragment">
+<p><span class="math display">S(Q_{\bar{x},i},x) - S(Q_i,x) \geq \log\frac{\lambda_n}{\lambda_1}\left(1- \frac{\sigma_i^2}{\Vert\sigma \Vert_2^2} \right)  - \frac{(\bar{x} - \bar{\mu})^2}{\lambda_1 \Vert \sigma \Vert_2^2}</span></p>
+</div>
+</section>
+<section id="scoring-rule-privacy-example-2-4" class="slide level2">
+<h2>Scoring rule privacy: Example 2</h2>
+<p>Therefore we can use the privacy loss</p>
+<div class="fragment">
+<p><span class="math display">\kappa_i(\bar{x}, \mu, \Sigma) = \frac{(\bar{x} - \bar{\mu})^2}{\lambda_1 \Vert \sigma \Vert_2^2} - \log\frac{\lambda_n}{\lambda_1}\left(1- \frac{\sigma_i^2}{\Vert\sigma \Vert_2^2} \right)</span></p>
+<p>with probability of leakage <span class="math inline">\delta = 0</span></p>
+</div>
+</section>
+<section id="sketch-of-extenstion-to-mcmc" class="slide level2">
+<h2>Sketch of extenstion to MCMC</h2>
+<p>If <span class="math inline">T \sim M(\cdot\mid \bar{x})</span> then <span class="math inline">Q_T = \mathbb{E}(Q_{\bar{z}} \mid T)</span> for <span class="math inline">\bar{z} \sim \bar{Q}(\cdot\mid T)</span> where</p>
+<ul>
+<li class="fragment"><span class="math inline">T = (\theta_1,\theta_2, \ldots, \theta_N)</span> is a chain of MCMC samples</li>
+<li class="fragment"><span class="math inline">\bar{Q}</span> the implied data-prior on the average</li>
+<li class="fragment"><span class="math inline">\bar{Q}(\cdot\mid T)</span> is the posterior update</li>
+</ul>
+<div class="fragment">
+<p>Recall that for all <span class="math inline">\bar{x} \in \mathbb{R}</span>, <span class="math inline">S(Q_{\bar{x},i},x) - S(Q_{i},x) \geq - \kappa</span></p>
+</div>
+<ul>
+<li class="fragment">Use MVT and/or properties of <span class="math inline">S(\cdot,x)</span> to bound <span class="math inline">S(Q_{T,i},x) = S(\mathbb{E}_{T}(Q_{\bar{z},i}),x)</span> with above</li>
+</ul>
+</section>
+<section id="comparison-with-differential-privacy" class="slide level2">
+<h2>Comparison with Differential Privacy</h2>
+<p>For privacy analysis of iterative algorithms <strong>with DP</strong> it is common place to:</p>
+<ol type="1">
+<li class="fragment">Prove DP for one step</li>
+<li class="fragment">Use composition rules to scale 1 step to <span class="math inline">n</span> steps
+<ul>
+<li class="fragment">As <span class="math inline">n \rightarrow \infty</span> no privacy guarantee</li>
+</ul></li>
+</ol>
+<div class="fragment">
+<p>In <strong>our approach</strong> to privacy it is possible to:</p>
+<ol type="1">
+<li class="fragment">Prove privacy for the limiting case (deterministic!)</li>
+<li class="fragment">Decompose limiting case to prove privacy for some finite <span class="math inline">n</span></li>
+</ol>
+</div>
+</section>
+<section id="ongoing-work" class="slide level2">
+<h2>Ongoing work</h2>
+<ul>
+<li class="fragment">More examples
+<ul>
+<li class="fragment">Other (vector) summary statistics</li>
+<li class="fragment">Nonparametric prior families</li>
+</ul></li>
+<li class="fragment">Formalise iterative schemes <span class="math inline">n \rightarrow \infty</span>
+<ul>
+<li class="fragment">MCMC</li>
+<li class="fragment">SGD</li>
+</ul></li>
+<li class="fragment">Privacy-utility trade off</li>
+</ul>
+<div class="fragment">
+<p>Thank you!</p>
+</div>
+</section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-bon2020acld" class="csl-entry" role="listitem">
+Bon, Joshua J, Bernard Baffour, Melanie Spallek, and Michele Haynes. 2020. <span>“Analysing Sensitive Data from Dynamically-Generated Overlapping Contingency Tables.”</span> <em>Journal of Official Statistics</em> 36 (2): 275–96.
+</div>
+<div id="ref-bon2019polling" class="csl-entry" role="listitem">
+Bon, Joshua J, Timothy Ballard, and Bernard Baffour. 2019. <span>“Polling Bias and Undecided Voter Allocations: US Presidential Elections, 2004–2016.”</span> <em>Journal of the Royal Statistical Society: Series A (Statistics in Society)</em> 182 (2): 467–93.
+</div>
+<div id="ref-bon2025rbsmc" class="csl-entry" role="listitem">
+Bon, Joshua J, and Anthony Lee. 2025. <span>“Knots and Variance Ordering of Sequential <span>M</span>onte <span>C</span>arlo Algorithms.”</span>
+</div>
+<div id="ref-bon2021dasmc" class="csl-entry" role="listitem">
+Bon, Joshua J, Anthony Lee, and Christopher Drovandi. 2021. <span>“Accelerating Sequential <span>M</span>onte <span>C</span>arlo with Surrogate Likelihoods.”</span> <em>Statistics and Computing</em> 31 (5): 1–26.
+</div>
+<div id="ref-bon2026priv" class="csl-entry" role="listitem">
+Bon, Joshua J, J Rousseau, and Christian P Robert. 2026. <span>“Persuasive Privacy.”</span>
+</div>
+<div id="ref-bon2025cal" class="csl-entry" role="listitem">
+Bon, Joshua J, David J Warne, David J Nott, and Christopher Drovandi. 2025. <span>“Bayesian Score Calibration for Approximate Models.”</span> <em>Journal of Machine Learning Research</em> 26 (301): 1–40. <a href="http://jmlr.org/papers/v26/24-1179.html">http://jmlr.org/papers/v26/24-1179.html</a>.
+</div>
+<div id="ref-bretherton2026principled" class="csl-entry" role="listitem">
+Bretherton, Adam, Joshua J Bon, David J Warne, Kerrie Mengersen, and Christopher Drovandi. 2026. <span>“A Principled Approach to Bayesian Transfer Learning.”</span> <em>Bayesian Analysis</em>.
+</div>
+<div id="ref-dwork2006approxdp" class="csl-entry" role="listitem">
+Dwork, Cynthia, Krishnaram Kenthapadi, Frank McSherry, Ilya Mironov, and Moni Naor. 2006. <span>“Our Data, Ourselves: Privacy via Distributed Noise Generation.”</span> In <em>Advances in Cryptology - EUROCRYPT 2006</em>, edited by Serge Vaudenay, 486–503. Berlin, Heidelberg: Springer Berlin Heidelberg.
+</div>
+<div id="ref-gneiting2007strictly" class="csl-entry" role="listitem">
+Gneiting, T., and A. E. Raftery. 2007. <span>“Strictly Proper Scoring Rules, Prediction, and Estimation.”</span> <em>J. American Statistical Assoc.</em> 102 (477): 359–78.
+</div>
+<div id="ref-grunwald2004game" class="csl-entry" role="listitem">
+Grünwald, Peter D, and A Philip Dawid. 2004. <span>“Game Theory, Maximum Entropy, Minimum Discrepancy and Robust <span>B</span>ayesian Decision Theory.”</span> <em>Annals of Statistics</em> 32 (4): 1367–1433.
+</div>
+<div id="ref-guingona2023comparing" class="csl-entry" role="listitem">
+Guingona, Vincent, Alexei Kolesnikov, Julianne Nierwinski, and Avery Schweitzer. 2023. <span>“Comparing Approximate and Probabilistic Differential Privacy Parameters.”</span> <em>Information Processing Letters</em> 182: 106380.
+</div>
+<div id="ref-hassan2024federated" class="csl-entry" role="listitem">
+Hassan, Conor, Joshua J Bon, Elizaveta Semenova, Antonietta Mira, and Kerrie Mengersen. 2024. <span>“Federated Learning for Non-Factorizable Models Using Deep Generative Prior Approximations.”</span>
+</div>
+<div id="ref-oflaherty2021teen" class="csl-entry" role="listitem">
+O’Flaherty, Martin, Sara Kalucza, and Joshua J Bon. 2023. <span>“Does Anyone Suffer from Teenage Motherhood? Mental Health Effects of Teen Motherhood in the UK Are Small and Homogeneous.”</span> <em>Demography</em> 60 (3): 707–29.
+</div>
+</div>
+</section></section>
+<section id="appendix" class="title-slide slide level1 center">
+<h1>Appendix</h1>
+
+</section>
+
+<section>
+<section id="differential-privacy-1" class="title-slide slide level1 center">
+<h1>Differential Privacy</h1>
+
+</section>
+<section id="approximate-differential-privacy" class="slide level2">
+<h2>(Approximate) differential privacy</h2>
+<ul>
+<li class="fragment">Let <span class="math inline">H(x,x')</span> be the Hamming distance between <span class="math inline">x</span> and <span class="math inline">x'</span></li>
+<li class="fragment">Constants <span class="math inline">\epsilon \geq 0</span> and <span class="math inline">\delta \geq 0</span></li>
+</ul>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Definition A1: Approximate differential privacy</strong></p>
+</div>
+<div class="callout-content">
+<p>We say <span class="math inline">M</span> is <span class="math inline">(\epsilon,\delta)</span>-ADP if</p>
+<p><span class="math display">M(A\mid x) \leq e^\epsilon M(A\mid x') + \delta</span></p>
+<p>for all <span class="math inline">A \in \mathcal{T}</span> and <span class="math inline">\forall x,x' \in \mathsf{X}</span> such that <span class="math inline">H(x,x') \leq 1</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">Typically referred to as DP</li>
+</ul>
+</section></section>
+<section>
+<section id="composition-property" class="title-slide slide level1 center">
+<h1>Composition property</h1>
+
+</section>
+<section id="composition-property-of-srp" class="slide level2">
+<h2>Composition property of SRP</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Definition 4: Closed under <span class="math inline">M</span>-updating</strong></p>
+</div>
+<div class="callout-content">
+<p>Let <span class="math inline">T \sim M(~\cdot\mid x)</span> for fixed <span class="math inline">x \in \mathsf{X}</span>.</p>
+<p>A family of distributions <span class="math inline">\mathcal{Q}_x</span> is closed under <span class="math inline">M</span>-updating if for every <span class="math inline">Q \in \mathcal{Q}_x</span> the posterior distribution conditional on <span class="math inline">T</span>, <span class="math inline">Q_T \in \mathcal{Q}_x</span> for all <span class="math inline">T \in \mathsf{T}</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="composition-property-of-srp-1" class="slide level2">
+<h2>Composition property of SRP</h2>
+<div class="fragment">
+<p><span class="math inline">M_1^\mathsf{E}:\mathcal{T}_1 \times \mathsf{E} \rightarrow [0,1],</span></p>
+</div>
+<ul>
+<li class="fragment">e.g.&nbsp;<span class="math inline">M_1^\mathsf{E}(t_1 \mid x) = K(t_1 \mid x)</span> where <span class="math inline">x \in \mathsf{E}</span></li>
+</ul>
+<div class="fragment">
+<p><span class="math inline">M_2^\mathsf{E}:\mathcal{T}_2 \times (\mathsf{T}_1 \times \mathsf{E}) \rightarrow [0,1]</span></p>
+</div>
+<ul>
+<li class="fragment">e.g.&nbsp;<span class="math inline">M_2^\mathsf{E}(t_2 \mid t_1, x) = K(t_2 \mid t_1, x)</span> where <span class="math inline">x \in \mathsf{E}</span></li>
+</ul>
+</section>
+<section id="composition-property-of-srp-2" class="slide level2">
+<h2>Composition property of SRP</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Theorem 1: Composition of SRP</strong></p>
+</div>
+<div class="callout-content">
+<p>If <span class="math inline">M_1^\mathsf{E}</span> and <span class="math inline">M_2^\mathsf{E}</span> are <span class="math inline">(\mathcal{Q}_x, S_I, \kappa_1, \delta_1)</span>-SRP and <span class="math inline">(\mathcal{Q}_x,S_I, \kappa_2, \delta_2)</span>-SRP for all <span class="math inline">t_1 \in \mathsf{T}_1</span> respectively and <span class="math inline">\mathcal{Q}_x</span> is closed under <span class="math inline">M_1^\mathsf{E}</span>-updating for all <span class="math inline">x \in \mathsf{E}</span> then <span class="math inline">M_{1}^\mathsf{E} \otimes M_2^\mathsf{E}</span> is <span class="math inline">(\mathcal{Q}_x, S_I, \kappa_1 + \kappa_2, \delta_1 + \delta_2)</span>-SRP.</p>
+</div>
+</div>
+</div>
+<p><a href="#/thm-comp-proof" class="quarto-xref">Proof of Theorem&nbsp;1</a></p>
+<ul>
+<li class="fragment">Useful for iterative algorithms: e.g.&nbsp;MCMC, Federated SGD</li>
+</ul>
+</section>
+<section id="proof-of-composition-property" class="slide level2">
+<h2>Proof of composition property</h2>
+<div id="thm-comp-proof" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Composition property)</strong></span> &nbsp;</p>
+<div class="fragment">
+<p>If <span class="math inline">\mathcal{Q}_x</span> is closed under <span class="math inline">M_1</span>-updating then <span class="math inline">Q_{T_1} \in \mathcal{Q}_x</span> for all <span class="math inline">T_1 \in \mathsf{T}_1</span> and priors <span class="math inline">Q \in \mathcal{Q}_x</span>.</p>
+</div>
+<div class="fragment">
+<p>And if <span class="math inline">M_2^\mathsf{E}</span> is <span class="math inline">(\mathcal{Q}_x, S_I, \kappa_2, \delta_2)</span>-SRP for all <span class="math inline">t_1 \in \mathsf{T}_1</span> then</p>
+</div>
+<div class="fragment">
+<p><span class="math display">\mathbb{P}_{x, t_1}\left[S_a(Q_{t_1,T_2}, x) \geq S_a(Q_{t_1}, x) - \kappa_2 \right] \geq 1 - \delta_2.</span> for all <span class="math inline">x\in \mathsf{E}, a\in I, Q\in\mathcal{Q}_x</span>.</p>
+</div>
+</div>
+</section>
+<section id="proof-of-composition-property-1" class="slide level2">
+<h2>Proof of composition property</h2>
+<p>Taking the expectation of</p>
+<p><span class="math display">\mathbb{P}_{x, t_1}\left[S_a(Q_{t_1,T_2}, x) \geq S_a(Q_{t_1}, x) - \kappa_2 \right]</span></p>
+<p>with respect to <span class="math inline">M_1(~\cdot \mid x)</span> yields</p>
+<div class="fragment">
+<p><span class="math display">\mathbb{P}_x\left[S_a(Q_{T_1,T_2}, x) \geq S_a(Q_{T_1}, x) - \kappa_2 \right] \geq 1 - \delta_2.</span></p>
+</div>
+</section>
+<section id="proof-of-composition-property-2" class="slide level2">
+<h2>Proof of composition property</h2>
+<p>Finally, consider the requisite probability</p>
+<p><span class="math inline">v = \mathbb{P}_x \left[S_a(Q_{T_1,T_2}, x) \geq S_a(Q, x) - \kappa_1 - \kappa_2 \right] \geq</span></p>
+<p><span class="math inline">\mathbb{P}_x\left[S_a(Q_{T_1,T_2}, x) \geq S_a(Q_{T_1}, x) - \kappa_2 \geq S_a(Q, x) - \kappa_1 - \kappa_2 \right]</span></p>
+<p><br></p>
+<div class="fragment">
+<p>Then by Boole–Fréchet inequalities</p>
+<p><span class="math inline">v \geq \mathbb{P}_x\left[S_a(Q_{T_1,T_2}, x) \geq S_a(Q_{T_1}, x) - \kappa_2 \right]</span> <span class="math inline">\qquad+  \mathbb{P}_x\left[S_a(Q_{T_1}, x) \geq S_a(Q, x) - \kappa_1 \right] - 1</span></p>
+</div>
+<div class="fragment">
+<p><span class="math inline">v \geq 1 - (\delta_1 + \delta_2).</span></p>
+</div>
+
+</section></section>
+
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

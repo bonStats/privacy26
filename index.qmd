@@ -1,0 +1,1235 @@
+---
+title: "Persuasive Privacy"
+subtitle: ""
+author: "Joshua J Bon"
+institute: "Adelaide University"
+bibliography: refs.bib
+format:
+  revealjs:
+    html-math-method: katex
+    theme: default
+    df-print: paged
+    incremental: true 
+    css: style.css
+    chalkboard: true
+editor: source
+---
+
+## My research
+
+```{dot}
+graph G {
+  layout=neato;
+  subgraph main {
+    node [fixedsize=true, width=0.7, height=0.4];
+    SBI -- SMC;
+    SMC -- Privacy;
+    Privacy -- SBI;
+  }
+  
+}
+```
+
+## My research
+
+:::: {.columns}
+
+::: {.column width="60%"}
+
+::: {.nonincremental}
+
+**Statistics**
+
+- Bayesian modelling[^1] [^2]
+- Efficient computation[^3] [^4] [^5]
+- Approximate models^3^ ^4^
+
+:::
+
+:::
+
+::: {.column width="40%"}
+
+```{dot}
+graph G {
+  layout=neato;
+  subgraph main {
+    node [fixedsize=true, width=0.7, height=0.4];
+    SBI -- SMC;
+  }
+  
+}
+```
+
+:::
+
+::::
+
+[^1]: @oflaherty2021teen _Demography_
+[^2]: @bon2019polling _JRSS A_
+[^3]: @bon2021dasmc _Stat & Comp_
+[^4]: @bon2025cal _JMLR_
+[^5]: @bon2025rbsmc _arXiv_
+
+## My research
+
+:::: {.columns}
+
+::: {.column width="60%"}
+
+::: {.nonincremental}
+
+**Privacy**
+
+- Federated & transfer learning[^6] [^7]
+- Private (Bayesian) computation[^8]
+- Approximate models[^9]
+
+:::
+
+:::
+
+::: {.column width="40%"}
+
+```{dot}
+graph G {
+  layout=neato;
+  subgraph main {
+    node [fixedsize=true, width=0.7, height=0.4];
+    Privacy -- SMC;
+    Privacy -- SBI;
+  }
+  
+}
+```
+
+:::
+
+::::
+
+[^6]: @hassan2024federated _arXiv_
+[^7]: @bretherton2026principled _Bayesian Analysis_
+[^8]: @bon2026priv _arXiv_
+[^9]: @bon2020acld _J Official Statistics_
+
+
+## Today's talk
+
+```{dot}
+graph G {
+  layout=neato;
+  subgraph main {
+    node [fixedsize=true, width=0.7, height=0.4];
+    SBI;
+    SMC;
+    Privacy [color="red"];
+    SBI -- SMC;
+    SMC -- Privacy;
+    Privacy -- SBI;
+  }
+  
+}
+```
+
+## Today's talk
+
+:::{.nonincremental}
+
+1. Differential privacy
+2. Privacy from the ground up
+3. Persuasive privacy
+4. Differential privacy redux
+5. Privacy without noise
+
+:::
+
+
+See: **Bon**, Bailie, Rousseau & Robert (2026) arXiv 2601.22945 
+
+_Under review at ICML 2026_
+
+
+# Differential privacy
+
+
+
+# Privacy from the ground up
+
+## Overview of statistical data privacy
+
+:::{.callout-tip}
+## Statistician
+
+:::{.fragment}
+Government agency release **small area statistics** on a disease.
+:::
+
+:::
+
+:::{.callout-warning}
+## Adversary
+
+:::{.fragment}
+Insurance company **raises premiums** based on inferred prevalence in a small town.
+:::
+
+:::
+
+:::{.callout-important}
+## Effect on data privacy 
+
+:::{.fragment}
+Statistic release $\longrightarrow$ adversarial decisions $\longrightarrow$ privacy effect
+:::
+
+:::
+
+# Anatomy of statistical data privacy
+
+## Privacy function
+
+We measure the privacy effect with a **privacy function**
+
+$$\rho:\mathcal{D} \times \mathsf{X} \rightarrow \mathbb{R}$$
+
+- Adversarial decision $\quad d_i \in \mathcal{D}$
+
+- Data value $\quad x \in \mathsf{X}$
+
+:::{.fragment}
+
+$\rho$ orders preferences of decisions for a given dataset
+:::
+
+
+- If $d_1$ is preferred to $d_2$ then $\rho(d_1,x) > \rho(d_2,x)$
+
+
+## Example 1: Privacy function
+
+For some fixed $\kappa>0$,
+
+$$\rho(d,x) = \begin{cases}
+  0, & \text{if } x \in d, \vert d \vert < \kappa\\
+  1, & \text{otherwise},
+\end{cases}$$
+
+
+:::{.nonincremental}
+
+- $x \in \mathsf{X} = \mathbb{R}$
+
+- $d \in \mathcal{D} = \{[a,b]:a,b\in \mathbb{R}, a\leq b\}$
+:::
+
+
+## Example 2: Privacy function
+
+<br>
+
+$$\rho(d,x) = -\log d(x)$$
+
+:::{.nonincremental}
+
+- $x \in \mathsf{X} = \mathbb{R}$
+
+- $d \in \mathcal{D} = \{\text{probability density functions on } \mathbb{R}\}$
+:::
+
+
+## The statistic
+ 
+A statistic $T \in \mathsf{T}$ is output from a mechanism $M$ given $x$
+
+$$T \sim M(~\cdot \mid x)$$
+
+- $M:\mathcal{T} \times \mathsf{X} \rightarrow [0,1]$ for $(\mathsf{T},\mathcal{T})$ measurable space
+
+## The statistic
+
+$M$ can be deterministic or randomised
+
+- Summary statistics $\quad\tau:\mathsf{X}\rightarrow\mathsf{T}$
+  - $M(~\cdot \mid x) = \delta_{\tau(x)}(\cdot)$ 
+
+- Noisy summary statistics
+  - $M(~\cdot \mid x) = \mathcal{N}(~\cdot \mid  \tau(x), \sigma^2)$
+  
+- Composition of multiple mechanisms
+
+## The statistic
+
+$M$ can be deterministic or randomised
+
+- Result of optimisation
+  - MLE: $\quad M(~\cdot \mid x) = \delta_{\tau(x)}(\cdot)$
+  - $\tau(x) = \arg\max_{\theta \in \Theta} \log L(x \mid \theta)$
+  
+- Monte Carlo output
+  - MCMC: $\quad M(\mathrm{d}t_{1:N} \mid x) = \prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)$
+
+- Noisy optimisation
+  - SGD: $\quad M(\mathrm{d}t_N \mid x) = \int_{\mathsf{T}_{-n}}\prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)$
+
+
+
+## The adversary
+
+:::{.callout-note}
+## Assumption 1: A Bayesian adversary
+The adversary makes Bayesian decisions
+:::
+
+1. Holds a prior distribution over the data $Q$
+2. Constructs a posterior distribution $Q_T$ from $(M,T)$
+3. Make Bayesian decisions
+   - loss function $\ell: \mathcal{D} \times \mathsf{X} \rightarrow \mathbb{R}$
+
+## Anatomy of statistical data privacy
+
+```{r dtp, engine = 'tikz',   fig.align = 'center', cache=TRUE}
+
+\begin{tikzpicture}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{fit}
+\usetikzlibrary{shapes}
+
+\tikzstyle{st} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{ad} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{pb} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{pbmech} = [diamond, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{bayes} = [diamond, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black]
+\tikzstyle{desc} = [rectangle, minimum width=2.5cm, rounded corners, minimum height=0.6cm,text centered, fill=gray!10]
+\tikzstyle{greybox} = [draw=gray, rounded corners, inner sep=0.5cm, thick]
+\tikzstyle{publicbox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{privatebox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=purple!30]
+
+% Statistician
+\node (sdata) [st] {$x$};
+\node (sdatad) [desc, left=0pt of sdata] {Data};
+\node (mech) [pbmech, below=0.5cm of sdata] {$M$};
+\node (mechd) [desc, left=0pt of mech] {Mechanism};
+\node (sstat) [pb, below=0.5cm of mech] {$T$};
+\node (sstatd) [desc, left=0pt of sstat] {Statistic};
+\node (spriv) [st, below=1cm of sstat] {$\rho(d,x)$};
+\node (sprivd) [desc, left=0pt of spriv] {Privacy};
+
+% Adversary
+\node (adata) [ad, right=3cm of sdata] {$Q$};
+\node (adatad) [desc, right=0pt of adata] {Data prior};
+\node (apost) [ad, right=3cm of sstat] {$Q_T$};
+\node (apostd) [desc, right=0pt of apost] {Data posterior};
+\node (aact) [ad, below=1cm of apost] {$d$};
+\node (aactd) [desc, right=0pt of aact] {Decision};
+\node (aloss) [ad, below=1cm of aact] {$\ell$};
+\node (alossd) [desc, right=0pt of aloss] {Loss};
+
+% info
+\node (public) [publicbox, below=1.5cm of sprivd, xshift=-1.5cm] {};
+\node (publicd) [desc, right=0pt of public] {Shared};
+\node (private) [privatebox, right=0.5cm of publicd] {};
+\node (privated) [desc, right=0pt of private] {Private};
+
+
+% Statistician
+\draw[thick, -] (sdata) -- (mech);
+\draw[thick, -Latex] (mech) -- (sstat);
+
+
+% Adversary
+\draw[thick, -Latex] (adata) -- (apost);
+\draw[thick, -Latex] (apost) -- (aact);
+\draw[thick, -Latex] (aloss) -- (aact);
+
+%Cross
+\draw[thick, -Latex] (mech) -- (apost);
+\draw[thick, -Latex] (sstat) -- (apost);
+\draw[thick, -Latex] (aact) -- (spriv);
+
+% boxes
+\node[greybox, fit=(sdata) (sdatad) (sstat) (sstatd) (spriv) (sprivd)] (statbox) {};
+\node[greybox, fit=(adata) (adatad) (apost) (apostd) (aact) (aactd) (aloss) (alossd)] (advbox) {};
+
+\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Statistician};
+\node[anchor=south east] at (advbox.north) {Adversary model};
+
+\end{tikzpicture}
+
+```
+
+## Adversary's optimal decision
+
+From Assumption 1:
+
+:::{.callout-note}
+## Adversary's optimal decision
+$$
+d^{P} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim P}[ \ell(d,z)]
+$$
+Prior to release $P = Q$, post-release $P = Q_T$.
+:::
+
+::: {.fragment}
+To measure privacy: **We need assumptions on $Q$ and $\ell$**
+:::
+
+## Unknown adversaries
+
+:::{.callout-note}
+## Assumption 2: Adversarial loss function
+The adversary has loss function $\ell(d,x) = \rho(d,x)$
+:::
+
+- Interpretation 1: Adversary targets privacy
+
+:::{.fragment}
+If $d^P_{\ell^\prime}$ is the adversary's optimal decision under $(P,\ell^\prime)$ then
+:::
+
+::: {.fragment}
+$$\mathbb{E}_{x \sim P}[ \rho(d^{P}_\rho,x)] \leq \mathbb{E}_{x \sim P}[ \rho(d^P_{\ell^\prime},x)]$$
+:::
+
+
+- Interpretation 2: data-averaged **worst-case** for statistician
+
+## Unknown adversaries
+
+:::{.callout-note}
+## Assumption 3: Adversarial prior class
+Let the data-prior $Q \in \mathcal{Q}_x$
+:::
+
+:::{.fragment}
+Defines class of posteriors and privacy can be measured: 
+:::
+
+:::{.fragment}
+:::{.callout-note}
+## Privacy outcome
+$$
+d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
+$$
+
+$$
+\inf_{Q \in \mathcal{Q}_x} \rho(d^{Q_T},x)
+$$
+:::
+:::
+
+## Anatomy of statistical data privacy
+
+```{r dtp1, engine = 'tikz',   fig.align = 'center', cache=TRUE}
+
+\begin{tikzpicture}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{fit}
+\usetikzlibrary{shapes}
+
+\tikzstyle{st} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{ad} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{pb} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{pbmech} = [diamond, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{bayes} = [diamond, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black]
+\tikzstyle{desc} = [rectangle, minimum width=2.5cm, rounded corners, minimum height=0.6cm,text centered, fill=gray!10]
+\tikzstyle{greybox} = [draw=gray, rounded corners, inner sep=0.5cm, thick]
+\tikzstyle{publicbox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{privatebox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=purple!30]
+
+% Statistician
+\node (sdata) [st] {$x$};
+\node (sdatad) [desc, left=0pt of sdata] {Data};
+\node (mech) [pbmech, below=0.5cm of sdata] {$M$};
+\node (mechd) [desc, left=0pt of mech] {Mechanism};
+\node (sstat) [pb, below=0.5cm of mech] {$T$};
+\node (sstatd) [desc, left=0pt of sstat] {Statistic};
+\node (spriv) [st, below=1cm of sstat] {$\rho(d,x)$};
+\node (sprivd) [desc, left=0pt of spriv] {Privacy};
+
+% Adversary
+\node (adata) [ad, right=3cm of sdata] {$Q$};
+\node (adatad) [desc, right=0pt of adata] {Data prior};
+\node (apost) [ad, right=3cm of sstat] {$Q_T$};
+\node (apostd) [desc, right=0pt of apost] {Data posterior};
+\node (aact) [ad, below=1cm of apost] {$d$};
+\node (aactd) [desc, right=0pt of aact] {Decision};
+\node (aloss) [ad, below=1cm of aact] {$\ell$};
+\node (alossd) [desc, right=0pt of aloss] {Loss};
+
+% info
+\node (public) [publicbox, below=1.25cm of sprivd, xshift=-1.5cm] {};
+\node (publicd) [desc, right=0pt of public] {Shared};
+\node (private) [privatebox, right=0.5cm of publicd] {};
+\node (privated) [desc, right=0pt of private] {Private};
+
+
+% Statistician
+\draw[thick, -] (sdata) -- (mech);
+\draw[thick, -Latex] (mech) -- (sstat);
+
+
+% Adversary
+\draw[thick, -Latex] (adata) -- (apost);
+\draw[thick, -Latex] (apost) -- (aact);
+\draw[thick, -Latex] (aloss) -- (aact);
+
+%Cross
+\draw[thick, -Latex] (mech) -- (apost);
+\draw[thick, -Latex] (sstat) -- (apost);
+\draw[thick, -Latex] (aact) -- (spriv);
+
+% boxes
+\node[greybox, fit=(sdata) (sdatad) (sstat) (sstatd) (spriv) (sprivd)] (statbox) {};
+\node[greybox, fit=(adata) (adatad) (apost) (apostd) (aact) (aactd) (aloss) (alossd)] (advbox) {};
+
+\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Statistician};
+\node[anchor=south east] at (advbox.north) {Adversary model};
+
+\end{tikzpicture}
+
+```
+
+## Anatomy of statistical data privacy
+
+```{r dtp2, engine = 'tikz',   fig.align = 'center', cache=TRUE}
+
+\begin{tikzpicture}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{fit}
+\usetikzlibrary{shapes}
+
+\tikzstyle{st} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{ad} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{pb} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{as} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=orange!30]
+\tikzstyle{im} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=blue!30]
+\tikzstyle{pbmech} = [diamond, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{bayes} = [diamond, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black]
+\tikzstyle{desc} = [rectangle, minimum width=2.5cm, rounded corners, minimum height=0.6cm,text centered, fill=gray!10]
+\tikzstyle{greybox} = [draw=gray, rounded corners, inner sep=0.5cm, thick]
+\tikzstyle{publicbox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{privatebox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{assbox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=orange!30]
+\tikzstyle{impbox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=blue!30]
+
+% Statistician
+\node (sdata) [st] {$x$};
+\node (sdatad) [desc, left=0pt of sdata] {Data};
+\node (mech) [pbmech, below=0.5cm of sdata] {$M$};
+\node (mechd) [desc, left=0pt of mech] {Mechanism};
+\node (sstat) [pb, below=0.5cm of mech] {$T$};
+\node (sstatd) [desc, left=0pt of sstat] {Statistic};
+\node (spriv) [st, below=1cm of sstat] {$\rho(d,x)$};
+\node (sprivd) [desc, left=0pt of spriv] {Privacy};
+
+% Adversary
+\node (adata) [as, right=3cm of sdata] {$Q\in\mathcal{Q}_x$};
+\node (adatad) [desc, right=0pt of adata] {Data prior};
+\node (apost) [im, right=3cm of sstat] {$Q_T$};
+\node (apostd) [desc, right=0pt of apost] {Data posterior};
+\node (aact) [im, below=1cm of apost] {$d$};
+\node (aactd) [desc, right=0pt of aact] {Decision};
+\node (aloss) [as, below=1cm of aact] {$\ell = \rho$};
+\node (alossd) [desc, right=0pt of aloss] {Loss};
+
+% info
+\node (public) [publicbox, below=1.25cm of sprivd, xshift=-1.5cm] {};
+\node (publicd) [desc, right=0pt of public] {Shared};
+\node (private) [privatebox, right=0.5cm of publicd] {};
+\node (privated) [desc, right=0pt of private] {Private};
+\node (ass) [assbox, below=0.25cm of public] {};
+\node (assd) [desc, right=0pt of ass] {Assumed};
+\node (imp) [impbox, right=0.5cm of assd] {};
+\node (impd) [desc, right=0pt of imp] {Implied};
+
+
+% Statistician
+\draw[thick, -] (sdata) -- (mech);
+\draw[thick, -Latex] (mech) -- (sstat);
+
+
+% Adversary
+\draw[thick, -Latex] (adata) -- (apost);
+\draw[thick, -Latex] (apost) -- (aact);
+\draw[thick, -Latex] (aloss) -- (aact);
+
+%Cross
+\draw[thick, -Latex] (mech) -- (apost);
+\draw[thick, -Latex] (sstat) -- (apost);
+\draw[thick, -Latex] (aact) -- (spriv);
+
+% boxes
+\node[greybox, fit=(sdata) (sdatad) (sstat) (sstatd) (spriv) (sprivd)] (statbox) {};
+\node[greybox, fit=(adata) (adatad) (apost) (apostd) (aact) (aactd) (aloss) (alossd)] (advbox) {};
+
+\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Statistician};
+\node[anchor=south east, xshift=2.35cm] at (advbox.north) {Adversary model + assumptions};
+
+\end{tikzpicture}
+
+```
+
+## Privacy guarantees and leakage
+
+Consider a set of "private" mechanisms $\mathcal{M}$.
+
+A privacy guarantee is the communication of $(M,\mathcal{M})$
+such that $M \in \mathcal{M}$. For example,
+
+$$M \in \mathcal{M}_{x} = \{M \in \mathcal{M}: M(~\cdot\mid x) \text{ is private}\}$$
+
+- A privacy guarantee needs to be transparent to be trusted
+- A guarantee only for $x$ reveals information about $x$
+    - Extra privacy loss: $x \in \{z\in \mathsf{X}: M \in \mathcal{M}_{z}\}  \subset \mathsf{X}$
+
+## Privacy guarantees and leakage
+
+:::{.callout-note}
+## Assumption 4: Protected set
+The statistician announces a protected set $\mathsf{E} \subset \mathsf{X}$ where the mechanism satisfies
+
+$$M \in \mathcal{M}_{\mathsf{E}} = \{M \in \mathcal{M}: M(~\cdot\mid x) \text{ is private } \forall x \in \mathsf{E}\}$$
+:::
+
+- Information about $x$ obscured by protecting all $x \in \mathsf{E}$
+- But the adversary learns $x \in \mathsf{E}$
+
+## Anatomy of statistical data privacy
+
+```{r dtp3, engine = 'tikz',   fig.align = 'center', cache=TRUE}
+
+\begin{tikzpicture}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{fit}
+\usetikzlibrary{shapes}
+
+\tikzstyle{st} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{ad} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{pb} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{as} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=orange!30]
+\tikzstyle{im} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=blue!30]
+\tikzstyle{pbmech} = [diamond, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{bayes} = [diamond, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black]
+\tikzstyle{desc} = [rectangle, minimum width=2.5cm, rounded corners, minimum height=0.6cm,text centered, fill=gray!10]
+\tikzstyle{greybox} = [draw=gray, rounded corners, inner sep=0.5cm, thick]
+\tikzstyle{publicbox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{privatebox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{assbox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=orange!30]
+\tikzstyle{impbox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=blue!30]
+
+% Statistician
+\node (sdata) [st] {$x$};
+\node (sdatad) [desc, left=0pt of sdata] {Data};
+\node (mech) [pbmech, below=0.5cm of sdata] {$M$};
+\node (mechd) [desc, left=0pt of mech] {Mechanism};
+\node (sstat) [pb, below=0.5cm of mech] {$T$};
+\node (sstatd) [desc, left=0pt of sstat] {Statistic};
+\node (spriv) [st, below=1cm of sstat] {$\rho(d,x)$};
+\node (sprivd) [desc, left=0pt of spriv] {Privacy};
+
+% Adversary
+\node (adata) [as, right=3cm of sdata] {$Q\in\mathcal{Q}_x$};
+\node (adatad) [desc, right=0pt of adata] {Data prior};
+\node (apost) [im, right=3cm of sstat] {$Q_T$};
+\node (apostd) [desc, right=0pt of apost] {Data posterior};
+\node (aact) [im, below=1cm of apost] {$d$};
+\node (aactd) [desc, right=0pt of aact] {Decision};
+\node (aloss) [as, below=1cm of aact] {$\ell = \rho$};
+\node (alossd) [desc, right=0pt of aloss] {Loss};
+
+% info
+\node (public) [publicbox, below=1.25cm of sprivd, xshift=-1.5cm] {};
+\node (publicd) [desc, right=0pt of public] {Shared};
+\node (private) [privatebox, right=0.5cm of publicd] {};
+\node (privated) [desc, right=0pt of private] {Private};
+\node (ass) [assbox, below=0.25cm of public] {};
+\node (assd) [desc, right=0pt of ass] {Assumed};
+\node (imp) [impbox, right=0.5cm of assd] {};
+\node (impd) [desc, right=0pt of imp] {Implied};
+
+
+% Statistician
+\draw[thick, -] (sdata) -- (mech);
+\draw[thick, -Latex] (mech) -- (sstat);
+
+
+% Adversary
+\draw[thick, -Latex] (adata) -- (apost);
+\draw[thick, -Latex] (apost) -- (aact);
+\draw[thick, -Latex] (aloss) -- (aact);
+
+%Cross
+\draw[thick, -Latex] (mech) -- (apost);
+\draw[thick, -Latex] (sstat) -- (apost);
+\draw[thick, -Latex] (aact) -- (spriv);
+
+% boxes
+\node[greybox, fit=(sdata) (sdatad) (sstat) (sstatd) (spriv) (sprivd)] (statbox) {};
+\node[greybox, fit=(adata) (adatad) (apost) (apostd) (aact) (aactd) (aloss) (alossd)] (advbox) {};
+
+\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Statistician};
+\node[anchor=south east, xshift=2.35cm] at (advbox.north) {Adversary model + assumptions};
+
+\end{tikzpicture}
+
+```
+
+
+## Anatomy of statistical data privacy
+
+```{r dtp5, engine = 'tikz',   fig.align = 'center', cache=TRUE}
+
+\begin{tikzpicture}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{fit}
+\usetikzlibrary{shapes}
+
+\tikzstyle{st} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{ad} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{pb} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{as} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=orange!30]
+\tikzstyle{im} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=blue!30]
+\tikzstyle{pbmech} = [diamond, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{bayes} = [diamond, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black]
+\tikzstyle{desc} = [rectangle, minimum width=2.5cm, rounded corners, minimum height=0.6cm,text centered, fill=gray!10]
+\tikzstyle{greybox} = [draw=gray, rounded corners, inner sep=0.5cm, thick]
+\tikzstyle{publicbox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{privatebox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{assbox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=orange!30]
+\tikzstyle{impbox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=blue!30]
+
+% Statistician
+\node (sdata) [st] {$x$};
+\node (sdatad) [desc, left=0pt of sdata] {Data};
+\node (mech) [pbmech, below=0.5cm of sdata] {$M$};
+\node (mechd) [desc, left=0pt of mech] {Mechanism};
+\node (sstat) [pb, below=0.5cm of mech] {$T$};
+\node (sstatd) [desc, left=0pt of sstat] {Statistic};
+
+\node (strans) [pb, below=0.5cm of sstat] {$x \in \mathsf{E}$};
+\node (stransd) [desc, left=0pt of strans] {Protected set};
+
+\node (spriv) [st, below=1.5cm of strans] {$\rho(d,x)$};
+\node (sprivd) [desc, left=0pt of spriv] {Privacy};
+
+% Adversary
+\node (adata) [as, right=3cm of sdata] {$Q\in\mathcal{Q}_x$};
+\node (adatad) [desc, right=0pt of adata] {Data prior};
+\node (apost) [im, right=3cm of sstat] {$Q_T$};
+\node (apostd) [desc, right=0pt of apost] {Data posterior};
+\node (aact) [im, below=1cm of apost] {$d$};
+\node (aactd) [desc, right=0pt of aact] {Decision};
+\node (aloss) [as, below=1cm of aact] {$\ell = \rho$};
+\node (alossd) [desc, right=0pt of aloss] {Loss};
+
+
+% Statistician
+\draw[thick, -] (sdata) -- (mech);
+\draw[thick, -Latex] (mech) -- (sstat);
+
+
+% Adversary
+\draw[thick, -Latex] (adata) -- (apost);
+\draw[thick, -Latex] (apost) -- (aact);
+\draw[thick, -Latex] (aloss) -- (aact);
+
+%Cross
+\draw[thick, -Latex] (mech) -- (apost);
+\draw[thick, -Latex] (sstat) -- (apost);
+\draw[thick, -Latex] (aact) -- (spriv);
+\draw[thick, -Latex] (strans) -- (apost);
+
+% boxes
+\node[greybox, fit=(sdata) (sdatad) (sstat) (sstatd) (spriv) (sprivd) (strans) (stransd)] (statbox) {};
+\node[greybox, fit=(adata) (adatad) (apost) (apostd) (aact) (aactd) (aloss) (alossd)] (advbox) {};
+
+\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Statistician};
+\node[anchor=south east, xshift=2.35cm] at (advbox.north) {Adversary model + assumptions};
+
+\end{tikzpicture}
+
+```
+
+# Measuring privacy
+
+## Measuring privacy
+
+:::{.callout-note}
+## Privacy outcome
+$$
+\inf_{Q \in \mathcal{Q}_x} \rho(d^{Q_T},x),\quad d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
+$$
+:::
+
+- Let $S: \mathcal{P} \times \mathsf{X} \rightarrow \mathbb{R}$ such that $S(Q_T,x) = \rho(d^{Q_T},x)$
+- $S$ is a (negatively-orientated) proper scoring rule^[@grunwald2004game]
+  - A "privacy score"
+
+## Measuring privacy
+
+
+:::{.callout-note}
+## Privacy outcome
+
+$$
+\inf_{Q \in \mathcal{Q}_x} S(Q_T,x)
+$$
+:::
+
+- Use known proper scoring rules to measure privacy outcome
+- Create new proper scoring rules from $\rho$
+- For example when $d$ is a PDF/PMF:
+
+:::{.fragment}
+$\rho(d,x) = -\log d(x)$ then $S(Q_T,x)=-\log q_T(x)$. 
+:::
+
+:::{.fragment}
+Without loss of generality, we focus on proper scoring rules. 
+:::
+
+## Detour: Proper scoring rules
+
+Proper scoring rules^[@gneiting2007strictly] provide a convenient (and rich) class of functions to assess privacy!
+
+- Consider space of probability distributions $\mathscr{P}$ on $(\mathsf{X},\mathcal{X})$.
+
+- A scoring rule is a function $S:\mathscr{P} \times \mathsf{X} \rightarrow \mathbb{R}$ 
+
+- Expected score $S(P,Q)$
+  - If $P,Q \in \mathscr{P}$ define $S(P,Q) = \mathbb{E}_{z\sim Q} S(P,z)$
+
+## Detour: Proper scoring rules
+
+:::{.callout-note}
+## Definition 1: Proper scoring rules^[Negatively-orientated]
+
+A scoring rule $S$ is proper with respect to $\mathscr{P}$ if for all $P,Q \in \mathscr{P}$
+
+$$S(P,P) \leq S(P,Q).$$
+
+In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
+
+:::
+
+## Scoring rules and privacy
+
+**Forecasting**
+
+- $S(P,x)$ compares a forecast $P$ to a ground truth $x$
+
+- Propriety encourages truthful reporting of the forecast
+
+**Privacy**
+
+- $S(Q,x)$ compares uncertain adversarial knowledge of the data $Q$ to the true data $x$
+
+- Propriety ensures coherent assessment of the privacy
+
+## Measuring privacy
+
+:::{.callout-note}
+## Privacy outcome
+
+$$
+\inf_{Q \in \mathcal{Q}_x} S(Q_T,x)
+$$
+:::
+
+- This is an absolute measure of privacy
+- We will look at a relative measure of privacy
+
+## Measuring privacy
+
+:::{.callout-note}
+## Relative privacy outcome
+
+$$
+\inf_{Q \in \mathcal{Q}_x} \left[ S(Q_T,x) - S(Q,x) \right]
+$$
+:::
+
+- Considers adversary's information gain
+- Statistician's relative privacy change (worst-case)
+
+## Measuring privacy
+
+
+:::{.callout-note}
+## Relative privacy outcome
+
+$$
+\inf_{Q \in \mathcal{Q}_x} \left[ S(Q_T,x) - S(Q,x) \right]
+$$
+:::
+
+But...
+
+- $Q_T$ may be random since $T\sim M(~\cdot\mid x)$
+- We need to protect all $x \in \mathsf{E}$
+
+# Defining privacy
+
+## A privacy definition
+
+- Let $\mathcal{Q}_x \subset \mathscr{P}(\mathsf{X},\mathcal{X})$ and $\mathsf{E} \subset \mathsf{X}$ be the protected set, 
+
+- $M^\mathsf{E}: \mathcal{T}\times \mathsf{E} \rightarrow \mathbb{R}_+$ be a mechanism,
+
+- $S$ be a privacy score, constants $\kappa \geq 0$, $0\leq\delta \ll 1$.
+
+:::{.fragment}
+:::{.callout-note}
+## Definition 2: Scoring rule privacy I
+
+We say $M^\mathsf{E}$ is $(\mathcal{Q}_x, S, \kappa, \delta)$-SRP if
+
+$$\inf_{x\in\mathsf{E}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q_{T}, x) \geq S(Q, x) - \kappa \right] \geq 1 - \delta,$$
+
+where the probability  $\mathbb{P}_x$ is w.r.t. $T \sim M^\mathsf{E}(~\cdot\mid x)$.
+
+:::
+:::
+
+## A privacy definition
+
+:::{.callout-note}
+## Definition 2: Scoring rule privacy I
+
+We say $M^\mathsf{E}$ is $(\mathcal{Q}_x, S, \kappa, \delta)$-SRP if
+
+$$\inf_{x\in\mathsf{E}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q_{T}, x) \geq S(Q, x) - \kappa \right] \geq 1 - \delta,$$
+
+where the probability  $\mathbb{P}_x$ is w.r.t. $T \sim M^\mathsf{E}(~\cdot\mid x)$.
+
+:::
+
+- $S(Q, x) - \kappa\quad$ is the minimum required privacy score
+- $\delta\quad$ is maximum probability of privacy leakage
+
+## Scoring rule privacy: Example 1
+
+Consider priors with probability on true $x$ and alternative $x^\prime$ 
+
+:::{.fragment}
+Let $H$ be the Hamming distance. For some fixed $x \in \mathsf{E} = \mathsf{X}$, 
+
+$$\mathcal{Q}_x = \bigcup_{\substack{x^{\prime} \in \mathsf{X}\\ H(x,x^{\prime}) = 1}} \left\{Q \in \mathscr{P}(\mathsf{X}): Q(\{x\}) + Q(\{x^\prime\})=1\right\}$$
+:::
+:::{.fragment}
+Further, for $p \in (0,1)$, consider the restriction
+
+$$\mathcal{Q}_x^p = \{Q\in\mathcal{Q}_x:Q(\{x\}) \geq p\}$$
+:::
+
+## Scoring rule privacy: Example 1
+
+**Scoring rule**
+
+Let $p = \frac{\mathrm{d}P}{\mathrm{d}\mu}$ be the Radon–Nikodym derivative of $P$ w.r.t. some base measure $\mu$, take
+
+$$S(P,x) = -\log p(x)$$
+
+
+:::{.fragment}
+**Mechanism**
+
+Consider random algorithm $M$ with $m = \frac{\mathrm{d}M}{\mathrm{d}\mu^\prime}$
+
+:::
+
+## Scoring rule privacy: Example 1
+
+It is straightforward to show
+
+$$\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x^p}\mathbb{P}_x\left[S(Q_{T}, x) \geq S(Q, x) - \kappa \right] \geq 1 - \delta,$$
+
+is equivalent to
+
+:::{.fragment}
+$$\inf_{\substack{x,x^{\prime}\in\mathsf{X}\\H(x,x^{\prime}) = 1}}\mathbb{P}_x\left[m(T \mid x) \geq e^\epsilon m(T \mid x^{\prime})\right] \leq \delta$$
+
+with $\epsilon = \log (1-p) - \log(e^{-\kappa} - p)$
+
+:::
+
+## Interpretation: Example 1
+
+$$\inf_{\substack{x,x^{\prime}\in\mathsf{X}\\H(x,x^{\prime}) = 1}}\mathbb{P}_x\left[m(T \mid x) \geq e^\epsilon m(T \mid x^{\prime})\right] \leq \delta$$
+
+- This is Probabilistic Differential Privacy (PrDP)^[@guingona2023comparing]
+- Scoring rule privacy contains PrDP as a special case
+- PrDP $\Rightarrow$ Approximate Differential Privacy (ADP)^[@dwork2006approxdp]
+
+## Interpretation: Example 1
+
+- PrDP and ADP are relative notions of privacy
+- Can be derived by considering adversarial decisions
+- PrDP and ADP assume a minimum strength of the adversary
+  - $\mathcal{Q}_x^p = \{Q\in\mathcal{Q}_x:Q(\{x\}) \geq p\}$
+- ADP has post-processing invariance property, PrDP **does not**
+- From our theory: post-processing by the 
+    - adversary **will not** change their posterior distribution
+    - statistician **will** change the privacy guarantee
+
+## Scoring rule privacy
+
+- Let $S_I = \{S_i\}_{i \in I}$ be a set of privacy scores
+
+:::{.fragment}
+:::{.callout-note}
+## Definition 3: Scoring rule privacy II
+
+We say $M^\mathsf{E}$ is $(\mathcal{Q}_x, S_I, \kappa, \delta)$-SRP if
+
+$$\inf_{i \in I}\inf_{x\in\mathsf{E}}\inf_{Q\in\mathcal{Q}_x}
+\mathbb{P}_x\left[S_i(Q_{T}, x) \geq S_i(Q, x) - \kappa \right] \geq 1 - \delta,$$
+
+where the probability  $\mathbb{P}_x$ is w.r.t. $T \sim M^\mathsf{E}(~\cdot\mid x)$.
+
+:::
+:::
+
+- SRP has composition property if the class of priors is closed under $M$-updating (i.e. conjugate).
+
+## Scoring rule privacy: Example 2
+
+- DP can't be defined for deterministic mechanisms
+- SRP are flexible enough to handle this
+- We will consider the mean of the data $\bar x$
+
+:::{.fragment}
+$$M(~\cdot\mid x) = \delta_{\bar x}(\cdot)$$
+
+:::
+
+:::{.fragment}
+$$\mathcal{Q}_x = \{\mathcal{N}(\mu, \Sigma): \mu \in \mathbb{R}^n, \Sigma \in \text{PD}(\mathbb{R}^n)\}$$
+
+:::
+
+
+
+## Scoring rule privacy: Example 2
+
+- Prior $Q \in \mathcal{Q}_x$ with $\mu,\Sigma$
+    - such that $[\Sigma]_{ij} = \sigma_i\sigma_j\rho_{ij}$ 
+- Data posterior after observing $\bar x$ is multivariate normal but degenerate
+- Support only on subspace $\{z\in \mathbb{R}^n: \bar z = \bar x\}$
+
+## Scoring rule privacy: Example 2
+
+The $i$th marginal data-posterior distribution is 
+${Q_{\bar{x},i} =  \mathcal{N}(\tilde{\mu}_i, \tilde{\sigma}_i^2)}$ with
+
+$$\tilde{\mu}_i = \mu_i + \sigma_i\frac{\nu_i}{\nu}(\bar{x} - \bar{\mu} ), \qquad \tilde{\sigma}_i^2 = \sigma_i^2\left[1 - \frac{\nu_i^2}{\nu}\right]$$
+
+- $\nu_i = \frac{1}{n}\sum_{j=1}^n \rho_{ij}\sigma_j$
+- $\nu = \frac{1}{n^2}\sum_{j=1}^n\sum_{k=1}^n \rho_{jk}\sigma_j\sigma_k$
+
+## Scoring rule privacy: Example 2
+
+One choice: entropy scoring rule
+
+$$S(P,x) = \log \sigma_P^2 + \frac{(x-\mu_P)^2}{\sigma_P^2}$$
+
+then we can show
+
+:::{.fragment}
+$$S(Q_{\bar{x},i},x) - S(Q_i,x) \geq \log\frac{\lambda_n}{\lambda_1}\left(1- \frac{\sigma_i^2}{\Vert\sigma \Vert_2^2} \right)  - \frac{(\bar{x} - \bar{\mu})^2}{\lambda_1 \Vert \sigma \Vert_2^2}$$
+:::
+
+## Scoring rule privacy: Example 2
+
+Therefore we can use the privacy loss
+
+:::{.fragment}
+$$\kappa_i(\bar{x}, \mu, \Sigma) = \frac{(\bar{x} - \bar{\mu})^2}{\lambda_1 \Vert \sigma \Vert_2^2} - \log\frac{\lambda_n}{\lambda_1}\left(1- \frac{\sigma_i^2}{\Vert\sigma \Vert_2^2} \right)$$
+
+with probability of leakage $\delta = 0$
+:::
+
+
+## Sketch of extenstion to MCMC 
+
+If $T \sim M(\cdot\mid \bar{x})$ then $Q_T = \mathbb{E}(Q_{\bar{z}} \mid T)$ for $\bar{z} \sim \bar{Q}(\cdot\mid T)$ where 
+
+- $T = (\theta_1,\theta_2, \ldots, \theta_N)$ is a chain of MCMC samples
+- $\bar{Q}$ the implied data-prior on the average
+- $\bar{Q}(\cdot\mid T)$ is the posterior update
+
+:::{.fragment}
+Recall that for all $\bar{x} \in \mathbb{R}$, 
+$S(Q_{\bar{x},i},x) - S(Q_{i},x) \geq - \kappa$ 
+:::
+
+- Use MVT and/or properties of $S(\cdot,x)$ to bound $S(Q_{T,i},x) = S(\mathbb{E}_{T}(Q_{\bar{z},i}),x)$ with above
+
+## Comparison with Differential Privacy
+
+For privacy analysis of iterative algorithms **with DP** it is common place to:
+
+1. Prove DP for one step
+2. Use composition rules to scale 1 step to $n$ steps
+    - As $n \rightarrow \infty$ no privacy guarantee
+
+:::{.fragment}
+
+In **our approach** to privacy it is possible to:
+
+1. Prove privacy for the limiting case (deterministic!)
+2. Decompose limiting case to prove privacy for some finite $n$
+
+:::
+
+
+## Ongoing work
+
+- More examples
+  - Other (vector) summary statistics
+  - Nonparametric prior families 
+
+- Formalise iterative schemes $n \rightarrow \infty$
+  - MCMC
+  - SGD
+  
+- Privacy-utility trade off
+
+:::{.fragment}
+Thank you!
+:::
+
+## References
+
+::: {#refs}
+:::
+
+# Appendix
+
+# Differential Privacy
+
+
+## (Approximate) differential privacy
+
+- Let $H(x,x')$ be the Hamming distance between $x$ and $x'$
+- Constants $\epsilon \geq 0$ and $\delta \geq 0$
+
+:::{.fragment}
+:::{.callout-note}
+## Definition A1: Approximate differential privacy
+
+We say $M$ is $(\epsilon,\delta)$-ADP if
+
+$$M(A\mid x) \leq e^\epsilon M(A\mid x') + \delta$$
+
+for all $A \in \mathcal{T}$ and $\forall x,x' \in \mathsf{X}$ such that $H(x,x') \leq 1$.
+:::
+:::
+
+ - Typically referred to as DP
+ 
+# Composition property
+
+## Composition property of SRP
+
+:::{.callout-note}
+## Definition 4: Closed under $M$-updating
+
+Let $T \sim M(~\cdot\mid x)$ for fixed $x \in \mathsf{X}$. 
+
+A family of distributions $\mathcal{Q}_x$ is closed under $M$-updating if for every $Q \in \mathcal{Q}_x$ the posterior distribution conditional on $T$, $Q_T \in \mathcal{Q}_x$ for all $T \in \mathsf{T}$.
+
+:::
+
+
+## Composition property of SRP
+
+:::{.fragment}
+$M_1^\mathsf{E}:\mathcal{T}_1 \times \mathsf{E} \rightarrow [0,1],$ 
+:::
+
+- e.g. $M_1^\mathsf{E}(t_1 \mid x) = K(t_1 \mid x)$ where $x \in \mathsf{E}$
+
+:::{.fragment}
+$M_2^\mathsf{E}:\mathcal{T}_2 \times (\mathsf{T}_1 \times \mathsf{E}) \rightarrow [0,1]$
+:::
+
+- e.g. $M_2^\mathsf{E}(t_2 \mid t_1, x) = K(t_2 \mid t_1, x)$ where $x \in \mathsf{E}$
+
+
+## Composition property of SRP
+
+:::{.callout-note}
+## Theorem 1: Composition of SRP
+
+If $M_1^\mathsf{E}$ and $M_2^\mathsf{E}$ are $(\mathcal{Q}_x, S_I, \kappa_1, \delta_1)$-SRP and $(\mathcal{Q}_x,S_I, \kappa_2, \delta_2)$-SRP for all $t_1 \in \mathsf{T}_1$ respectively and $\mathcal{Q}_x$ is closed under $M_1^\mathsf{E}$-updating for all $x \in \mathsf{E}$ then $M_{1}^\mathsf{E} \otimes M_2^\mathsf{E}$ is $(\mathcal{Q}_x, S_I, \kappa_1 + \kappa_2, \delta_1 + \delta_2)$-SRP.
+
+:::
+
+
+[Proof of Theorem @thm-comp-proof]
+
+- Useful for iterative algorithms: e.g. MCMC, Federated SGD
+
+## Proof of composition property
+
+:::{#thm-comp-proof}
+## Composition property
+
+:::{.fragment}
+If $\mathcal{Q}_x$ is closed under $M_1$-updating then $Q_{T_1} \in \mathcal{Q}_x$ for all $T_1 \in \mathsf{T}_1$ and priors $Q \in \mathcal{Q}_x$.
+:::
+
+:::{.fragment}
+And if $M_2^\mathsf{E}$ is $(\mathcal{Q}_x, S_I, \kappa_2, \delta_2)$-SRP for all $t_1 \in \mathsf{T}_1$ then
+:::
+
+:::{.fragment}
+$$\mathbb{P}_{x, t_1}\left[S_a(Q_{t_1,T_2}, x) \geq S_a(Q_{t_1}, x) - \kappa_2 \right] \geq 1 - \delta_2.$$
+for all $x\in \mathsf{E}, a\in I, Q\in\mathcal{Q}_x$.
+:::
+:::
+
+## Proof of composition property
+
+Taking the expectation of 
+
+$$\mathbb{P}_{x, t_1}\left[S_a(Q_{t_1,T_2}, x) \geq S_a(Q_{t_1}, x) - \kappa_2 \right]$$ 
+
+with respect to $M_1(~\cdot \mid x)$ yields
+
+:::{.fragment}
+$$\mathbb{P}_x\left[S_a(Q_{T_1,T_2}, x) \geq S_a(Q_{T_1}, x) - \kappa_2 \right] \geq 1 - \delta_2.$$
+:::
+
+
+## Proof of composition property
+
+Finally, consider the requisite probability
+
+$v = \mathbb{P}_x \left[S_a(Q_{T_1,T_2}, x) \geq S_a(Q, x) - \kappa_1 - \kappa_2 \right] \geq$
+
+$\mathbb{P}_x\left[S_a(Q_{T_1,T_2}, x) \geq S_a(Q_{T_1}, x) - \kappa_2 \geq S_a(Q, x) - \kappa_1 - \kappa_2 \right]$
+
+<br>
+
+:::{.fragment}
+
+Then by Boole–Fréchet inequalities
+
+$v \geq \mathbb{P}_x\left[S_a(Q_{T_1,T_2}, x) \geq S_a(Q_{T_1}, x) - \kappa_2 \right]$
+$\qquad+  \mathbb{P}_x\left[S_a(Q_{T_1}, x) \geq S_a(Q, x) - \kappa_1 \right] - 1$
+:::
+
+:::{.fragment}
+$v \geq 1 - (\delta_1 + \delta_2).$
+:::
+
+
+
+

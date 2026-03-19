@@ -1,0 +1,26 @@
+.center h2 {
+  text-align: center;
+}
+
+#vcenter {
+  vertical-align: middle;
+}
+
+.v-center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90%;
+}
+
+.graytext {
+  color: grey; /* Change this to your desired color */
+}
+
+.center {
+  text-align: center;
+}
+
+.cell-output-display > div:not(.quarto-figure) figure svg {
+  max-width: 100% !important;
+}
