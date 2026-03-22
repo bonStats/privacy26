@@ -362,25 +362,21 @@ All related to Lipschitz interpretation
 - Game theory 
   - Controls expected utility [@zhang2021more]
 
-## Pure DP Semantics
+## Limitations of DP
 
-::: {.nonincremental}
-- Hypothesis testing
-- Bayesian evidence
-- Game theory
-:::
+- DP Semantics are post-hoc explanations
+- Deterministic mechanisms are not covered by DP
+  - What about the mean of a large dataset?
 
 ::: {.fragment}
-DP Semantics are... 
+
+Our approach is a **semantics-first** understanding of data privacy, where
+
 :::
 
-::: {.fragment}
-**... post-hoc explanations of DP**
-:::
-
-::: {.fragment}
-and motivated to find privacy definitions that are relevant for deterministic mechanisms. 
-:::
+- Assumptions can be tested against real-world
+- Privacy definitions are easy to interpret, communicate and tailor, _because_
+- Our framework is constructed from an agent-based game
 
 # Privacy from the ground up
 
@@ -547,7 +543,7 @@ Receiver makes Bayesian decisions
 3. Has loss function $\ell: \mathcal{D} \times \mathsf{X} \rightarrow \mathbb{R}$
 
 :::{.fragment}
-$\mathfrak{C}$ _may effect Receiver's data posterior. Here assumed not to._
+$\mathfrak{C}$ _may affect Receiver's data posterior. Here assumed not to._
 :::
 
 ## Anatomy of statistical data privacy
