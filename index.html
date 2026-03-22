@@ -338,6 +338,58 @@ Joshua J Bon
 </div>
 </div></div>
 <aside><ol class="aside-footnotes"><li id="fn6"><p><span class="citation" data-cites="hassan2024federated">Hassan et al. (<a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span> <em>arXiv</em></p></li><li id="fn7"><p><span class="citation" data-cites="bretherton2026principled">Bretherton et al. (<a href="#/references" role="doc-biblioref" onclick="">2026</a>)</span> <em>Bayesian Analysis</em></p></li><li id="fn8"><p><span class="citation" data-cites="bon2026priv">Bon, Rousseau, and Robert (<a href="#/references" role="doc-biblioref" onclick="">2026</a>)</span> <em>arXiv</em></p></li><li id="fn9"><p><span class="citation" data-cites="bon2020acld">Bon et al. (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span> <em>J Official Statistics</em></p></li></ol></aside></section>
+<section id="my-research-3" class="slide level2">
+<h2>My research</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="960" height="480" viewbox="0.00 0.00 130.21 99.41" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 95.41)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-95.41 126.21,-95.41 126.21,4 -4,4"></polygon>
+<!-- SBI -->
+<g id="node1" class="node">
+<title>SBI</title>
+<ellipse fill="none" stroke="black" cx="25" cy="-76.43" rx="25" ry="14.5"></ellipse>
+<text text-anchor="middle" x="25" y="-72.23" font-family="Times,serif" font-size="14.00">SBI</text>
+</g>
+<!-- SMC -->
+<g id="node2" class="node">
+<title>SMC</title>
+<ellipse fill="none" stroke="black" cx="97.21" cy="-76.91" rx="25" ry="14.5"></ellipse>
+<text text-anchor="middle" x="97.21" y="-72.71" font-family="Times,serif" font-size="14.00">SMC</text>
+</g>
+<!-- SBI&#45;&#45;SMC -->
+<g id="edge1" class="edge">
+<title>SBI--SMC</title>
+<path fill="none" stroke="black" d="M50.25,-76.6C57.25,-76.65 64.84,-76.7 71.84,-76.74"></path>
+</g>
+<!-- Privacy -->
+<g id="node3" class="node">
+<title>Privacy</title>
+<ellipse fill="none" stroke="black" cx="61.59" cy="-14.5" rx="25" ry="14.5"></ellipse>
+<text text-anchor="middle" x="61.59" y="-10.3" font-family="Times,serif" font-size="14.00">Privacy</text>
+</g>
+<!-- SMC&#45;&#45;Privacy -->
+<g id="edge2" class="edge">
+<title>SMC--Privacy</title>
+<path fill="none" stroke="black" d="M89.3,-63.06C83.4,-52.72 75.37,-38.64 69.47,-28.31"></path>
+</g>
+<!-- Privacy&#45;&#45;SBI -->
+<g id="edge3" class="edge">
+<title>Privacy--SBI</title>
+<path fill="none" stroke="black" d="M53.47,-28.25C47.49,-38.37 39.39,-52.09 33.35,-62.3"></path>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
 <section id="todays-talk" class="slide level2">
 <h2>Today’s talk</h2>
 <div class="cell" data-layout-align="default">
@@ -412,37 +464,41 @@ Joshua J Bon
 <p><span class="math display">\text{Dataset}~x \overset{\text{release}}{\longrightarrow} \text{statistic}~T</span></p>
 <ul>
 <li class="fragment"><span class="math inline">T \sim M(x,\cdot)</span>, with some mechanism <span class="math inline">M</span></li>
+<li class="fragment"><span class="math inline">T = \frac{1}{n}\sum_{i=1}^{n} x_i + Z</span> with <span class="math inline">Z \sim \mathcal{N}(0,\sigma^2)</span></li>
 </ul>
 <div class="fragment">
-<p>For example, let <span class="math inline">T = \frac{1}{n}\sum_{i=1}^{n} x_i + Z</span> with <span class="math inline">Z \sim \mathcal{N}(0,\sigma^2)</span></p>
-</div>
-<div class="fragment">
-<p><span class="math display">M(x,\cdot) = \mathcal{N}(\overline{x}_n,\sigma^2)</span></p>
+<p><span class="math display">M(x,\cdot) = \mathcal{N}(\overline{x},\sigma^2)</span></p>
 </div>
 </section>
 <section id="dp-intuition" class="slide level2">
 <h2>DP Intuition</h2>
-<p>Information about data <span class="math inline">x</span> leaked through statistic <span class="math inline">T</span> is controlled by how sensitive the mechanism <span class="math inline">M(x,\cdot)</span> is to <span class="math inline">x</span>.</p>
+<ul>
+<li class="fragment">To limit information leaked about data <span class="math inline">x</span> by statistic <span class="math inline">T</span>,</li>
+<li class="fragment">Control the sensitivity of the mechanism <span class="math inline">M(x,\cdot)</span> w.r.t. <span class="math inline">x</span>.</li>
+</ul>
 <div class="fragment">
-<p>Measuring sensitivity? I can take the derivative of <span class="math inline">M(x,\cdot)</span> w.r.t. <span class="math inline">x</span>!</p>
-</div>
-<div class="fragment">
-<p>No!</p>
+<p>PLOTS HERE</p>
 </div>
 </section>
 <section id="dp-definition" class="slide level2">
 <h2>DP Definition</h2>
-<p>Borrow from Lipschitz continuity: <span class="math inline">M</span> is <span class="math inline">(\epsilon)</span>-DP if</p>
-<p><span class="math display">d_\text{P}[M(x,\cdot),M(x^\prime,\cdot)] \leq \exp(\epsilon) d_\text{X}[x,x^\prime]</span> for all <span class="math inline">(x,x^\prime) \in S</span> where <span class="math inline">S</span> is a set of (data) neighbours.</p>
-</section>
-<section id="laplace-mechanism" class="slide level2">
-<h2>Laplace mechanism</h2>
-<p>A fundamental mechanism for DP adds Laplace noise to a deterministic function of the data to ensure privacy.</p>
+<p>Borrow from Lipschitz continuity <span class="citation" data-cites="bailie2024general">(<a href="#/references" role="doc-biblioref" onclick="">Bailie and Gong 2024</a>)</span>.</p>
+<div class="fragment">
+<p><span class="math display">d_\text{P}[M(x,\cdot),M(x^\prime,\cdot)] \leq \exp(\epsilon) d_\text{X}[x,x^\prime]</span></p>
+</div>
+<div class="fragment">
+<p>for all <span class="math inline">x,x^\prime \in \mathcal{D}</span> some data domain.</p>
+</div>
 </section>
 <section id="dp-definition-1" class="slide level2">
 <h2>DP Definition</h2>
-<p>Borrow from Lipschitz continuity: <span class="math inline">M</span> is <span class="math inline">(\epsilon,\delta)</span>-DP if</p>
-<p><span class="math display">d_\text{P}[M(x,\cdot),M(x^\prime,\cdot)] \leq \exp(\epsilon) d_\text{X}[x,x^\prime] + \delta</span> for all <span class="math inline">(x,x^\prime) \in S</span> where <span class="math inline">S</span> is a set of (data) neighbours.</p>
+<p><span class="math inline">M</span> is <span class="math inline">\epsilon</span>-DP if</p>
+<div class="fragment">
+<p><span class="math display">\sup_{S\in\mathcal{S}}\left\vert\ln\frac{M(x,S)}{M(x^\prime,S)}\right\vert \leq \exp(\epsilon)</span></p>
+</div>
+<div class="fragment">
+<p>for all <span class="math inline">x,x^\prime \in \mathcal{D}</span>, differing by at most one element.</p>
+</div>
 </section>
 <section id="some-dp-properties" class="slide level2">
 <h2>Some DP Properties</h2>
@@ -462,7 +518,7 @@ Joshua J Bon
 </section>
 <section id="some-dp-properties-1" class="slide level2">
 <h2>Some DP Properties</h2>
-<p>Focusing on <span class="math inline">\epsilon</span>-DP.</p>
+<p>Focusing on <span class="math inline">\epsilon</span>-DP. Examples:</p>
 <ol type="1">
 <li><strong>Composition</strong>:</li>
 </ol>
@@ -475,29 +531,31 @@ Joshua J Bon
 <section id="dp-semantics" class="slide level2">
 <h2>DP Semantics</h2>
 <ul>
-<li class="fragment">Hypothesis testing: Type I &amp; II error controlled by <span class="math inline">(\epsilon, \delta)</span>
+<li class="fragment">Hypothesis testing
 <ul>
-<li class="fragment"><span class="citation" data-cites="wasserman2010statistical hall2013differential">(<a href="#/references" role="doc-biblioref" onclick="">Wasserman and Zhou 2010</a>; <a href="#/references" role="doc-biblioref" onclick="">Hall, Rinaldo, and Wasserman 2013</a>)</span></li>
+<li class="fragment">Type I &amp; II error controlled by <span class="math inline">\epsilon</span> <span class="citation" data-cites="wasserman2010statistical">(<a href="#/references" role="doc-biblioref" onclick="">Wasserman and Zhou 2010</a>)</span></li>
 </ul></li>
 <li class="fragment">Bayesian evidence
 <ul>
-<li class="fragment">Prior-to-posterior ratio controlled
-<ul>
-<li class="fragment"><span class="citation" data-cites="dwork2006calibrating">(<a href="#/references" role="doc-biblioref" onclick="">Dwork, McSherry, et al. 2006</a>)</span></li>
-</ul></li>
-<li class="fragment">Posterior-to-posterior ratio controlled
-<ul>
-<li class="fragment"><span class="citation" data-cites="kasiviswanathan2014semantics">(<a href="#/references" role="doc-biblioref" onclick="">Kasiviswanathan and Smith 2014</a>)</span></li>
-</ul></li>
+<li class="fragment">Prior-to-posterior ratio controlled <span class="citation" data-cites="dwork2006calibrating">(<a href="#/references" role="doc-biblioref" onclick="">Dwork, McSherry, et al. 2006</a>)</span></li>
+<li class="fragment">Posterior-to-posterior ratio controlled <span class="citation" data-cites="kasiviswanathan2014semantics">(<a href="#/references" role="doc-biblioref" onclick="">Kasiviswanathan and Smith 2014</a>)</span></li>
 </ul></li>
 <li class="fragment">Game theory
 <ul>
-<li class="fragment">Controls expected utility
-<ul>
-<li class="fragment"><span class="citation" data-cites="zhang2021more">(<a href="#/references" role="doc-biblioref" onclick="">Zhang et al. 2021</a>)</span></li>
-</ul></li>
+<li class="fragment">Controls expected utility <span class="citation" data-cites="zhang2021more">(<a href="#/references" role="doc-biblioref" onclick="">Zhang et al. 2021</a>)</span></li>
 </ul></li>
 </ul>
+</section>
+<section id="dp-semantics-1" class="slide level2">
+<h2>DP Semantics</h2>
+<ul>
+<li>Hypothesis testing</li>
+<li>Bayesian evidence</li>
+<li>Game theory</li>
+</ul>
+<div class="fragment">
+<p>DP Semantics are…</p>
+</div>
 <div class="fragment">
 <p><strong>… post-hoc explanations of DP</strong></p>
 </div>
@@ -655,6 +713,10 @@ Joshua J Bon
 <h2>Transperancy</h2>
 <p><strong>Privacy class</strong>: A set of mechanisms that satisfy a given privacy definition.</p>
 <div class="fragment">
+<p>If <span class="math inline">\mathfrak{C}</span> is the privacy class generated by “<span class="math inline">\text{PD}</span>” then</p>
+<p><span class="math display">M \in \mathfrak{C} \Longleftrightarrow M~\text{satisfies}~\text{PD}</span></p>
+</div>
+<div class="fragment">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -688,11 +750,11 @@ Joshua J Bon
 <ol type="1">
 <li class="fragment">Holds a prior distribution over the data <span class="math inline">Q</span></li>
 <li class="fragment">Constructs a posterior distribution <span class="math inline">Q_T</span> from <span class="math inline">(M,T)</span></li>
-<li class="fragment">Make Bayesian decisions
-<ul>
-<li class="fragment">loss function <span class="math inline">\ell: \mathcal{D} \times \mathsf{X} \rightarrow \mathbb{R}</span></li>
-</ul></li>
+<li class="fragment">Has loss function <span class="math inline">\ell: \mathcal{D} \times \mathsf{X} \rightarrow \mathbb{R}</span></li>
 </ol>
+<div class="fragment">
+<p><span class="math inline">\mathfrak{C}</span> <em>may effect Receiver’s data posterior. Here assumed not to.</em></p>
+</div>
 </section>
 <section id="anatomy-of-statistical-data-privacy-1" class="slide level2">
 <h2>Anatomy of statistical data privacy</h2>
@@ -711,24 +773,27 @@ Joshua J Bon
 </div>
 <div class="callout-content">
 <p><span class="math display">
-d^{P} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim P}[ \ell(d,z)]
-</span> Prior to release <span class="math inline">P = Q</span>, post-release <span class="math inline">P = Q_T</span>.</p>
+d^{P} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \ell(d,z)]
+</span></p>
 </div>
 </div>
 </div>
 <div class="fragment">
-<p>To measure privacy: <strong>We need assumptions on <span class="math inline">Q</span> and <span class="math inline">\ell</span></strong></p>
+<p>To model Receiver’s decision:</p>
+</div>
+<div class="fragment">
+<p><strong>We need assumptions on <span class="math inline">Q</span> and <span class="math inline">\ell</span></strong></p>
 </div>
 </section>
-<section id="unknown-adversaries" class="slide level2">
-<h2>Unknown adversaries</h2>
+<section id="receiver-model" class="slide level2">
+<h2>Receiver model</h2>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Assumption 2: Adversarial loss function</strong></p>
+<p><strong>Assumption 3: Adversarial loss function</strong></p>
 </div>
 <div class="callout-content">
 <p>Receiver has loss function <span class="math inline">\ell(d,x) = \rho(d,x)</span></p>
@@ -748,15 +813,15 @@ d^{P} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim P}[ \ell(d,z)]
 <li class="fragment">Interpretation 2: data-averaged <strong>worst-case</strong> for Sender</li>
 </ul>
 </section>
-<section id="unknown-adversaries-1" class="slide level2">
-<h2>Unknown adversaries</h2>
+<section id="receiver-model-1" class="slide level2">
+<h2>Receiver model</h2>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Assumption 3: Adversarial prior class</strong></p>
+<p><strong>Assumption 4: Adversarial prior class</strong></p>
 </div>
 <div class="callout-content">
 <p>Let the data-prior <span class="math inline">Q \in \mathcal{Q}_x</span></p>
@@ -764,7 +829,24 @@ d^{P} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim P}[ \ell(d,z)]
 </div>
 </div>
 <div class="fragment">
-<p>Defines class of posteriors and privacy can be measured:</p>
+<p>Implies privacy outcome in terms of</p>
+</div>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Receiver’s decision</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">
+d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
+</span></p>
+</div>
+</div>
+</div>
 </div>
 <div class="fragment">
 <div class="callout callout-note callout-titled callout-style-default">
@@ -776,9 +858,6 @@ d^{P} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim P}[ \ell(d,z)]
 <p><strong>Privacy outcome</strong></p>
 </div>
 <div class="callout-content">
-<p><span class="math display">
-d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
-</span></p>
 <p><span class="math display">
 \inf_{Q \in \mathcal{Q}_x} \rho(d^{Q_T},x)
 </span></p>
@@ -790,59 +869,12 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 <section id="anatomy-of-statistical-data-privacy-2" class="slide level2">
 <h2>Anatomy of statistical data privacy</h2>
 
-<img data-src="index_files/figure-revealjs/dtp1-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<img data-src="index_files/figure-revealjs/dtp5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
 <section id="anatomy-of-statistical-data-privacy-3" class="slide level2">
 <h2>Anatomy of statistical data privacy</h2>
 
-<img data-src="index_files/figure-revealjs/dtp2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="privacy-guarantees-and-leakage" class="slide level2">
-<h2>Privacy guarantees and leakage</h2>
-<p>Consider a set of “private” mechanisms <span class="math inline">\mathcal{M}</span>.</p>
-<p>A privacy guarantee is the communication of <span class="math inline">(M,\mathcal{M})</span> such that <span class="math inline">M \in \mathcal{M}</span>. For example,</p>
-<p><span class="math display">M \in \mathcal{M}_{x} = \{M \in \mathcal{M}: M(~\cdot\mid x) \text{ is private}\}</span></p>
-<ul>
-<li class="fragment">A privacy guarantee needs to be transparent to be trusted</li>
-<li class="fragment">A guarantee only for <span class="math inline">x</span> reveals information about <span class="math inline">x</span>
-<ul>
-<li class="fragment">Extra privacy loss: <span class="math inline">x \in \{z\in \mathsf{X}: M \in \mathcal{M}_{z}\}  \subset \mathsf{X}</span></li>
-</ul></li>
-</ul>
-</section>
-<section id="privacy-guarantees-and-leakage-1" class="slide level2">
-<h2>Privacy guarantees and leakage</h2>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Assumption 4: Protected set</strong></p>
-</div>
-<div class="callout-content">
-<p>Sender announces a protected set <span class="math inline">\mathsf{E} \subset \mathsf{X}</span> where the mechanism satisfies</p>
-<p><span class="math display">M \in \mathcal{M}_{\mathsf{E}} = \{M \in \mathcal{M}: M(~\cdot\mid x) \text{ is private } \forall x \in \mathsf{E}\}</span></p>
-</div>
-</div>
-</div>
-<ul>
-<li class="fragment">Information about <span class="math inline">x</span> obscured by protecting all <span class="math inline">x \in \mathsf{E}</span></li>
-<li class="fragment">But Receiver learns <span class="math inline">x \in \mathsf{E}</span></li>
-</ul>
-</section>
-<section id="anatomy-of-statistical-data-privacy-4" class="slide level2">
-<h2>Anatomy of statistical data privacy</h2>
-
 <img data-src="index_files/figure-revealjs/dtp3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="anatomy-of-statistical-data-privacy-5" class="slide level2">
-<h2>Anatomy of statistical data privacy</h2>
-
-<img data-src="index_files/figure-revealjs/dtp5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section></section>
-<section>
-<section id="measuring-privacy" class="title-slide slide level1 center">
-<h1>Measuring privacy</h1>
-
-</section>
-<section id="measuring-privacy-1" class="slide level2">
+<section id="measuring-privacy" class="slide level2">
 <h2>Measuring privacy</h2>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -854,7 +886,7 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 </div>
 <div class="callout-content">
 <p><span class="math display">
-\inf_{Q \in \mathcal{Q}_x} \rho(d^{Q_T},x),\quad d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
+\inf_{Q \in \mathcal{Q}_x} \rho(d^{Q_T},x)
 </span></p>
 </div>
 </div>
@@ -867,7 +899,7 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 </ul></li>
 </ul>
 <aside><ol class="aside-footnotes"><li id="fn10"><p><span class="citation" data-cites="grunwald2004game">Grünwald and Dawid (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span></p></li></ol></aside></section>
-<section id="measuring-privacy-2" class="slide level2">
+<section id="measuring-privacy-1" class="slide level2">
 <h2>Measuring privacy</h2>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -920,7 +952,7 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 </div>
 <div class="callout-content">
 <p>A scoring rule <span class="math inline">S</span> is proper with respect to <span class="math inline">\mathscr{P}</span> if for all <span class="math inline">P,Q \in \mathscr{P}</span></p>
-<p><span class="math display">S(P,P) \leq S(P,Q).</span></p>
+<p><span class="math display">S(Q,Q) \leq S(P,Q).</span></p>
 <p>In addition, it is <em>strictly</em> proper if <span class="math inline">S(P,P) = S(P,Q) \Leftrightarrow P = Q</span>.</p>
 </div>
 </div>
@@ -939,7 +971,7 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 <li class="fragment"><p>Propriety ensures coherent assessment of the privacy</p></li>
 </ul>
 </section>
-<section id="measuring-privacy-3" class="slide level2">
+<section id="measuring-privacy-2" class="slide level2">
 <h2>Measuring privacy</h2>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -961,7 +993,7 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 <li class="fragment">We will look at a relative measure of privacy</li>
 </ul>
 </section>
-<section id="measuring-privacy-4" class="slide level2">
+<section id="measuring-privacy-3" class="slide level2">
 <h2>Measuring privacy</h2>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -983,7 +1015,7 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 <li class="fragment">Sender’s relative privacy change (worst-case)</li>
 </ul>
 </section>
-<section id="measuring-privacy-5" class="slide level2">
+<section id="measuring-privacy-4" class="slide level2">
 <h2>Measuring privacy</h2>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -1003,7 +1035,6 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 <p>But…</p>
 <ul>
 <li class="fragment"><span class="math inline">Q_T</span> may be random since <span class="math inline">T\sim M(~\cdot\mid x)</span></li>
-<li class="fragment">We need to protect all <span class="math inline">x \in \mathsf{E}</span></li>
 </ul>
 </section></section>
 <section>
@@ -1014,8 +1045,8 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 <section id="a-privacy-definition" class="slide level2">
 <h2>A privacy definition</h2>
 <ul>
-<li class="fragment"><p>Let <span class="math inline">\mathcal{Q}_x \subset \mathscr{P}(\mathsf{X},\mathcal{X})</span> and <span class="math inline">\mathsf{E} \subset \mathsf{X}</span> be the protected set,</p></li>
-<li class="fragment"><p><span class="math inline">M^\mathsf{E}: \mathcal{T}\times \mathsf{E} \rightarrow \mathbb{R}_+</span> be a mechanism,</p></li>
+<li class="fragment"><p>Let <span class="math inline">\mathcal{Q}_x \subset \mathscr{P}(\mathsf{X},\mathcal{X})</span></p></li>
+<li class="fragment"><p><span class="math inline">M: \mathcal{T}\times \mathsf{X} \rightarrow \mathbb{R}_+</span> be a mechanism,</p></li>
 <li class="fragment"><p><span class="math inline">S</span> be a privacy score, constants <span class="math inline">\kappa \geq 0</span>, <span class="math inline">0\leq\delta \ll 1</span>.</p></li>
 </ul>
 <div class="fragment">
@@ -1028,8 +1059,8 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 <p><strong>Definition 2: Scoring rule privacy I</strong></p>
 </div>
 <div class="callout-content">
-<p>We say <span class="math inline">M^\mathsf{E}</span> is <span class="math inline">(\mathcal{Q}_x, S, \kappa, \delta)</span>-SRP if</p>
-<p><span class="math display">\inf_{x\in\mathsf{E}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q_{T}, x) \geq S(Q, x) - \kappa \right] \geq 1 - \delta,</span></p>
+<p>We say <span class="math inline">M</span> is <span class="math inline">(\mathcal{Q}_x, S, \kappa, \delta)</span>-SRP if</p>
+<p><span class="math display">\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q_{T}, x) \geq S(Q, x) - \kappa \right] \geq 1 - \delta,</span></p>
 <p>where the probability <span class="math inline">\mathbb{P}_x</span> is w.r.t. <span class="math inline">T \sim M^\mathsf{E}(~\cdot\mid x)</span>.</p>
 </div>
 </div>
@@ -1230,17 +1261,19 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 <section id="ongoing-work" class="slide level2">
 <h2>Ongoing work</h2>
 <ul>
-<li class="fragment">More examples
+<li class="fragment"><p>ICAC SA</p></li>
+<li class="fragment"><p>Decomposition rule</p></li>
+<li class="fragment"><p>More examples</p>
 <ul>
 <li class="fragment">Other (vector) summary statistics</li>
 <li class="fragment">Nonparametric prior families</li>
 </ul></li>
-<li class="fragment">Formalise iterative schemes <span class="math inline">n \rightarrow \infty</span>
+<li class="fragment"><p>Formalise iterative schemes <span class="math inline">n \rightarrow \infty</span></p>
 <ul>
 <li class="fragment">MCMC</li>
 <li class="fragment">SGD</li>
 </ul></li>
-<li class="fragment">Privacy-utility trade off</li>
+<li class="fragment"><p>Privacy-utility trade off</p></li>
 </ul>
 <div class="fragment">
 <p>Thank you!</p>
@@ -1249,6 +1282,9 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-bailie2024general" class="csl-entry" role="listitem">
+Bailie, James, and Ruobin Gong. 2024. <span>“General Inferential Limits Under Differential and Pufferfish Privacy.”</span> <em>International Journal of Approximate Reasoning</em> 172: 109242.
+</div>
 <div id="ref-bon2020acld" class="csl-entry" role="listitem">
 Bon, Joshua J, Bernard Baffour, Melanie Spallek, and Michele Haynes. 2020. <span>“Analysing Sensitive Data from Dynamically-Generated Overlapping Contingency Tables.”</span> <em>Journal of Official Statistics</em> 36 (2): 275–96.
 </div>
@@ -1284,9 +1320,6 @@ Grünwald, Peter D, and A Philip Dawid. 2004. <span>“Game Theory, Maximum Entr
 </div>
 <div id="ref-guingona2023comparing" class="csl-entry" role="listitem">
 Guingona, Vincent, Alexei Kolesnikov, Julianne Nierwinski, and Avery Schweitzer. 2023. <span>“Comparing Approximate and Probabilistic Differential Privacy Parameters.”</span> <em>Information Processing Letters</em> 182: 106380.
-</div>
-<div id="ref-hall2013differential" class="csl-entry" role="listitem">
-Hall, Rob, Alessandro Rinaldo, and Larry Wasserman. 2013. <span>“Differential Privacy for Functions and Functional Data.”</span> <em>The Journal of Machine Learning Research</em> 14 (1): 703–27.
 </div>
 <div id="ref-hassan2024federated" class="csl-entry" role="listitem">
 Hassan, Conor, Joshua J Bon, Elizaveta Semenova, Antonietta Mira, and Kerrie Mengersen. 2024. <span>“Federated Learning for Non-Factorizable Models Using Deep Generative Prior Approximations.”</span>
