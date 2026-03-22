@@ -161,7 +161,7 @@ graph G {
 :::
 
 
-See: **Bon**, Bailie, Rousseau & Robert (2026) arXiv 2601.22945 
+**Bon**, Bailie, Rousseau & Robert (2026) arXiv 2601.22945 
 
 _Under review at ICML 2026_
 
@@ -175,6 +175,11 @@ _Under review at ICML 2026_
 $$\text{Dataset}~x \overset{\text{release}}{\longrightarrow} \text{statistic}~T$$
 
 - $T \sim M(x,\cdot)$, with some mechanism $M$
+
+::: {.fragment}
+**Example**
+:::
+
 - $T = \frac{1}{n}\sum_{i=1}^{n} x_i + Z$ with $Z \sim \mathcal{N}(0,\sigma^2)$
 
 ::: {.fragment}
@@ -224,13 +229,13 @@ dist_plot <- ggplot(mvn) +
   geom_hdr(aes(x,y,fill = dist), method = "mvnorm", probs = c(0.5,0.9,0.99)) +
   scale_x_continuous(limits = c(-4,5)) +
   scale_y_continuous(limits = c(-2,4)) +
-  thm + ggtitle("Output")
+  thm + ggtitle(expression(paste("Output: ",  M(x,{}%.%{}))))
 
 point_plot <- ggplot(tibble(x=c(2,-1), y = c(1,1), dist = c("1","2"))) + 
   geom_point(aes(x,y, colour = dist), size = 6) + 
   scale_x_continuous(limits = c(-4,5)) +
   scale_y_continuous(limits = c(-2,4)) +
-  thm + ggtitle("Input") +
+  thm + ggtitle(expression(paste("Input: ", x))) +
   geom_vline(xintercept = -1, colour = "grey", alpha = 0.5) +
   geom_hline(yintercept = 1, colour = "grey", alpha = 0.5)
 
@@ -240,8 +245,9 @@ overall_plot
 
 ```
 
-- To limit information leaked about data $x$ by statistic $T$,
-- Control the sensitivity of the mechanism $M(x,\cdot)$ w.r.t. $x$.
+To limit information leaked about data $x$ by statistic $T$,
+
+control the sensitivity of the mechanism $M(x,\cdot)$ w.r.t. $x$.
 
 
 

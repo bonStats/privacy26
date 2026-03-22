@@ -451,7 +451,7 @@ Joshua J Bon
 <li>Differential privacy redux</li>
 <li>Privacy without noise</li>
 </ol>
-<p>See: <strong>Bon</strong>, Bailie, Rousseau &amp; Robert (2026) arXiv 2601.22945</p>
+<p><strong>Bon</strong>, Bailie, Rousseau &amp; Robert (2026) arXiv 2601.22945</p>
 <p><em>Under review at ICML 2026</em></p>
 <aside><ol class="aside-footnotes"><li id="fn10"><p>Slides available https://bonstats.github.io/privacy26</p></li></ol></aside></section>
 <section>
@@ -464,6 +464,11 @@ Joshua J Bon
 <p><span class="math display">\text{Dataset}~x \overset{\text{release}}{\longrightarrow} \text{statistic}~T</span></p>
 <ul>
 <li class="fragment"><span class="math inline">T \sim M(x,\cdot)</span>, with some mechanism <span class="math inline">M</span></li>
+</ul>
+<div class="fragment">
+<p><strong>Example</strong></p>
+</div>
+<ul>
 <li class="fragment"><span class="math inline">T = \frac{1}{n}\sum_{i=1}^{n} x_i + Z</span> with <span class="math inline">Z \sim \mathcal{N}(0,\sigma^2)</span></li>
 </ul>
 <div class="fragment">
@@ -473,10 +478,8 @@ Joshua J Bon
 <section id="dp-intuition" class="slide level2">
 <h2>DP Intuition</h2>
 
-<img data-src="index_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"><ul>
-<li class="fragment">To limit information leaked about data <span class="math inline">x</span> by statistic <span class="math inline">T</span>,</li>
-<li class="fragment">Control the sensitivity of the mechanism <span class="math inline">M(x,\cdot)</span> w.r.t. <span class="math inline">x</span>.</li>
-</ul>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"><p>To limit information leaked about data <span class="math inline">x</span> by statistic <span class="math inline">T</span>,</p>
+<p>control the sensitivity of the mechanism <span class="math inline">M(x,\cdot)</span> w.r.t. <span class="math inline">x</span>.</p>
 </section>
 <section id="dp-definition" class="slide level2">
 <h2>DP Definition</h2>
