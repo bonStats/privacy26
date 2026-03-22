@@ -547,13 +547,13 @@ Joshua J Bon
 <h2>Variants of DP</h2>
 <p>There are many variants and relaxations of DP.</p>
 <ul>
-<li class="fragment">Probabilistic DP</li>
+<li class="fragment">Probabilistic DP <span class="citation" data-cites="guingona2023comparing">(<a href="#/references" role="doc-biblioref" onclick="">Guingona et al. 2023</a>)</span></li>
 </ul>
 <div class="fragment">
 <p><span class="math display">\inf_{x\sim x^\prime}\mathbb{P}_{x}\left[ m(x,T) \leq \exp\{\epsilon\} m(x^\prime, T) \right] \geq 1 - \delta</span></p>
 </div>
 <ul>
-<li class="fragment">Approximate DP</li>
+<li class="fragment">Approximate DP <span class="citation" data-cites="dwork2006approxdp">(<a href="#/references" role="doc-biblioref" onclick="">Dwork, Kenthapadi, et al. 2006</a>)</span></li>
 </ul>
 <div class="fragment">
 <p><span class="math display">m(x,S) \leq \exp\{\epsilon\} m(x^\prime, S)  + \delta</span> for all <span class="math inline">S \in \mathcal{S}</span>.</p>
@@ -1192,186 +1192,90 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 </section>
 <section id="returning-to-dp-1" class="slide level2">
 <h2>Returning to DP</h2>
-<p>Alternative hypothesis prior class and log-probability score recover Probabilistic DP as instance of Persuasive Privacy</p>
+<p>Alternative hypothesis prior class and log-probability score recover PrDP as instance of Persuasive Privacy</p>
 <div class="fragment">
 <p><span class="math display">\inf_{x\sim x^\prime}\mathbb{P}_{x}\left[ m(x,T) \leq \exp\{\epsilon\} m(x^\prime, T) \right] \geq 1 - \delta</span></p>
 </div>
 <ul>
 <li class="fragment">Pure DP is a special case (<span class="math inline">\delta = 0</span>)</li>
+<li class="fragment">PrDP implies Approximate DP</li>
 </ul>
 </section>
-<section id="scoring-rule-privacy-example-1" class="slide level2">
-<h2>Scoring rule privacy: Example 1</h2>
-<p><strong>Scoring rule</strong></p>
-<p>Let <span class="math inline">p = \frac{\mathrm{d}P}{\mathrm{d}\mu}</span> be the Radon–Nikodym derivative of <span class="math inline">P</span> w.r.t. some base measure <span class="math inline">\mu</span>, take</p>
-<div class="fragment">
-<p><strong>Mechanism</strong></p>
-<p>Consider random algorithm <span class="math inline">M</span> with <span class="math inline">m = \frac{\mathrm{d}M}{\mathrm{d}\mu^\prime}</span></p>
-</div>
-</section>
-<section id="scoring-rule-privacy-example-1-1" class="slide level2">
-<h2>Scoring rule privacy: Example 1</h2>
-<p>It is straightforward to show</p>
-<p><span class="math display">\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x^p}\mathbb{P}_x\left[S(Q_{T}, x) \geq S(Q, x) - \kappa \right] \geq 1 - \delta,</span></p>
-<p>is equivalent to</p>
-<div class="fragment">
-<p><span class="math display">\inf_{\substack{x,x^{\prime}\in\mathsf{X}\\H(x,x^{\prime}) = 1}}\mathbb{P}_x\left[m(T \mid x) \geq e^\epsilon m(T \mid x^{\prime})\right] \leq \delta</span></p>
-<p>with <span class="math inline">\epsilon = \log (1-p) - \log(e^{-\kappa} - p)</span></p>
-</div>
-</section>
-<section id="interpretation-example-1" class="slide level2">
-<h2>Interpretation: Example 1</h2>
-<p><span class="math display">\inf_{\substack{x,x^{\prime}\in\mathsf{X}\\H(x,x^{\prime}) = 1}}\mathbb{P}_x\left[m(T \mid x) \geq e^\epsilon m(T \mid x^{\prime})\right] \leq \delta</span></p>
+<section id="returning-to-dp-2" class="slide level2">
+<h2>Returning to DP</h2>
 <ul>
-<li class="fragment">This is Probabilistic Differential Privacy (PrDP)<sup>1</sup></li>
-<li class="fragment">Scoring rule privacy contains PrDP as a special case</li>
-<li class="fragment">PrDP <span class="math inline">\Rightarrow</span> Approximate Differential Privacy (ADP)<sup>2</sup></li>
-</ul>
-<aside><ol class="aside-footnotes"><li id="fn11"><p><span class="citation" data-cites="guingona2023comparing">Guingona et al. (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span></p></li><li id="fn12"><p><span class="citation" data-cites="dwork2006approxdp">Dwork, Kenthapadi, et al. (<a href="#/references" role="doc-biblioref" onclick="">2006</a>)</span></p></li></ol></aside></section>
-<section id="interpretation-example-1-1" class="slide level2">
-<h2>Interpretation: Example 1</h2>
+<li class="fragment">Pure, Probabilistic, and approximate DP are notions of privacy relative to change in Receiver’s knowledge</li>
+<li class="fragment">Can be derived by considering persuasive privacy game</li>
+<li class="fragment">ADP has (Sender) post-processing property, PrDP <strong>does not</strong> (unless pure DP)
 <ul>
-<li class="fragment">PrDP and ADP are relative notions of privacy</li>
-<li class="fragment">Can be derived by considering adversarial decisions</li>
-<li class="fragment">PrDP and ADP assume a minimum strength of Receiver
-<ul>
-<li class="fragment"><span class="math inline">\mathcal{Q}_x^p = \{Q\in\mathcal{Q}_x:Q(\{x\}) \geq p\}</span></li>
+<li class="fragment">Typically a criticism of PrDP</li>
 </ul></li>
-<li class="fragment">ADP has post-processing invariance property, PrDP <strong>does not</strong></li>
-<li class="fragment">From our theory: post-processing by the
+<li class="fragment">PrDP does have (Receiver) post-processing property
 <ul>
-<li class="fragment">Receiver <strong>will not</strong> change their posterior distribution</li>
-<li class="fragment">Sender <strong>will</strong> change the privacy guarantee</li>
+<li class="fragment">A simple fix: control Receiver’s decision by including pre-processed statistic</li>
 </ul></li>
 </ul>
 </section>
-<section id="scoring-rule-privacy" class="slide level2">
-<h2>Scoring rule privacy</h2>
+<section id="privacy-for-deterministic-mechanisms" class="slide level2">
+<h2>Privacy for deterministic mechanisms</h2>
 <ul>
-<li class="fragment">Let <span class="math inline">S_I = \{S_i\}_{i \in I}</span> be a set of privacy scores</li>
+<li class="fragment">DP can’t be defined for deterministic mechanisms</li>
+<li class="fragment">Persuasive privacy framework flexible enough</li>
+<li class="fragment">Demonstrate privacy for mean <span class="math inline">\bar x</span></li>
 </ul>
 <div class="fragment">
+<p><span class="math display">M(~\cdot\mid x) = \delta_{\bar x}(\cdot)</span></p>
+</div>
+</section>
+<section id="privacy-for-deterministic-mechanisms-1" class="slide level2">
+<h2>Privacy for deterministic mechanisms</h2>
+<p>Use class of Gaussian distributions</p>
+<div class="fragment">
+<p><span class="math display">\mathcal{G}_{x}^{r} = \left\{ \mathcal{N}(\mu,\Sigma): \frac{(\bar{x}-\bar{\mu})^2}{\overline{\Sigma}} \leq r_1 , c_\Phi \leq r_2 \left(1- \frac{\sigma_i^2}{\Vert\sigma \Vert_2^2} \right) \right\}</span></p>
+<p>for <span class="math inline">r_1 &gt; 0</span> and <span class="math inline">r_2 &gt; 1</span>.</p>
+</div>
+<ul>
+<li class="fragment">Data posterior after observing <span class="math inline">\bar x</span> is multivariate normal but degenerate</li>
+<li class="fragment">Support only on subspace <span class="math inline">\{z\in \mathbb{R}^n: \bar z = \bar x\}</span></li>
+</ul>
+</section>
+<section id="privacy-for-deterministic-mechanisms-2" class="slide level2">
+<h2>Privacy for deterministic mechanisms</h2>
+<p>Use (marginal) Dawid–Sebastiani Score</p>
+<p><span class="math display"> D_i(Q,x) = \log \sigma^2_i(Q) + \frac{[x_i - \mu_i(Q)]^2}{\sigma^{2}_i(Q)}</span></p>
+<p>for each element of data, and consider the worst-case element for privacy.</p>
+</section>
+<section id="privacy-for-deterministic-mechanisms-3" class="slide level2">
+<h2>Privacy for deterministic mechanisms</h2>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Definition 3: Scoring rule privacy II</strong></p>
+<p><strong>Proposition</strong></p>
 </div>
 <div class="callout-content">
-<p>We say <span class="math inline">M^\mathsf{E}</span> is <span class="math inline">(\mathcal{Q}_x, S_I, \kappa, \delta)</span>-SRP if</p>
-<p><span class="math display">\inf_{i \in I}\inf_{x\in\mathsf{E}}\inf_{Q\in\mathcal{Q}_x}
-\mathbb{P}_x\left[S_i(Q_{T}, x) \geq S_i(Q, x) - \kappa \right] \geq 1 - \delta,</span></p>
-<p>where the probability <span class="math inline">\mathbb{P}_x</span> is w.r.t. <span class="math inline">T \sim M^\mathsf{E}(~\cdot\mid x)</span>.</p>
-</div>
+<p>The average mechanism <span class="math inline">M(x,\cdot) = \delta_{\bar{x}}</span> satisfies <span class="math inline">(\mathcal{I},\mathcal{G}_{x}^{r},r_1+ \log r_2,0)</span>-PP.</p>
 </div>
 </div>
 </div>
 <ul>
-<li class="fragment">SRP has composition property if the class of priors is closed under <span class="math inline">M</span>-updating (i.e.&nbsp;conjugate).</li>
-</ul>
-</section>
-<section id="scoring-rule-privacy-example-2" class="slide level2">
-<h2>Scoring rule privacy: Example 2</h2>
+<li class="fragment">Possible to have a rigorous guarantee for a deterministic mechanism</li>
+<li class="fragment">Opens path for privacy guarantees for convergent iterative algorithms
 <ul>
-<li class="fragment">DP can’t be defined for deterministic mechanisms</li>
-<li class="fragment">SRP are flexible enough to handle this</li>
-<li class="fragment">We will consider the mean of the data <span class="math inline">\bar x</span></li>
-</ul>
-<div class="fragment">
-<p><span class="math display">M(~\cdot\mid x) = \delta_{\bar x}(\cdot)</span></p>
-</div>
-<div class="fragment">
-<p><span class="math display">\mathcal{Q}_x = \{\mathcal{N}(\mu, \Sigma): \mu \in \mathbb{R}^n, \Sigma \in \text{PD}(\mathbb{R}^n)\}</span></p>
-</div>
-</section>
-<section id="scoring-rule-privacy-example-2-1" class="slide level2">
-<h2>Scoring rule privacy: Example 2</h2>
-<ul>
-<li class="fragment">Prior <span class="math inline">Q \in \mathcal{Q}_x</span> with <span class="math inline">\mu,\Sigma</span>
-<ul>
-<li class="fragment">such that <span class="math inline">[\Sigma]_{ij} = \sigma_i\sigma_j\rho_{ij}</span></li>
+<li class="fragment">e.g.&nbsp;MCMC without privacy perturbations (posterior summary statistics)</li>
+<li class="fragment">A “decomposition rule”</li>
 </ul></li>
-<li class="fragment">Data posterior after observing <span class="math inline">\bar x</span> is multivariate normal but degenerate</li>
-<li class="fragment">Support only on subspace <span class="math inline">\{z\in \mathbb{R}^n: \bar z = \bar x\}</span></li>
 </ul>
-</section>
-<section id="scoring-rule-privacy-example-2-2" class="slide level2">
-<h2>Scoring rule privacy: Example 2</h2>
-<p>The <span class="math inline">i</span>th marginal data-posterior distribution is <span class="math inline">{Q_{\bar{x},i} =  \mathcal{N}(\tilde{\mu}_i, \tilde{\sigma}_i^2)}</span> with</p>
-<p><span class="math display">\tilde{\mu}_i = \mu_i + \sigma_i\frac{\nu_i}{\nu}(\bar{x} - \bar{\mu} ), \qquad \tilde{\sigma}_i^2 = \sigma_i^2\left[1 - \frac{\nu_i^2}{\nu}\right]</span></p>
-<ul>
-<li class="fragment"><span class="math inline">\nu_i = \frac{1}{n}\sum_{j=1}^n \rho_{ij}\sigma_j</span></li>
-<li class="fragment"><span class="math inline">\nu = \frac{1}{n^2}\sum_{j=1}^n\sum_{k=1}^n \rho_{jk}\sigma_j\sigma_k</span></li>
-</ul>
-</section>
-<section id="scoring-rule-privacy-example-2-3" class="slide level2">
-<h2>Scoring rule privacy: Example 2</h2>
-<p>One choice: entropy scoring rule</p>
-<p><span class="math display">S(P,x) = \log \sigma_P^2 + \frac{(x-\mu_P)^2}{\sigma_P^2}</span></p>
-<p>then we can show</p>
-<div class="fragment">
-<p><span class="math display">S(Q_{\bar{x},i},x) - S(Q_i,x) \geq \log\frac{\lambda_n}{\lambda_1}\left(1- \frac{\sigma_i^2}{\Vert\sigma \Vert_2^2} \right)  - \frac{(\bar{x} - \bar{\mu})^2}{\lambda_1 \Vert \sigma \Vert_2^2}</span></p>
-</div>
-</section>
-<section id="scoring-rule-privacy-example-2-4" class="slide level2">
-<h2>Scoring rule privacy: Example 2</h2>
-<p>Therefore we can use the privacy loss</p>
-<div class="fragment">
-<p><span class="math display">\kappa_i(\bar{x}, \mu, \Sigma) = \frac{(\bar{x} - \bar{\mu})^2}{\lambda_1 \Vert \sigma \Vert_2^2} - \log\frac{\lambda_n}{\lambda_1}\left(1- \frac{\sigma_i^2}{\Vert\sigma \Vert_2^2} \right)</span></p>
-<p>with probability of leakage <span class="math inline">\delta = 0</span></p>
-</div>
-</section>
-<section id="sketch-of-extenstion-to-mcmc" class="slide level2">
-<h2>Sketch of extenstion to MCMC</h2>
-<p>If <span class="math inline">T \sim M(\cdot\mid \bar{x})</span> then <span class="math inline">Q_T = \mathbb{E}(Q_{\bar{z}} \mid T)</span> for <span class="math inline">\bar{z} \sim \bar{Q}(\cdot\mid T)</span> where</p>
-<ul>
-<li class="fragment"><span class="math inline">T = (\theta_1,\theta_2, \ldots, \theta_N)</span> is a chain of MCMC samples</li>
-<li class="fragment"><span class="math inline">\bar{Q}</span> the implied data-prior on the average</li>
-<li class="fragment"><span class="math inline">\bar{Q}(\cdot\mid T)</span> is the posterior update</li>
-</ul>
-<div class="fragment">
-<p>Recall that for all <span class="math inline">\bar{x} \in \mathbb{R}</span>, <span class="math inline">S(Q_{\bar{x},i},x) - S(Q_{i},x) \geq - \kappa</span></p>
-</div>
-<ul>
-<li class="fragment">Use MVT and/or properties of <span class="math inline">S(\cdot,x)</span> to bound <span class="math inline">S(Q_{T,i},x) = S(\mathbb{E}_{T}(Q_{\bar{z},i}),x)</span> with above</li>
-</ul>
-</section>
-<section id="comparison-with-differential-privacy" class="slide level2">
-<h2>Comparison with Differential Privacy</h2>
-<p>For privacy analysis of iterative algorithms <strong>with DP</strong> it is common place to:</p>
-<ol type="1">
-<li class="fragment">Prove DP for one step</li>
-<li class="fragment">Use composition rules to scale 1 step to <span class="math inline">n</span> steps
-<ul>
-<li class="fragment">As <span class="math inline">n \rightarrow \infty</span> no privacy guarantee</li>
-</ul></li>
-</ol>
-<div class="fragment">
-<p>In <strong>our approach</strong> to privacy it is possible to:</p>
-<ol type="1">
-<li class="fragment">Prove privacy for the limiting case (deterministic!)</li>
-<li class="fragment">Decompose limiting case to prove privacy for some finite <span class="math inline">n</span></li>
-</ol>
-</div>
 </section>
 <section id="ongoing-work" class="slide level2">
 <h2>Ongoing work</h2>
 <ul>
-<li class="fragment"><p>ICAC SA</p></li>
-<li class="fragment"><p>Formalise decomposition rule</p></li>
-<li class="fragment"><p>More examples</p>
-<ul>
-<li class="fragment">Other (vector) summary statistics</li>
-<li class="fragment">Nonparametric prior families</li>
-</ul></li>
-<li class="fragment"><p>Formalise iterative schemes <span class="math inline">n \rightarrow \infty</span></p>
-<ul>
-<li class="fragment">MCMC</li>
-<li class="fragment">SGD</li>
-</ul></li>
-<li class="fragment"><p>Privacy-utility trade off</p></li>
+<li class="fragment"><p>Decomposition rule (for deterministic mechanisms)</p></li>
+<li class="fragment"><p>Nonparametric prior families</p></li>
+<li class="fragment"><p>Work with Independent Commissioner Against Corruption (SA)</p></li>
+<li class="fragment"><p>Privacy-utility trade-off</p></li>
 </ul>
 <div class="fragment">
 <p>Thank you!</p>
@@ -1434,138 +1338,6 @@ Wasserman, Larry, and Shuheng Zhou. 2010. <span>“A Statistical Framework for D
 <div id="ref-zhang2021more" class="csl-entry" role="listitem">
 Zhang, Lefeng, Tianqing Zhu, Ping Xiong, Wanlei Zhou, and Philip S Yu. 2021. <span>“More Than Privacy: Adopting Differential Privacy in Game-Theoretic Mechanism Design.”</span> <em>ACM Computing Surveys (CSUR)</em> 54 (7): 1–37.
 </div>
-</div>
-</section></section>
-<section id="appendix" class="title-slide slide level1 center">
-<h1>Appendix</h1>
-
-</section>
-
-<section>
-<section id="differential-privacy-1" class="title-slide slide level1 center">
-<h1>Differential Privacy</h1>
-
-</section>
-<section id="approximate-differential-privacy" class="slide level2">
-<h2>(Approximate) differential privacy</h2>
-<ul>
-<li class="fragment">Let <span class="math inline">H(x,x')</span> be the Hamming distance between <span class="math inline">x</span> and <span class="math inline">x'</span></li>
-<li class="fragment">Constants <span class="math inline">\epsilon \geq 0</span> and <span class="math inline">\delta \geq 0</span></li>
-</ul>
-<div class="fragment">
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Definition A1: Approximate differential privacy</strong></p>
-</div>
-<div class="callout-content">
-<p>We say <span class="math inline">M</span> is <span class="math inline">(\epsilon,\delta)</span>-ADP if</p>
-<p><span class="math display">M(A\mid x) \leq e^\epsilon M(A\mid x') + \delta</span></p>
-<p>for all <span class="math inline">A \in \mathcal{T}</span> and <span class="math inline">\forall x,x' \in \mathsf{X}</span> such that <span class="math inline">H(x,x') \leq 1</span>.</p>
-</div>
-</div>
-</div>
-</div>
-<ul>
-<li class="fragment">Typically referred to as DP</li>
-</ul>
-</section></section>
-<section>
-<section id="composition-property" class="title-slide slide level1 center">
-<h1>Composition property</h1>
-
-</section>
-<section id="composition-property-of-srp" class="slide level2">
-<h2>Composition property of SRP</h2>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Definition 4: Closed under <span class="math inline">M</span>-updating</strong></p>
-</div>
-<div class="callout-content">
-<p>Let <span class="math inline">T \sim M(~\cdot\mid x)</span> for fixed <span class="math inline">x \in \mathsf{X}</span>.</p>
-<p>A family of distributions <span class="math inline">\mathcal{Q}_x</span> is closed under <span class="math inline">M</span>-updating if for every <span class="math inline">Q \in \mathcal{Q}_x</span> the posterior distribution conditional on <span class="math inline">T</span>, <span class="math inline">Q_T \in \mathcal{Q}_x</span> for all <span class="math inline">T \in \mathsf{T}</span>.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="composition-property-of-srp-1" class="slide level2">
-<h2>Composition property of SRP</h2>
-<div class="fragment">
-<p><span class="math inline">M_1^\mathsf{E}:\mathcal{T}_1 \times \mathsf{E} \rightarrow [0,1],</span></p>
-</div>
-<ul>
-<li class="fragment">e.g.&nbsp;<span class="math inline">M_1^\mathsf{E}(t_1 \mid x) = K(t_1 \mid x)</span> where <span class="math inline">x \in \mathsf{E}</span></li>
-</ul>
-<div class="fragment">
-<p><span class="math inline">M_2^\mathsf{E}:\mathcal{T}_2 \times (\mathsf{T}_1 \times \mathsf{E}) \rightarrow [0,1]</span></p>
-</div>
-<ul>
-<li class="fragment">e.g.&nbsp;<span class="math inline">M_2^\mathsf{E}(t_2 \mid t_1, x) = K(t_2 \mid t_1, x)</span> where <span class="math inline">x \in \mathsf{E}</span></li>
-</ul>
-</section>
-<section id="composition-property-of-srp-2" class="slide level2">
-<h2>Composition property of SRP</h2>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Theorem 1: Composition of SRP</strong></p>
-</div>
-<div class="callout-content">
-<p>If <span class="math inline">M_1^\mathsf{E}</span> and <span class="math inline">M_2^\mathsf{E}</span> are <span class="math inline">(\mathcal{Q}_x, S_I, \kappa_1, \delta_1)</span>-SRP and <span class="math inline">(\mathcal{Q}_x,S_I, \kappa_2, \delta_2)</span>-SRP for all <span class="math inline">t_1 \in \mathsf{T}_1</span> respectively and <span class="math inline">\mathcal{Q}_x</span> is closed under <span class="math inline">M_1^\mathsf{E}</span>-updating for all <span class="math inline">x \in \mathsf{E}</span> then <span class="math inline">M_{1}^\mathsf{E} \otimes M_2^\mathsf{E}</span> is <span class="math inline">(\mathcal{Q}_x, S_I, \kappa_1 + \kappa_2, \delta_1 + \delta_2)</span>-SRP.</p>
-</div>
-</div>
-</div>
-<p><a href="#/thm-comp-proof" class="quarto-xref">Proof of Theorem&nbsp;1</a></p>
-<ul>
-<li class="fragment">Useful for iterative algorithms: e.g.&nbsp;MCMC, Federated SGD</li>
-</ul>
-</section>
-<section id="proof-of-composition-property" class="slide level2">
-<h2>Proof of composition property</h2>
-<div id="thm-comp-proof" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 1 (Composition property)</strong></span> &nbsp;</p>
-<div class="fragment">
-<p>If <span class="math inline">\mathcal{Q}_x</span> is closed under <span class="math inline">M_1</span>-updating then <span class="math inline">Q_{T_1} \in \mathcal{Q}_x</span> for all <span class="math inline">T_1 \in \mathsf{T}_1</span> and priors <span class="math inline">Q \in \mathcal{Q}_x</span>.</p>
-</div>
-<div class="fragment">
-<p>And if <span class="math inline">M_2^\mathsf{E}</span> is <span class="math inline">(\mathcal{Q}_x, S_I, \kappa_2, \delta_2)</span>-SRP for all <span class="math inline">t_1 \in \mathsf{T}_1</span> then</p>
-</div>
-<div class="fragment">
-<p><span class="math display">\mathbb{P}_{x, t_1}\left[S_a(Q_{t_1,T_2}, x) \geq S_a(Q_{t_1}, x) - \kappa_2 \right] \geq 1 - \delta_2.</span> for all <span class="math inline">x\in \mathsf{E}, a\in I, Q\in\mathcal{Q}_x</span>.</p>
-</div>
-</div>
-</section>
-<section id="proof-of-composition-property-1" class="slide level2">
-<h2>Proof of composition property</h2>
-<p>Taking the expectation of</p>
-<p><span class="math display">\mathbb{P}_{x, t_1}\left[S_a(Q_{t_1,T_2}, x) \geq S_a(Q_{t_1}, x) - \kappa_2 \right]</span></p>
-<p>with respect to <span class="math inline">M_1(~\cdot \mid x)</span> yields</p>
-<div class="fragment">
-<p><span class="math display">\mathbb{P}_x\left[S_a(Q_{T_1,T_2}, x) \geq S_a(Q_{T_1}, x) - \kappa_2 \right] \geq 1 - \delta_2.</span></p>
-</div>
-</section>
-<section id="proof-of-composition-property-2" class="slide level2">
-<h2>Proof of composition property</h2>
-<p>Finally, consider the requisite probability</p>
-<p><span class="math inline">v = \mathbb{P}_x \left[S_a(Q_{T_1,T_2}, x) \geq S_a(Q, x) - \kappa_1 - \kappa_2 \right] \geq</span></p>
-<p><span class="math inline">\mathbb{P}_x\left[S_a(Q_{T_1,T_2}, x) \geq S_a(Q_{T_1}, x) - \kappa_2 \geq S_a(Q, x) - \kappa_1 - \kappa_2 \right]</span></p>
-<p><br></p>
-<div class="fragment">
-<p>Then by Boole–Fréchet inequalities</p>
-<p><span class="math inline">v \geq \mathbb{P}_x\left[S_a(Q_{T_1,T_2}, x) \geq S_a(Q_{T_1}, x) - \kappa_2 \right]</span> <span class="math inline">\qquad+  \mathbb{P}_x\left[S_a(Q_{T_1}, x) \geq S_a(Q, x) - \kappa_1 \right] - 1</span></p>
-</div>
-<div class="fragment">
-<p><span class="math inline">v \geq 1 - (\delta_1 + \delta_2).</span></p>
 </div>
 
 </section></section>
