@@ -195,30 +195,39 @@ PLOTS HERE
 Borrow from Lipschitz continuity [@bailie2024general].
 
 ::: {.fragment}
-$$d_\text{P}[M(x,\cdot),M(x^\prime,\cdot)] \leq \exp(\epsilon) d_\text{X}[x,x^\prime]$$
+$$d_\text{P}[M(x,\cdot),M(x^\prime,\cdot)] \leq \epsilon~d_\text{X}[x,x^\prime]$$
 :::
 
 ::: {.fragment}
-for all $x,x^\prime \in \mathcal{D}$ some data domain.
+for all $x,x^\prime \in \mathcal{D}$.
 :::
 
 ## DP Definition
 
-$M$ is $\epsilon$-DP if
+A mechanism $M$ is $\epsilon$-DP if
 
 ::: {.fragment}
-$$\sup_{S\in\mathcal{S}}\left\vert\ln\frac{M(x,S)}{M(x^\prime,S)}\right\vert \leq \exp(\epsilon)$$
+$$\sup_{S\in\mathcal{S}}\left\vert\ln\frac{M(x,S)}{M(x^\prime,S)}\right\vert \leq \epsilon$$
 :::
 
 ::: {.fragment}
 for all $x,x^\prime \in \mathcal{D}$, differing by at most one element.
 :::
 
+::: {.fragment}
 
+:::{.callout-note}
+## Pure Differential Privacy 
+
+$$M(x,S) \leq \exp\{\epsilon\} M(x^\prime, S)$$
+for all $x \sim x^\prime$ and $S \in \mathcal{S}$.
+
+:::
+:::
 
 ## Some DP Properties
 
-Focusing on $\epsilon$-DP.
+Focusing on (pure) $\epsilon$-DP.
 
 1. **Composition**: If $M_1$ and $M_2$ are $\epsilon$-DP then
 
@@ -248,12 +257,41 @@ If releasing the mean and variance of a dataset is $\epsilon$-DP respectively, t
 
 2. **Post-processing**:
 
-If some mechanism $M$ creates a synthetic dataset that is $\epsilon$-DP then any summary statistic from the synthetic dataset will also be $\epsilon$-DP.
+If $M$ constructs a histogram that is $\epsilon$-DP, then any quantile from the histogram will also be $\epsilon$-DP.
 
 :::
 
+## Variants of DP
 
-## DP Semantics
+There are many variants and relaxations of DP.
+
+- Probabilistic DP [@guingona2023comparing]
+
+::: {.fragment}
+$$\inf_{x\sim x^\prime}\mathbb{P}_{x}\left[ m(x,T) \leq \exp\{\epsilon\} m(x^\prime, T) \right] \geq 1 - \delta$$
+:::
+
+- Approximate DP [@dwork2006approxdp]
+
+::: {.fragment}
+$$m(x,S) \leq \exp\{\epsilon\} m(x^\prime, S)  + \delta$$
+for all $S \in \mathcal{S}$.
+:::
+
+## Variants of DP
+
+There are many variants and relaxations of DP.
+
+- Rényi DP
+- Gaussian DP
+- Concentrated DP
+- Many more!
+
+:::{.fragment}
+All related to Lipschitz interpretation 
+:::
+
+## Pure DP Semantics
 
 - Hypothesis testing
   - Type I & II error controlled by $\epsilon$ [@wasserman2010statistical]
@@ -263,7 +301,7 @@ If some mechanism $M$ creates a synthetic dataset that is $\epsilon$-DP then any
 - Game theory 
   - Controls expected utility [@zhang2021more]
 
-## DP Semantics
+## Pure DP Semantics
 
 ::: {.nonincremental}
 - Hypothesis testing
@@ -279,7 +317,9 @@ DP Semantics are...
 **... post-hoc explanations of DP**
 :::
 
-
+::: {.fragment}
+and motivated to find privacy definitions that are relevant for deterministic mechanisms. 
+:::
 
 # Privacy from the ground up
 
@@ -788,6 +828,8 @@ $\rho(d,x) = -\log d(x)$ then $S(Q_T,x)=-\log q_T(x)$.
 Without loss of generality, we focus on proper scoring rules. 
 :::
 
+
+<!--
 ## Detour: Proper scoring rules
 
 Proper scoring rules^[@gneiting2007strictly] provide a convenient (and rich) class of functions to assess privacy!
@@ -825,6 +867,9 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 - $S(Q,x)$ compares uncertain adversarial knowledge of the data $Q$ to the true data $x$
 
 - Propriety ensures coherent assessment of the privacy
+
+
+-->
 
 ## Measuring privacy
 
@@ -867,7 +912,7 @@ But...
 
 - $Q_T$ may be random since $T\sim M(~\cdot\mid x)$
 
-# Defining privacy
+# Persuasive privacy
 
 ## A privacy definition
 
@@ -879,13 +924,13 @@ But...
 
 :::{.fragment}
 :::{.callout-note}
-## Definition 2: Scoring rule privacy I
+## Definition: Persuasive Privacy
 
-We say $M$ is $(\mathcal{Q}_x, S, \kappa, \delta)$-SRP if
+We say $M$ is $(\mathcal{Q}_x, S, \kappa, \delta)$-PP if
 
-$$\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q_{T}, x) \geq S(Q, x) - \kappa \right] \geq 1 - \delta,$$
+$$\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q, x) - S(Q_{T}, x) \leq \kappa \right] \geq 1 - \delta,$$
 
-where the probability  $\mathbb{P}_x$ is w.r.t. $T \sim M^\mathsf{E}(~\cdot\mid x)$.
+where $\mathbb{P}_x$ is w.r.t. $T \sim M(~\cdot\mid x)$.
 
 :::
 :::
@@ -893,33 +938,76 @@ where the probability  $\mathbb{P}_x$ is w.r.t. $T \sim M^\mathsf{E}(~\cdot\mid 
 ## A privacy definition
 
 :::{.callout-note}
-## Definition 2: Scoring rule privacy I
+## Definition: Persuasive Privacy
 
-We say $M^\mathsf{E}$ is $(\mathcal{Q}_x, S, \kappa, \delta)$-SRP if
+We say $M$ is $(\mathcal{Q}_x, S, \kappa, \delta)$-PP if
 
-$$\inf_{x\in\mathsf{E}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q_{T}, x) \geq S(Q, x) - \kappa \right] \geq 1 - \delta,$$
+$$\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q, x) - S(Q_{T}, x) \leq \kappa \right] \geq 1 - \delta,$$
 
-where the probability  $\mathbb{P}_x$ is w.r.t. $T \sim M^\mathsf{E}(~\cdot\mid x)$.
+where $\mathbb{P}_x$ is w.r.t. $T \sim M(~\cdot\mid x)$.
 
 :::
 
-- $S(Q, x) - \kappa\quad$ is the minimum required privacy score
-- $\delta\quad$ is maximum probability of privacy leakage
+- Change in privacy: $S(Q, x) - S(Q_{T}, x)$
+- Maximum allowable privacy change: $\kappa$
+- Maximum probability of leakage: $\delta\quad$
 
-## Scoring rule privacy: Example 1
+## Why "persuasive"?
 
-Consider priors with probability on true $x$ and alternative $x^\prime$ 
+::: {.fragment}
+_Sender chooses a mechanism to persuade Receiver to make decisions having limited impact on privacy._
+:::
+
+::: {.fragment}
+Similar to Bayesian persuasion [@kamenica2011bayesian]
+However,
+:::
+
+- asymmetry between Sender and Receiver
+- utility functions of Sender and Receiver are related
+- Sender assesses decisions (mechanism) robustly: worst-case not expected value
+
+## Properties of Persuasive Privacy
+
+1. **Composition**
+
+2. **Receiver post-processing**
 
 :::{.fragment}
-Let $H$ be the Hamming distance. For some fixed $x \in \mathsf{E} = \mathsf{X}$, 
+:::{.callout-note}
+## Definition: Receiver Post-Processing
 
-$$\mathcal{Q}_x = \bigcup_{\substack{x^{\prime} \in \mathsf{X}\\ H(x,x^{\prime}) = 1}} \left\{Q \in \mathscr{P}(\mathsf{X}): Q(\{x\}) + Q(\{x^\prime\})=1\right\}$$
+A guarantee $\mathrm{D}$ satisfies the receiver post-processing property if $M \in \mathfrak{C}(\mathrm{D})$ implies that $M\otimes K \in \mathfrak{C}(\mathrm{D})$ for all Markov kernels $K$ independent of the data $x$.
 :::
-:::{.fragment}
-Further, for $p \in (0,1)$, consider the restriction
+:::
 
-$$\mathcal{Q}_x^p = \{Q\in\mathcal{Q}_x:Q(\{x\}) \geq p\}$$
+3. Do not satisfy (Sender) post-processing
+
+## Returning to DP
+
+Recall the Persuasive Privacy elements $(\mathcal{Q}_x, S, \kappa, \delta)$, and consider
+
+1. Family of alternative hypothesis priors
+
+::: {.fragment}
+$$\mathcal{H}_x  = \{ Q \in \mathcal P_2:x^\prime \sim x, Q(\{ x , x^\prime \})= 1 \}$$
 :::
+
+2. Log-probability scoring rule 
+
+::: {.fragment}
+$$S(P,x) = -\log p(x)$$
+:::
+
+## Returning to DP
+
+Alternative hypothesis prior class and log-probability score recover Probabilistic DP as instance of Persuasive Privacy
+
+::: {.fragment}
+$$\inf_{x\sim x^\prime}\mathbb{P}_{x}\left[ m(x,T) \leq \exp\{\epsilon\} m(x^\prime, T) \right] \geq 1 - \delta$$
+::: 
+
+- Pure DP is a special case ($\delta = 0$)
 
 ## Scoring rule privacy: Example 1
 
@@ -927,7 +1015,7 @@ $$\mathcal{Q}_x^p = \{Q\in\mathcal{Q}_x:Q(\{x\}) \geq p\}$$
 
 Let $p = \frac{\mathrm{d}P}{\mathrm{d}\mu}$ be the Radon–Nikodym derivative of $P$ w.r.t. some base measure $\mu$, take
 
-$$S(P,x) = -\log p(x)$$
+
 
 
 :::{.fragment}
@@ -956,7 +1044,7 @@ with $\epsilon = \log (1-p) - \log(e^{-\kappa} - p)$
 
 $$\inf_{\substack{x,x^{\prime}\in\mathsf{X}\\H(x,x^{\prime}) = 1}}\mathbb{P}_x\left[m(T \mid x) \geq e^\epsilon m(T \mid x^{\prime})\right] \leq \delta$$
 
-- This is Probabilistic Differential Privacy (PrDP)^[@guingona2023comparing]
+- This is Probabilistic Differential Privacy (PrDP)^
 - Scoring rule privacy contains PrDP as a special case
 - PrDP $\Rightarrow$ Approximate Differential Privacy (ADP)^[@dwork2006approxdp]
 
