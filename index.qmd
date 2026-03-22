@@ -148,7 +148,7 @@ graph G {
 }
 ```
 
-## Today's talk
+## Today's talk[^sl]
 
 :::{.nonincremental}
 
@@ -164,6 +164,8 @@ graph G {
 See: **Bon**, Bailie, Rousseau & Robert (2026) arXiv 2601.22945 
 
 _Under review at ICML 2026_
+
+[^sl]: Slides available https://bonstats.github.io/privacy26
 
 
 # Differential privacy
@@ -1068,6 +1070,14 @@ The average mechanism
   - e.g. MCMC without privacy perturbations (posterior summary statistics)
   - A "decomposition rule"
 
+## Summary
+
+- Framework for purpose-driven privacy definitions (rigorously justified)
+  - All assumptions stated, data privacy anatomy flexible
+- Assessment of existing privacy guarantees with game theory
+- New interpretations of post-processing property
+- Established that privacy guarantees can exist for deterministic algorithms
+
 
 ## Ongoing work
 
@@ -1078,7 +1088,7 @@ The average mechanism
 
 - Nonparametric prior families 
 
-- Work with Independent Commissioner Against Corruption (SA)
+- Independent Commissioner Against Corruption (SA)
 
 **Medium term**
   
@@ -1088,9 +1098,8 @@ The average mechanism
 
 
 
-:::{.fragment}
-Thank you!
-:::
+# Thank you!
+
 
 ## References
 

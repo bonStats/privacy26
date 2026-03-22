@@ -442,8 +442,8 @@ Joshua J Bon
 </div>
 </div>
 </section>
-<section id="todays-talk-1" class="slide level2">
-<h2>Today’s talk</h2>
+<section id="todays-talksl" class="slide level2">
+<h2>Today’s talk<sup>1</sup></h2>
 <ol type="1">
 <li>Differential privacy</li>
 <li>Privacy from the ground up</li>
@@ -453,7 +453,7 @@ Joshua J Bon
 </ol>
 <p>See: <strong>Bon</strong>, Bailie, Rousseau &amp; Robert (2026) arXiv 2601.22945</p>
 <p><em>Under review at ICML 2026</em></p>
-</section>
+<aside><ol class="aside-footnotes"><li id="fn10"><p>Slides available https://bonstats.github.io/privacy26</p></li></ol></aside></section>
 <section>
 <section id="differential-privacy" class="title-slide slide level1 center">
 <h1>Differential privacy</h1>
@@ -945,7 +945,7 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 <li class="fragment">A “privacy score”</li>
 </ul></li>
 </ul>
-<aside><ol class="aside-footnotes"><li id="fn10"><p><span class="citation" data-cites="grunwald2004game">Grünwald and Dawid (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span></p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn11"><p><span class="citation" data-cites="grunwald2004game">Grünwald and Dawid (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span></p></li></ol></aside></section>
 <section id="measuring-privacy-1" class="slide level2">
 <h2>Measuring privacy</h2>
 <div class="callout callout-note callout-titled callout-style-default">
@@ -1269,17 +1269,39 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 </ul></li>
 </ul>
 </section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li class="fragment">Framework for purpose-driven privacy definitions (rigorously justified)
+<ul>
+<li class="fragment">All assumptions stated, data privacy anatomy flexible</li>
+</ul></li>
+<li class="fragment">Assessment of existing privacy guarantees with game theory</li>
+<li class="fragment">New interpretations of post-processing property</li>
+<li class="fragment">Established that privacy guarantees can exist for deterministic algorithms</li>
+</ul>
+</section>
 <section id="ongoing-work" class="slide level2">
 <h2>Ongoing work</h2>
+<p><strong>Short term</strong></p>
 <ul>
-<li class="fragment"><p>Decomposition rule (for deterministic mechanisms)</p></li>
+<li class="fragment"><p>Decomposition rule (for deterministic mechanisms)</p>
+<ul>
+<li class="fragment">Use noise in MCMC as additional privacy</li>
+</ul></li>
 <li class="fragment"><p>Nonparametric prior families</p></li>
-<li class="fragment"><p>Work with Independent Commissioner Against Corruption (SA)</p></li>
-<li class="fragment"><p>Privacy-utility trade-off</p></li>
+<li class="fragment"><p>Independent Commissioner Against Corruption (SA)</p></li>
 </ul>
-<div class="fragment">
-<p>Thank you!</p>
-</div>
+<p><strong>Medium term</strong></p>
+<ul>
+<li class="fragment"><p>Privacy-utility trade-off</p></li>
+<li class="fragment"><p>Computation (SMC, SBI) versus privacy approximation trade-off</p></li>
+</ul>
+</section></section>
+<section>
+<section id="thank-you" class="title-slide slide level1 center">
+<h1>Thank you!</h1>
+
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
