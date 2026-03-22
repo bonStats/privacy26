@@ -453,7 +453,7 @@ $M$ can be deterministic or randomised
 - Noisy optimisation
   - SGD: $\quad M(\mathrm{d}t_N \mid x) = \int_{\mathsf{T}_{-n}}\prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)$
 
-## Transperancy
+## Transparency
 
 **Privacy class**: A set of mechanisms that satisfy a given privacy definition.
 
@@ -467,7 +467,7 @@ $$M \in \mathfrak{C} \Longleftrightarrow M~\text{satisfies}~\text{PD}$$
 :::{.fragment}
 
 :::{.callout-note}
-## Assumption 1: Transperancy
+## Assumption 1: Transparency
 
 Sender shares the mechanism $M$ and privacy class $\mathfrak{C}$, for which $M \in \mathfrak{C}$, with Receiver. Further, the
 definitions of $M$ and $\mathfrak{C}$ do not depend on the data.
