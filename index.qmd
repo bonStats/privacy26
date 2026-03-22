@@ -1,6 +1,6 @@
 ---
 title: "Persuasive Privacy"
-subtitle: ""
+subtitle: "University of Melbourne, 23^rd^ March 2026"
 author: "Joshua J Bon"
 institute: "Adelaide University"
 bibliography: refs.bib
@@ -151,6 +151,112 @@ _Under review at ICML 2026_
 
 # Differential privacy
 
+## DP framework
+
+$$\text{Dataset}~x \overset{\text{release}}{\longrightarrow} \text{statistic}~T$$
+
+- $T \sim M(x,\cdot)$, with some mechanism $M$
+
+::: {.fragment}
+
+For example, let $T = \frac{1}{n}\sum_{i=1}^{n} x_i + Z$ with $Z \sim \mathcal{N}(0,\sigma^2)$
+
+:::
+
+::: {.fragment}
+$$M(x,\cdot) = \mathcal{N}(\overline{x}_n,\sigma^2)$$
+:::
+
+## DP Intuition
+
+Information about data $x$ leaked through statistic $T$ is controlled by how sensitive the mechanism $M(x,\cdot)$ is to $x$.
+
+::: {.fragment}
+
+Measuring sensitivity? I can take the derivative of $M(x,\cdot)$ w.r.t. $x$!
+
+:::
+
+::: {.fragment}
+
+No!
+
+:::
+
+## DP Definition
+
+Borrow from Lipschitz continuity: $M$ is $(\epsilon)$-DP if
+
+$$d_\text{P}[M(x,\cdot),M(x^\prime,\cdot)] \leq \exp(\epsilon) d_\text{X}[x,x^\prime]$$
+for all $(x,x^\prime) \in S$ where $S$ is a set of (data) neighbours.
+
+## Laplace mechanism
+
+A fundamental mechanism for DP adds Laplace noise to a deterministic function of the data to ensure privacy.
+
+
+
+## DP Definition
+
+Borrow from Lipschitz continuity: $M$ is $(\epsilon,\delta)$-DP if
+
+$$d_\text{P}[M(x,\cdot),M(x^\prime,\cdot)] \leq \exp(\epsilon) d_\text{X}[x,x^\prime] + \delta$$
+for all $(x,x^\prime) \in S$ where $S$ is a set of (data) neighbours.
+
+## Some DP Properties
+
+Focusing on $\epsilon$-DP.
+
+1. **Composition**: If $M_1$ and $M_2$ are $\epsilon$-DP then
+
+::: {.fragment}
+
+$$M_1 \otimes M_2 ~\text{is}~ 2\epsilon\text{-DP}$$
+
+:::
+
+2. **Post-processing**: If $K$ is independent of the data then
+ 
+::: {.fragment}
+
+$$M_1 K ~\text{is}~ \epsilon\text{-DP}$$
+
+:::
+
+## Some DP Properties
+
+Focusing on $\epsilon$-DP.
+
+:::{.nonincremental}
+
+1. **Composition**:
+
+If releasing the mean and variance of a dataset is $\epsilon$-DP respectively, then the joint release is $2\epsilon$-DP.
+
+2. **Post-processing**:
+
+If some mechanism $M$ creates a synthetic dataset that is $\epsilon$-DP then any summary statistic from the synthetic dataset will also be $\epsilon$-DP.
+
+:::
+
+
+## DP Semantics
+
+- Hypothesis testing: Type I & II error controlled by $(\epsilon, \delta)$
+  - [@wasserman2010statistical;@hall2013differential]
+- Bayesian evidence
+  - Prior-to-posterior ratio controlled
+    - [@dwork2006calibrating]
+  - Posterior-to-posterior ratio controlled
+    - [@kasiviswanathan2014semantics]
+- Game theory
+  - Controls expected utility 
+    - [@zhang2021more]
+
+::: {.fragment}
+**... post-hoc explanations of DP**
+:::
+
 
 
 # Privacy from the ground up
@@ -158,19 +264,19 @@ _Under review at ICML 2026_
 ## Overview of statistical data privacy
 
 :::{.callout-tip}
-## Statistician
+## Sender
 
 :::{.fragment}
-Government agency release **small area statistics** on a disease.
+Government agency release **small area statistics** on a disease
 :::
 
 :::
 
 :::{.callout-warning}
-## Adversary
+## Receiver
 
 :::{.fragment}
-Insurance company **raises premiums** based on inferred prevalence in a small town.
+Insurance company **raises premiums** using inferred disease prevalence in a small town
 :::
 
 :::
@@ -186,13 +292,25 @@ Statistic release $\longrightarrow$ adversarial decisions $\longrightarrow$ priv
 
 # Anatomy of statistical data privacy
 
+## The players
+
+### Sender
+
+- Custodian of data
+- Will use mechanism to release information about data
+
+### Receiver
+
+- Makes decision based on revealed information
+- Decision affects Sender's privacy
+
 ## Privacy function
 
-We measure the privacy effect with a **privacy function**
+Sender's privacy measured with a **privacy function**
 
 $$\rho:\mathcal{D} \times \mathsf{X} \rightarrow \mathbb{R}$$
 
-- Adversarial decision $\quad d_i \in \mathcal{D}$
+- Receiver's decision $\quad d_i \in \mathcal{D}$
 
 - Data value $\quad x \in \mathsf{X}$
 
@@ -271,13 +389,27 @@ $M$ can be deterministic or randomised
 - Noisy optimisation
   - SGD: $\quad M(\mathrm{d}t_N \mid x) = \int_{\mathsf{T}_{-n}}\prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)$
 
+## Transperancy
 
+**Privacy class**: A set of mechanisms that satisfy a given privacy definition.
 
-## The adversary
+:::{.fragment}
 
 :::{.callout-note}
-## Assumption 1: A Bayesian adversary
-The adversary makes Bayesian decisions
+## Assumption 1: Transperancy
+
+Sender shares the mechanism $M$ and privacy class $\mathfrak{C}$, for which $M \in \mathfrak{C}$, with Receiver. Further, the
+definitions of $M$ and $\mathfrak{C}$ do not depend on the data.
+
+:::
+
+:::
+
+## Receiver
+
+:::{.callout-note}
+## Assumption 2: Bayesian adversary
+Receiver makes Bayesian decisions
 :::
 
 1. Holds a prior distribution over the data $Q$
@@ -351,19 +483,19 @@ The adversary makes Bayesian decisions
 \node[greybox, fit=(sdata) (sdatad) (sstat) (sstatd) (spriv) (sprivd)] (statbox) {};
 \node[greybox, fit=(adata) (adatad) (apost) (apostd) (aact) (aactd) (aloss) (alossd)] (advbox) {};
 
-\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Statistician};
-\node[anchor=south east] at (advbox.north) {Adversary model};
+\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Sender};
+\node[anchor=south east] at (advbox.north) {Receiver model};
 
 \end{tikzpicture}
 
 ```
 
-## Adversary's optimal decision
+## Receiver's optimal decision
 
 From Assumption 1:
 
 :::{.callout-note}
-## Adversary's optimal decision
+## Receiver's optimal decision
 $$
 d^{P} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim P}[ \ell(d,z)]
 $$
@@ -378,13 +510,13 @@ To measure privacy: **We need assumptions on $Q$ and $\ell$**
 
 :::{.callout-note}
 ## Assumption 2: Adversarial loss function
-The adversary has loss function $\ell(d,x) = \rho(d,x)$
+Receiver has loss function $\ell(d,x) = \rho(d,x)$
 :::
 
-- Interpretation 1: Adversary targets privacy
+- Interpretation 1: Receiver targets privacy
 
 :::{.fragment}
-If $d^P_{\ell^\prime}$ is the adversary's optimal decision under $(P,\ell^\prime)$ then
+If $d^P_{\ell^\prime}$ is Receiver's optimal decision under $(P,\ell^\prime)$ then
 :::
 
 ::: {.fragment}
@@ -392,7 +524,7 @@ $$\mathbb{E}_{x \sim P}[ \rho(d^{P}_\rho,x)] \leq \mathbb{E}_{x \sim P}[ \rho(d^
 :::
 
 
-- Interpretation 2: data-averaged **worst-case** for statistician
+- Interpretation 2: data-averaged **worst-case** for Sender
 
 ## Unknown adversaries
 
@@ -484,8 +616,8 @@ $$
 \node[greybox, fit=(sdata) (sdatad) (sstat) (sstatd) (spriv) (sprivd)] (statbox) {};
 \node[greybox, fit=(adata) (adatad) (apost) (apostd) (aact) (aactd) (aloss) (alossd)] (advbox) {};
 
-\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Statistician};
-\node[anchor=south east] at (advbox.north) {Adversary model};
+\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Sender};
+\node[anchor=south east] at (advbox.north) {Receiver model};
 
 \end{tikzpicture}
 
@@ -565,8 +697,8 @@ $$
 \node[greybox, fit=(sdata) (sdatad) (sstat) (sstatd) (spriv) (sprivd)] (statbox) {};
 \node[greybox, fit=(adata) (adatad) (apost) (apostd) (aact) (aactd) (aloss) (alossd)] (advbox) {};
 
-\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Statistician};
-\node[anchor=south east, xshift=2.35cm] at (advbox.north) {Adversary model + assumptions};
+\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Sender};
+\node[anchor=south east, xshift=2.35cm] at (advbox.north) {Receiver model + assumptions};
 
 \end{tikzpicture}
 
@@ -589,13 +721,13 @@ $$M \in \mathcal{M}_{x} = \{M \in \mathcal{M}: M(~\cdot\mid x) \text{ is private
 
 :::{.callout-note}
 ## Assumption 4: Protected set
-The statistician announces a protected set $\mathsf{E} \subset \mathsf{X}$ where the mechanism satisfies
+Sender announces a protected set $\mathsf{E} \subset \mathsf{X}$ where the mechanism satisfies
 
 $$M \in \mathcal{M}_{\mathsf{E}} = \{M \in \mathcal{M}: M(~\cdot\mid x) \text{ is private } \forall x \in \mathsf{E}\}$$
 :::
 
 - Information about $x$ obscured by protecting all $x \in \mathsf{E}$
-- But the adversary learns $x \in \mathsf{E}$
+- But Receiver learns $x \in \mathsf{E}$
 
 ## Anatomy of statistical data privacy
 
@@ -671,8 +803,8 @@ $$M \in \mathcal{M}_{\mathsf{E}} = \{M \in \mathcal{M}: M(~\cdot\mid x) \text{ i
 \node[greybox, fit=(sdata) (sdatad) (sstat) (sstatd) (spriv) (sprivd)] (statbox) {};
 \node[greybox, fit=(adata) (adatad) (apost) (apostd) (aact) (aactd) (aloss) (alossd)] (advbox) {};
 
-\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Statistician};
-\node[anchor=south east, xshift=2.35cm] at (advbox.north) {Adversary model + assumptions};
+\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Sender};
+\node[anchor=south east, xshift=2.35cm] at (advbox.north) {Receiver model + assumptions};
 
 \end{tikzpicture}
 
@@ -681,9 +813,10 @@ $$M \in \mathcal{M}_{\mathsf{E}} = \{M \in \mathcal{M}: M(~\cdot\mid x) \text{ i
 
 ## Anatomy of statistical data privacy
 
-```{r dtp5, engine = 'tikz',   fig.align = 'center', cache=TRUE}
+```{r dtp5, engine = 'tikz',   fig.align = 'center', cache=TRUE, engine.opts = list(template = "tikz2pdf.tex")}
 
 \begin{tikzpicture}
+
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{fit}
@@ -711,8 +844,8 @@ $$M \in \mathcal{M}_{\mathsf{E}} = \{M \in \mathcal{M}: M(~\cdot\mid x) \text{ i
 \node (sstat) [pb, below=0.5cm of mech] {$T$};
 \node (sstatd) [desc, left=0pt of sstat] {Statistic};
 
-\node (strans) [pb, below=0.5cm of sstat] {$x \in \mathsf{E}$};
-\node (stransd) [desc, left=0pt of strans] {Protected set};
+\node (strans) [pb, below=0.5cm of sstat] {$\mathfrak{C}$};
+\node (stransd) [desc, left=0pt of strans] {Privacy class};
 
 \node (spriv) [st, below=1.5cm of strans] {$\rho(d,x)$};
 \node (sprivd) [desc, left=0pt of spriv] {Privacy};
@@ -748,8 +881,8 @@ $$M \in \mathcal{M}_{\mathsf{E}} = \{M \in \mathcal{M}: M(~\cdot\mid x) \text{ i
 \node[greybox, fit=(sdata) (sdatad) (sstat) (sstatd) (spriv) (sprivd) (strans) (stransd)] (statbox) {};
 \node[greybox, fit=(adata) (adatad) (apost) (apostd) (aact) (aactd) (aloss) (alossd)] (advbox) {};
 
-\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Statistician};
-\node[anchor=south east, xshift=2.35cm] at (advbox.north) {Adversary model + assumptions};
+\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Sender};
+\node[anchor=south east, xshift=2.35cm] at (advbox.north) {Receiver model + assumptions};
 
 \end{tikzpicture}
 
@@ -854,8 +987,8 @@ $$
 $$
 :::
 
-- Considers adversary's information gain
-- Statistician's relative privacy change (worst-case)
+- Considers Receiver's information gain
+- Sender's relative privacy change (worst-case)
 
 ## Measuring privacy
 
@@ -970,12 +1103,12 @@ $$\inf_{\substack{x,x^{\prime}\in\mathsf{X}\\H(x,x^{\prime}) = 1}}\mathbb{P}_x\l
 
 - PrDP and ADP are relative notions of privacy
 - Can be derived by considering adversarial decisions
-- PrDP and ADP assume a minimum strength of the adversary
+- PrDP and ADP assume a minimum strength of Receiver
   - $\mathcal{Q}_x^p = \{Q\in\mathcal{Q}_x:Q(\{x\}) \geq p\}$
 - ADP has post-processing invariance property, PrDP **does not**
 - From our theory: post-processing by the 
-    - adversary **will not** change their posterior distribution
-    - statistician **will** change the privacy guarantee
+    - Receiver **will not** change their posterior distribution
+    - Sender **will** change the privacy guarantee
 
 ## Scoring rule privacy
 

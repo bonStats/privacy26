@@ -169,6 +169,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Persuasive Privacy</h1>
+  <p class="subtitle">University of Melbourne, 23<sup>rd</sup> March 2026</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -401,11 +402,106 @@ Joshua J Bon
 <p>See: <strong>Bon</strong>, Bailie, Rousseau &amp; Robert (2026) arXiv 2601.22945</p>
 <p><em>Under review at ICML 2026</em></p>
 </section>
+<section>
 <section id="differential-privacy" class="title-slide slide level1 center">
 <h1>Differential privacy</h1>
 
 </section>
-
+<section id="dp-framework" class="slide level2">
+<h2>DP framework</h2>
+<p><span class="math display">\text{Dataset}~x \overset{\text{release}}{\longrightarrow} \text{statistic}~T</span></p>
+<ul>
+<li class="fragment"><span class="math inline">T \sim M(x,\cdot)</span>, with some mechanism <span class="math inline">M</span></li>
+</ul>
+<div class="fragment">
+<p>For example, let <span class="math inline">T = \frac{1}{n}\sum_{i=1}^{n} x_i + Z</span> with <span class="math inline">Z \sim \mathcal{N}(0,\sigma^2)</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">M(x,\cdot) = \mathcal{N}(\overline{x}_n,\sigma^2)</span></p>
+</div>
+</section>
+<section id="dp-intuition" class="slide level2">
+<h2>DP Intuition</h2>
+<p>Information about data <span class="math inline">x</span> leaked through statistic <span class="math inline">T</span> is controlled by how sensitive the mechanism <span class="math inline">M(x,\cdot)</span> is to <span class="math inline">x</span>.</p>
+<div class="fragment">
+<p>Measuring sensitivity? I can take the derivative of <span class="math inline">M(x,\cdot)</span> w.r.t. <span class="math inline">x</span>!</p>
+</div>
+<div class="fragment">
+<p>No!</p>
+</div>
+</section>
+<section id="dp-definition" class="slide level2">
+<h2>DP Definition</h2>
+<p>Borrow from Lipschitz continuity: <span class="math inline">M</span> is <span class="math inline">(\epsilon)</span>-DP if</p>
+<p><span class="math display">d_\text{P}[M(x,\cdot),M(x^\prime,\cdot)] \leq \exp(\epsilon) d_\text{X}[x,x^\prime]</span> for all <span class="math inline">(x,x^\prime) \in S</span> where <span class="math inline">S</span> is a set of (data) neighbours.</p>
+</section>
+<section id="laplace-mechanism" class="slide level2">
+<h2>Laplace mechanism</h2>
+<p>A fundamental mechanism for DP adds Laplace noise to a deterministic function of the data to ensure privacy.</p>
+</section>
+<section id="dp-definition-1" class="slide level2">
+<h2>DP Definition</h2>
+<p>Borrow from Lipschitz continuity: <span class="math inline">M</span> is <span class="math inline">(\epsilon,\delta)</span>-DP if</p>
+<p><span class="math display">d_\text{P}[M(x,\cdot),M(x^\prime,\cdot)] \leq \exp(\epsilon) d_\text{X}[x,x^\prime] + \delta</span> for all <span class="math inline">(x,x^\prime) \in S</span> where <span class="math inline">S</span> is a set of (data) neighbours.</p>
+</section>
+<section id="some-dp-properties" class="slide level2">
+<h2>Some DP Properties</h2>
+<p>Focusing on <span class="math inline">\epsilon</span>-DP.</p>
+<ol type="1">
+<li class="fragment"><strong>Composition</strong>: If <span class="math inline">M_1</span> and <span class="math inline">M_2</span> are <span class="math inline">\epsilon</span>-DP then</li>
+</ol>
+<div class="fragment">
+<p><span class="math display">M_1 \otimes M_2 ~\text{is}~ 2\epsilon\text{-DP}</span></p>
+</div>
+<ol start="2" type="1">
+<li class="fragment"><strong>Post-processing</strong>: If <span class="math inline">K</span> is independent of the data then</li>
+</ol>
+<div class="fragment">
+<p><span class="math display">M_1 K ~\text{is}~ \epsilon\text{-DP}</span></p>
+</div>
+</section>
+<section id="some-dp-properties-1" class="slide level2">
+<h2>Some DP Properties</h2>
+<p>Focusing on <span class="math inline">\epsilon</span>-DP.</p>
+<ol type="1">
+<li><strong>Composition</strong>:</li>
+</ol>
+<p>If releasing the mean and variance of a dataset is <span class="math inline">\epsilon</span>-DP respectively, then the joint release is <span class="math inline">2\epsilon</span>-DP.</p>
+<ol start="2" type="1">
+<li><strong>Post-processing</strong>:</li>
+</ol>
+<p>If some mechanism <span class="math inline">M</span> creates a synthetic dataset that is <span class="math inline">\epsilon</span>-DP then any summary statistic from the synthetic dataset will also be <span class="math inline">\epsilon</span>-DP.</p>
+</section>
+<section id="dp-semantics" class="slide level2">
+<h2>DP Semantics</h2>
+<ul>
+<li class="fragment">Hypothesis testing: Type I &amp; II error controlled by <span class="math inline">(\epsilon, \delta)</span>
+<ul>
+<li class="fragment"><span class="citation" data-cites="wasserman2010statistical hall2013differential">(<a href="#/references" role="doc-biblioref" onclick="">Wasserman and Zhou 2010</a>; <a href="#/references" role="doc-biblioref" onclick="">Hall, Rinaldo, and Wasserman 2013</a>)</span></li>
+</ul></li>
+<li class="fragment">Bayesian evidence
+<ul>
+<li class="fragment">Prior-to-posterior ratio controlled
+<ul>
+<li class="fragment"><span class="citation" data-cites="dwork2006calibrating">(<a href="#/references" role="doc-biblioref" onclick="">Dwork, McSherry, et al. 2006</a>)</span></li>
+</ul></li>
+<li class="fragment">Posterior-to-posterior ratio controlled
+<ul>
+<li class="fragment"><span class="citation" data-cites="kasiviswanathan2014semantics">(<a href="#/references" role="doc-biblioref" onclick="">Kasiviswanathan and Smith 2014</a>)</span></li>
+</ul></li>
+</ul></li>
+<li class="fragment">Game theory
+<ul>
+<li class="fragment">Controls expected utility
+<ul>
+<li class="fragment"><span class="citation" data-cites="zhang2021more">(<a href="#/references" role="doc-biblioref" onclick="">Zhang et al. 2021</a>)</span></li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="fragment">
+<p><strong>… post-hoc explanations of DP</strong></p>
+</div>
+</section></section>
 <section>
 <section id="privacy-from-the-ground-up" class="title-slide slide level1 center">
 <h1>Privacy from the ground up</h1>
@@ -419,11 +515,11 @@ Joshua J Bon
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Statistician</strong></p>
+<p><strong>Sender</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
-<p>Government agency release <strong>small area statistics</strong> on a disease.</p>
+<p>Government agency release <strong>small area statistics</strong> on a disease</p>
 </div>
 </div>
 </div>
@@ -434,11 +530,11 @@ Joshua J Bon
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Adversary</strong></p>
+<p><strong>Receiver</strong></p>
 </div>
 <div class="callout-content">
 <div class="fragment">
-<p>Insurance company <strong>raises premiums</strong> based on inferred prevalence in a small town.</p>
+<p>Insurance company <strong>raises premiums</strong> using inferred disease prevalence in a small town</p>
 </div>
 </div>
 </div>
@@ -464,12 +560,25 @@ Joshua J Bon
 <h1>Anatomy of statistical data privacy</h1>
 
 </section>
+<section id="the-players" class="slide level2">
+<h2>The players</h2>
+<h3 id="sender-1">Sender</h3>
+<ul>
+<li class="fragment">Custodian of data</li>
+<li class="fragment">Will use mechanism to release information about data</li>
+</ul>
+<h3 id="receiver-1">Receiver</h3>
+<ul>
+<li class="fragment">Makes decision based on revealed information</li>
+<li class="fragment">Decision affects Sender’s privacy</li>
+</ul>
+</section>
 <section id="privacy-function" class="slide level2">
 <h2>Privacy function</h2>
-<p>We measure the privacy effect with a <strong>privacy function</strong></p>
+<p>Sender’s privacy measured with a <strong>privacy function</strong></p>
 <p><span class="math display">\rho:\mathcal{D} \times \mathsf{X} \rightarrow \mathbb{R}</span></p>
 <ul>
-<li class="fragment"><p>Adversarial decision <span class="math inline">\quad d_i \in \mathcal{D}</span></p></li>
+<li class="fragment"><p>Receiver’s decision <span class="math inline">\quad d_i \in \mathcal{D}</span></p></li>
 <li class="fragment"><p>Data value <span class="math inline">\quad x \in \mathsf{X}</span></p></li>
 </ul>
 <div class="fragment">
@@ -542,18 +651,37 @@ Joshua J Bon
 </ul></li>
 </ul>
 </section>
-<section id="the-adversary" class="slide level2">
-<h2>The adversary</h2>
+<section id="transperancy" class="slide level2">
+<h2>Transperancy</h2>
+<p><strong>Privacy class</strong>: A set of mechanisms that satisfy a given privacy definition.</p>
+<div class="fragment">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Assumption 1: A Bayesian adversary</strong></p>
+<p><strong>Assumption 1: Transperancy</strong></p>
 </div>
 <div class="callout-content">
-<p>The adversary makes Bayesian decisions</p>
+<p>Sender shares the mechanism <span class="math inline">M</span> and privacy class <span class="math inline">\mathfrak{C}</span>, for which <span class="math inline">M \in \mathfrak{C}</span>, with Receiver. Further, the definitions of <span class="math inline">M</span> and <span class="math inline">\mathfrak{C}</span> do not depend on the data.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="receiver-2" class="slide level2">
+<h2>Receiver</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Assumption 2: Bayesian adversary</strong></p>
+</div>
+<div class="callout-content">
+<p>Receiver makes Bayesian decisions</p>
 </div>
 </div>
 </div>
@@ -570,8 +698,8 @@ Joshua J Bon
 <h2>Anatomy of statistical data privacy</h2>
 
 <img data-src="index_files/figure-revealjs/dtp-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="adversarys-optimal-decision" class="slide level2">
-<h2>Adversary’s optimal decision</h2>
+<section id="receivers-optimal-decision" class="slide level2">
+<h2>Receiver’s optimal decision</h2>
 <p>From Assumption 1:</p>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -579,7 +707,7 @@ Joshua J Bon
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Adversary’s optimal decision</strong></p>
+<p><strong>Receiver’s optimal decision</strong></p>
 </div>
 <div class="callout-content">
 <p><span class="math display">
@@ -603,21 +731,21 @@ d^{P} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim P}[ \ell(d,z)]
 <p><strong>Assumption 2: Adversarial loss function</strong></p>
 </div>
 <div class="callout-content">
-<p>The adversary has loss function <span class="math inline">\ell(d,x) = \rho(d,x)</span></p>
+<p>Receiver has loss function <span class="math inline">\ell(d,x) = \rho(d,x)</span></p>
 </div>
 </div>
 </div>
 <ul>
-<li class="fragment">Interpretation 1: Adversary targets privacy</li>
+<li class="fragment">Interpretation 1: Receiver targets privacy</li>
 </ul>
 <div class="fragment">
-<p>If <span class="math inline">d^P_{\ell^\prime}</span> is the adversary’s optimal decision under <span class="math inline">(P,\ell^\prime)</span> then</p>
+<p>If <span class="math inline">d^P_{\ell^\prime}</span> is Receiver’s optimal decision under <span class="math inline">(P,\ell^\prime)</span> then</p>
 </div>
 <div class="fragment">
 <p><span class="math display">\mathbb{E}_{x \sim P}[ \rho(d^{P}_\rho,x)] \leq \mathbb{E}_{x \sim P}[ \rho(d^P_{\ell^\prime},x)]</span></p>
 </div>
 <ul>
-<li class="fragment">Interpretation 2: data-averaged <strong>worst-case</strong> for statistician</li>
+<li class="fragment">Interpretation 2: data-averaged <strong>worst-case</strong> for Sender</li>
 </ul>
 </section>
 <section id="unknown-adversaries-1" class="slide level2">
@@ -691,14 +819,14 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 <p><strong>Assumption 4: Protected set</strong></p>
 </div>
 <div class="callout-content">
-<p>The statistician announces a protected set <span class="math inline">\mathsf{E} \subset \mathsf{X}</span> where the mechanism satisfies</p>
+<p>Sender announces a protected set <span class="math inline">\mathsf{E} \subset \mathsf{X}</span> where the mechanism satisfies</p>
 <p><span class="math display">M \in \mathcal{M}_{\mathsf{E}} = \{M \in \mathcal{M}: M(~\cdot\mid x) \text{ is private } \forall x \in \mathsf{E}\}</span></p>
 </div>
 </div>
 </div>
 <ul>
 <li class="fragment">Information about <span class="math inline">x</span> obscured by protecting all <span class="math inline">x \in \mathsf{E}</span></li>
-<li class="fragment">But the adversary learns <span class="math inline">x \in \mathsf{E}</span></li>
+<li class="fragment">But Receiver learns <span class="math inline">x \in \mathsf{E}</span></li>
 </ul>
 </section>
 <section id="anatomy-of-statistical-data-privacy-4" class="slide level2">
@@ -851,8 +979,8 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 </div>
 </div>
 <ul>
-<li class="fragment">Considers adversary’s information gain</li>
-<li class="fragment">Statistician’s relative privacy change (worst-case)</li>
+<li class="fragment">Considers Receiver’s information gain</li>
+<li class="fragment">Sender’s relative privacy change (worst-case)</li>
 </ul>
 </section>
 <section id="measuring-privacy-5" class="slide level2">
@@ -970,21 +1098,21 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 <li class="fragment">Scoring rule privacy contains PrDP as a special case</li>
 <li class="fragment">PrDP <span class="math inline">\Rightarrow</span> Approximate Differential Privacy (ADP)<sup>2</sup></li>
 </ul>
-<aside><ol class="aside-footnotes"><li id="fn13"><p><span class="citation" data-cites="guingona2023comparing">Guingona et al. (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span></p></li><li id="fn14"><p><span class="citation" data-cites="dwork2006approxdp">Dwork et al. (<a href="#/references" role="doc-biblioref" onclick="">2006</a>)</span></p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn13"><p><span class="citation" data-cites="guingona2023comparing">Guingona et al. (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span></p></li><li id="fn14"><p><span class="citation" data-cites="dwork2006approxdp">Dwork, Kenthapadi, et al. (<a href="#/references" role="doc-biblioref" onclick="">2006</a>)</span></p></li></ol></aside></section>
 <section id="interpretation-example-1-1" class="slide level2">
 <h2>Interpretation: Example 1</h2>
 <ul>
 <li class="fragment">PrDP and ADP are relative notions of privacy</li>
 <li class="fragment">Can be derived by considering adversarial decisions</li>
-<li class="fragment">PrDP and ADP assume a minimum strength of the adversary
+<li class="fragment">PrDP and ADP assume a minimum strength of Receiver
 <ul>
 <li class="fragment"><span class="math inline">\mathcal{Q}_x^p = \{Q\in\mathcal{Q}_x:Q(\{x\}) \geq p\}</span></li>
 </ul></li>
 <li class="fragment">ADP has post-processing invariance property, PrDP <strong>does not</strong></li>
 <li class="fragment">From our theory: post-processing by the
 <ul>
-<li class="fragment">adversary <strong>will not</strong> change their posterior distribution</li>
-<li class="fragment">statistician <strong>will</strong> change the privacy guarantee</li>
+<li class="fragment">Receiver <strong>will not</strong> change their posterior distribution</li>
+<li class="fragment">Sender <strong>will</strong> change the privacy guarantee</li>
 </ul></li>
 </ul>
 </section>
@@ -1145,6 +1273,9 @@ Bretherton, Adam, Joshua J Bon, David J Warne, Kerrie Mengersen, and Christopher
 <div id="ref-dwork2006approxdp" class="csl-entry" role="listitem">
 Dwork, Cynthia, Krishnaram Kenthapadi, Frank McSherry, Ilya Mironov, and Moni Naor. 2006. <span>“Our Data, Ourselves: Privacy via Distributed Noise Generation.”</span> In <em>Advances in Cryptology - EUROCRYPT 2006</em>, edited by Serge Vaudenay, 486–503. Berlin, Heidelberg: Springer Berlin Heidelberg.
 </div>
+<div id="ref-dwork2006calibrating" class="csl-entry" role="listitem">
+Dwork, Cynthia, Frank McSherry, Kobbi Nissim, and Adam Smith. 2006. <span>“Calibrating Noise to Sensitivity in Private Data Analysis.”</span> In <em>Theory of Cryptography Conference</em>, 265–84. Springer.
+</div>
 <div id="ref-gneiting2007strictly" class="csl-entry" role="listitem">
 Gneiting, T., and A. E. Raftery. 2007. <span>“Strictly Proper Scoring Rules, Prediction, and Estimation.”</span> <em>J. American Statistical Assoc.</em> 102 (477): 359–78.
 </div>
@@ -1154,11 +1285,23 @@ Grünwald, Peter D, and A Philip Dawid. 2004. <span>“Game Theory, Maximum Entr
 <div id="ref-guingona2023comparing" class="csl-entry" role="listitem">
 Guingona, Vincent, Alexei Kolesnikov, Julianne Nierwinski, and Avery Schweitzer. 2023. <span>“Comparing Approximate and Probabilistic Differential Privacy Parameters.”</span> <em>Information Processing Letters</em> 182: 106380.
 </div>
+<div id="ref-hall2013differential" class="csl-entry" role="listitem">
+Hall, Rob, Alessandro Rinaldo, and Larry Wasserman. 2013. <span>“Differential Privacy for Functions and Functional Data.”</span> <em>The Journal of Machine Learning Research</em> 14 (1): 703–27.
+</div>
 <div id="ref-hassan2024federated" class="csl-entry" role="listitem">
 Hassan, Conor, Joshua J Bon, Elizaveta Semenova, Antonietta Mira, and Kerrie Mengersen. 2024. <span>“Federated Learning for Non-Factorizable Models Using Deep Generative Prior Approximations.”</span>
 </div>
+<div id="ref-kasiviswanathan2014semantics" class="csl-entry" role="listitem">
+Kasiviswanathan, Shiva P, and Adam Smith. 2014. <span>“On the ’Semantics’ of Differential Privacy: A Bayesian Formulation.”</span> <em>Journal of Privacy and Confidentiality</em> 6 (1).
+</div>
 <div id="ref-oflaherty2021teen" class="csl-entry" role="listitem">
 O’Flaherty, Martin, Sara Kalucza, and Joshua J Bon. 2023. <span>“Does Anyone Suffer from Teenage Motherhood? Mental Health Effects of Teen Motherhood in the UK Are Small and Homogeneous.”</span> <em>Demography</em> 60 (3): 707–29.
+</div>
+<div id="ref-wasserman2010statistical" class="csl-entry" role="listitem">
+Wasserman, Larry, and Shuheng Zhou. 2010. <span>“A Statistical Framework for Differential Privacy.”</span> <em>Journal of the American Statistical Association</em> 105 (489): 375–89.
+</div>
+<div id="ref-zhang2021more" class="csl-entry" role="listitem">
+Zhang, Lefeng, Tianqing Zhu, Ping Xiong, Wanlei Zhou, and Philip S Yu. 2021. <span>“More Than Privacy: Adopting Differential Privacy in Game-Theoretic Mechanism Design.”</span> <em>ACM Computing Surveys (CSUR)</em> 54 (7): 1–37.
 </div>
 </div>
 </section></section>
