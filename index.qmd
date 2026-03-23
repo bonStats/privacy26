@@ -478,7 +478,7 @@ $$\rho(d,x) = -\log d(x)$$
  
 A statistic $T \in \mathsf{T}$ is output from a mechanism $M$ given $x$
 
-$$T \sim M(~\cdot \mid x)$$
+$$T \sim M(x,\cdot)$$
 
 - $M:\mathcal{T} \times \mathsf{X} \rightarrow [0,1]$ for $(\mathsf{T},\mathcal{T})$ measurable space
 
@@ -487,10 +487,10 @@ $$T \sim M(~\cdot \mid x)$$
 $M$ can be deterministic or randomised
 
 - Summary statistics $\quad\tau:\mathsf{X}\rightarrow\mathsf{T}$
-  - $M(~\cdot \mid x) = \delta_{\tau(x)}(\cdot)$ 
+  - $M(x,\cdot) = \delta_{\tau(x)}(\cdot)$ 
 
 - Noisy summary statistics
-  - $M(~\cdot \mid x) = \mathcal{N}(~\cdot \mid  \tau(x), \sigma^2)$
+  - $M(x,\cdot) = \mathcal{N}(~\cdot \mid  \tau(x), \sigma^2)$
   
 - Composition of multiple mechanisms
 
@@ -499,14 +499,14 @@ $M$ can be deterministic or randomised
 $M$ can be deterministic or randomised
 
 - Result of optimisation
-  - MLE: $\quad M(~\cdot \mid x) = \delta_{\tau(x)}(\cdot)$
+  - MLE: $\quad M(x,\cdot) = \delta_{\tau(x)}(\cdot)$
   - $\tau(x) = \arg\max_{\theta \in \Theta} \log L(x \mid \theta)$
   
 - Monte Carlo output
-  - MCMC: $\quad M(\mathrm{d}t_{1:N} \mid x) = \prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)$
+  - MCMC: $\quad M(x,\mathrm{d}t_{1:N}) = \prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)$
 
 - Noisy optimisation
-  - SGD: $\quad M(\mathrm{d}t_N \mid x) = \int_{\mathsf{T}_{-n}}\prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)$
+  - SGD: $\quad M(x,\mathrm{d}t_N) = \int_{\mathsf{T}_{-n}}\prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)$
 
 ## Transparency
 
@@ -967,7 +967,7 @@ $$
 
 But...
 
-- $Q_T$ may be random since $T\sim M(~\cdot\mid x)$
+- $Q_T$ may be random since $T\sim M(x, \cdot)$
 
 # Persuasive privacy
 
@@ -987,7 +987,7 @@ We say $M$ is $(\mathcal{Q}_x, S, \kappa, \delta)$-PP if
 
 $$\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q, x) - S(Q_{T}, x) \leq \kappa \right] \geq 1 - \delta,$$
 
-where $\mathbb{P}_x$ is w.r.t. $T \sim M(~\cdot\mid x)$.
+where $\mathbb{P}_x$ is w.r.t. $T \sim M(x,\cdot)$.
 
 :::
 :::
@@ -1001,7 +1001,7 @@ We say $M$ is $(\mathcal{Q}_x, S, \kappa, \delta)$-PP if
 
 $$\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q, x) - S(Q_{T}, x) \leq \kappa \right] \geq 1 - \delta,$$
 
-where $\mathbb{P}_x$ is w.r.t. $T \sim M(~\cdot\mid x)$.
+where $\mathbb{P}_x$ is w.r.t. $T \sim M(x,\cdot)$.
 
 :::
 
@@ -1084,7 +1084,7 @@ $$\inf_{x\sim x^\prime}\mathbb{P}_{x}\left[ m(x,T) \leq \exp\{\epsilon\} m(x^\pr
 - Demonstrate privacy for mean $\bar x$
 
 :::{.fragment}
-$$M(~\cdot\mid x) = \delta_{\bar x}(\cdot)$$
+$$M(x,\cdot) = \delta_{\bar x}(\cdot)$$
 
 :::
 

@@ -719,7 +719,7 @@ Joshua J Bon
 <section id="the-statistic" class="slide level2">
 <h2>The statistic</h2>
 <p>A statistic <span class="math inline">T \in \mathsf{T}</span> is output from a mechanism <span class="math inline">M</span> given <span class="math inline">x</span></p>
-<p><span class="math display">T \sim M(~\cdot \mid x)</span></p>
+<p><span class="math display">T \sim M(x,\cdot)</span></p>
 <ul>
 <li class="fragment"><span class="math inline">M:\mathcal{T} \times \mathsf{X} \rightarrow [0,1]</span> for <span class="math inline">(\mathsf{T},\mathcal{T})</span> measurable space</li>
 </ul>
@@ -730,11 +730,11 @@ Joshua J Bon
 <ul>
 <li class="fragment">Summary statistics <span class="math inline">\quad\tau:\mathsf{X}\rightarrow\mathsf{T}</span>
 <ul>
-<li class="fragment"><span class="math inline">M(~\cdot \mid x) = \delta_{\tau(x)}(\cdot)</span></li>
+<li class="fragment"><span class="math inline">M(x,\cdot) = \delta_{\tau(x)}(\cdot)</span></li>
 </ul></li>
 <li class="fragment">Noisy summary statistics
 <ul>
-<li class="fragment"><span class="math inline">M(~\cdot \mid x) = \mathcal{N}(~\cdot \mid  \tau(x), \sigma^2)</span></li>
+<li class="fragment"><span class="math inline">M(x,\cdot) = \mathcal{N}(~\cdot \mid  \tau(x), \sigma^2)</span></li>
 </ul></li>
 <li class="fragment">Composition of multiple mechanisms</li>
 </ul>
@@ -745,16 +745,16 @@ Joshua J Bon
 <ul>
 <li class="fragment">Result of optimisation
 <ul>
-<li class="fragment">MLE: <span class="math inline">\quad M(~\cdot \mid x) = \delta_{\tau(x)}(\cdot)</span></li>
+<li class="fragment">MLE: <span class="math inline">\quad M(x,\cdot) = \delta_{\tau(x)}(\cdot)</span></li>
 <li class="fragment"><span class="math inline">\tau(x) = \arg\max_{\theta \in \Theta} \log L(x \mid \theta)</span></li>
 </ul></li>
 <li class="fragment">Monte Carlo output
 <ul>
-<li class="fragment">MCMC: <span class="math inline">\quad M(\mathrm{d}t_{1:N} \mid x) = \prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)</span></li>
+<li class="fragment">MCMC: <span class="math inline">\quad M(x,\mathrm{d}t_{1:N}) = \prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)</span></li>
 </ul></li>
 <li class="fragment">Noisy optimisation
 <ul>
-<li class="fragment">SGD: <span class="math inline">\quad M(\mathrm{d}t_N \mid x) = \int_{\mathsf{T}_{-n}}\prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)</span></li>
+<li class="fragment">SGD: <span class="math inline">\quad M(x,\mathrm{d}t_N) = \int_{\mathsf{T}_{-n}}\prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)</span></li>
 </ul></li>
 </ul>
 </section>
@@ -1081,7 +1081,7 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 </div>
 <p>But…</p>
 <ul>
-<li class="fragment"><span class="math inline">Q_T</span> may be random since <span class="math inline">T\sim M(~\cdot\mid x)</span></li>
+<li class="fragment"><span class="math inline">Q_T</span> may be random since <span class="math inline">T\sim M(x, \cdot)</span></li>
 </ul>
 </section></section>
 <section>
@@ -1108,7 +1108,7 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 <div class="callout-content">
 <p>We say <span class="math inline">M</span> is <span class="math inline">(\mathcal{Q}_x, S, \kappa, \delta)</span>-PP if</p>
 <p><span class="math display">\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q, x) - S(Q_{T}, x) \leq \kappa \right] \geq 1 - \delta,</span></p>
-<p>where <span class="math inline">\mathbb{P}_x</span> is w.r.t. <span class="math inline">T \sim M(~\cdot\mid x)</span>.</p>
+<p>where <span class="math inline">\mathbb{P}_x</span> is w.r.t. <span class="math inline">T \sim M(x,\cdot)</span>.</p>
 </div>
 </div>
 </div>
@@ -1127,7 +1127,7 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 <div class="callout-content">
 <p>We say <span class="math inline">M</span> is <span class="math inline">(\mathcal{Q}_x, S, \kappa, \delta)</span>-PP if</p>
 <p><span class="math display">\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q, x) - S(Q_{T}, x) \leq \kappa \right] \geq 1 - \delta,</span></p>
-<p>where <span class="math inline">\mathbb{P}_x</span> is w.r.t. <span class="math inline">T \sim M(~\cdot\mid x)</span>.</p>
+<p>where <span class="math inline">\mathbb{P}_x</span> is w.r.t. <span class="math inline">T \sim M(x,\cdot)</span>.</p>
 </div>
 </div>
 </div>
@@ -1227,7 +1227,7 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 <li class="fragment">Demonstrate privacy for mean <span class="math inline">\bar x</span></li>
 </ul>
 <div class="fragment">
-<p><span class="math display">M(~\cdot\mid x) = \delta_{\bar x}(\cdot)</span></p>
+<p><span class="math display">M(x,\cdot) = \delta_{\bar x}(\cdot)</span></p>
 </div>
 </section>
 <section id="privacy-for-deterministic-mechanisms-1" class="slide level2">
