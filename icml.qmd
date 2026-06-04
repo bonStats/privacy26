@@ -1,0 +1,241 @@
+---
+title: "Persuasive Privacy"
+subtitle: "ICML 2026"
+author: "Joshua J Bon$^\\dagger$ James Bailie$^\\ast$ Judith Rousseau$^\\diamond$ Christian P Robert${^\\diamond}{^\\circ}$"
+institute: "$^\\dagger$Adelaide University $^\\ast$Chalmers University $^\\diamond$Université Paris–Dauphine PSL $^\\circ$University of Warwick"
+bibliography: refs.bib
+format:
+  revealjs:
+    html-math-method: katex
+    theme: default
+    df-print: paged
+    incremental: true 
+    css: style.css
+    chalkboard: true
+editor: source
+---
+
+## Persuasive Privacy
+
+::: {.fragment}
+
+A **semantics-first** understanding of data privacy where
+
+:::
+
+- Privacy definitions are systematically constructed from an **agent-based game**
+- Game assumptions have real-world interpretations
+- Probabilistic and pure **DP special cases**
+- Rényi and $f$-divergence DP also by changing assumptions
+- Privacy developed for **deterministic mechanisms**
+
+## A Game of Persuasion
+
+::: {style="color:blue;"}
+Sender chooses a mechanism that **persuades** Receiver to make decisions limiting privacy loss.
+:::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Sender
+
+_Designs mechanism_
+
+_Worst-case analysis in_
+
+:::{.nonincremental}
+- _data value_
+
+- _Receiver's data-prior_
+:::
+:::
+
+::: {.column width="50%"}
+### Receiver
+
+_Observes mechanism output_ 
+
+_Minimizes expected loss w.r.t. data-posterior,_
+
+_Bayesian agent^[Similar to Bayesian persuasion [@kamenica2011bayesian]]_
+:::
+
+::::
+
+
+
+## Data privacy game
+
+```{r dtp, engine = 'tikz',   fig.align = 'center', cache=TRUE}
+
+\begin{tikzpicture}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{fit}
+\usetikzlibrary{shapes}
+
+\tikzstyle{st} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{ad} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{pb} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{pbmech} = [diamond, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{bayes} = [diamond, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black]
+\tikzstyle{desc} = [rectangle, minimum width=2.5cm, rounded corners, minimum height=0.6cm,text centered, fill=gray!10]
+\tikzstyle{greybox} = [draw=gray, rounded corners, inner sep=0.5cm, thick]
+\tikzstyle{publicbox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{privatebox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=purple!30]
+
+% Statistician
+\node (sdata) [st] {$x$};
+\node (sdatad) [desc, left=0pt of sdata] {Data};
+\node (mech) [pbmech, below=0.5cm of sdata] {$M$};
+\node (mechd) [desc, left=0pt of mech] {Mechanism};
+\node (sstat) [pb, below=0.5cm of mech] {$T$};
+\node (sstatd) [desc, left=0pt of sstat] {Statistic};
+\node (spriv) [st, below=1cm of sstat] {$\rho(d,x)$};
+\node (sprivd) [desc, left=0pt of spriv] {Privacy};
+
+% Adversary
+\node (adata) [ad, right=3cm of sdata] {$Q$};
+\node (adatad) [desc, right=0pt of adata] {Data-prior};
+\node (apost) [ad, right=3cm of sstat] {$Q_T$};
+\node (apostd) [desc, right=0pt of apost] {Data-posterior};
+\node (aact) [ad, below=1cm of apost] {$d$};
+\node (aactd) [desc, right=0pt of aact] {Decision};
+\node (aloss) [ad, below=1cm of aact] {$\ell$};
+\node (alossd) [desc, right=0pt of aloss] {Loss};
+
+% info
+\node (public) [publicbox, below=1.5cm of sprivd, xshift=-1.5cm] {};
+\node (publicd) [desc, right=0pt of public] {Shared};
+\node (private) [privatebox, right=0.5cm of publicd] {};
+\node (privated) [desc, right=0pt of private] {Private};
+
+
+% Statistician
+\draw[thick, -] (sdata) -- (mech);
+\draw[thick, -Latex] (mech) -- (sstat);
+
+
+% Adversary
+\draw[thick, -Latex] (adata) -- (apost);
+\draw[thick, -Latex] (apost) -- (aact);
+\draw[thick, -Latex] (aloss) -- (aact);
+
+%Cross
+\draw[thick, -Latex] (mech) -- (apost);
+\draw[thick, -Latex] (sstat) -- (apost);
+\draw[thick, -Latex] (aact) -- (spriv);
+
+% boxes
+\node[greybox, fit=(sdata) (sdatad) (sstat) (sstatd) (spriv) (sprivd)] (statbox) {};
+\node[greybox, fit=(adata) (adatad) (apost) (apostd) (aact) (aactd) (aloss) (alossd)] (advbox) {};
+
+\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Sender};
+\node[anchor=south east] at (advbox.north) {Receiver model};
+
+\end{tikzpicture}
+
+```
+
+## Game under persuasive privacy
+
+```{r dtp3, engine = 'tikz',   fig.align = 'center', cache=TRUE}
+
+\begin{tikzpicture}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{fit}
+\usetikzlibrary{shapes}
+
+\tikzstyle{st} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{ad} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{pb} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{as} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=orange!30]
+\tikzstyle{im} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=blue!30]
+\tikzstyle{pbmech} = [diamond, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{bayes} = [diamond, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black]
+\tikzstyle{desc} = [rectangle, minimum width=2.5cm, rounded corners, minimum height=0.6cm,text centered, fill=gray!10]
+\tikzstyle{greybox} = [draw=gray, rounded corners, inner sep=0.5cm, thick]
+\tikzstyle{publicbox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=teal!30]
+\tikzstyle{privatebox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=purple!30]
+\tikzstyle{assbox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=orange!30]
+\tikzstyle{impbox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=blue!30]
+
+% Statistician
+\node (sdata) [st] {$x$};
+\node (sdatad) [desc, left=0pt of sdata] {Data};
+\node (mech) [pbmech, below=0.5cm of sdata] {$M$};
+\node (mechd) [desc, left=0pt of mech] {Mechanism};
+\node (sstat) [pb, below=0.5cm of mech] {$T$};
+\node (sstatd) [desc, left=0pt of sstat] {Statistic};
+\node (spriv) [st, below=1cm of sstat] {$\rho(d,x)$};
+\node (sprivd) [desc, left=0pt of spriv] {Privacy};
+
+% Adversary
+\node (adata) [as, right=3cm of sdata] {$Q\in\mathcal{Q}_x$};
+\node (adatad) [desc, right=0pt of adata] {Data-prior};
+\node (apost) [im, right=3cm of sstat] {$Q_T$};
+\node (apostd) [desc, right=0pt of apost] {Data-posterior};
+\node (aact) [im, below=1cm of apost] {$d$};
+\node (aactd) [desc, right=0pt of aact] {Decision};
+\node (aloss) [as, below=1cm of aact] {$\ell = \rho$};
+\node (alossd) [desc, right=0pt of aloss] {Loss};
+
+% info
+\node (public) [publicbox, below=1.25cm of sprivd, xshift=-1.5cm] {};
+\node (publicd) [desc, right=0pt of public] {Shared};
+\node (private) [privatebox, right=0.5cm of publicd] {};
+\node (privated) [desc, right=0pt of private] {Private};
+\node (ass) [assbox, below=0.25cm of public] {};
+\node (assd) [desc, right=0pt of ass] {Assumed};
+\node (imp) [impbox, right=0.5cm of assd] {};
+\node (impd) [desc, right=0pt of imp] {Implied};
+
+
+% Statistician
+\draw[thick, -] (sdata) -- (mech);
+\draw[thick, -Latex] (mech) -- (sstat);
+
+
+% Adversary
+\draw[thick, -Latex] (adata) -- (apost);
+\draw[thick, -Latex] (apost) -- (aact);
+\draw[thick, -Latex] (aloss) -- (aact);
+
+%Cross
+\draw[thick, -Latex] (mech) -- (apost);
+\draw[thick, -Latex] (sstat) -- (apost);
+\draw[thick, -Latex] (aact) -- (spriv);
+
+% boxes
+\node[greybox, fit=(sdata) (sdatad) (sstat) (sstatd) (spriv) (sprivd)] (statbox) {};
+\node[greybox, fit=(adata) (adatad) (apost) (apostd) (aact) (aactd) (aloss) (alossd)] (advbox) {};
+
+\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Sender};
+\node[anchor=south east, xshift=2.35cm] at (advbox.north) {Receiver model + assumptions};
+
+\end{tikzpicture}
+
+```
+
+## Persuasive Privacy Paper
+
+- New interpretations of post-processing property
+
+- Properties: **composition** and **Receiver post-processing**
+
+- Deterministic mechanisms: empirical mean, cell suppression
+
+- Recovery of existing DP privacy definitions
+
+- arXiv: [https://arxiv.org/abs/2601.22945](https://arxiv.org/abs/2601.22945)
+
+
+## References
+
+::: {#refs}
+:::
+
+
+

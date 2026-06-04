@@ -1,0 +1,132 @@
+## My research
+
+```{dot}
+graph G {
+  layout=neato;
+  subgraph main {
+    node [fixedsize=true, width=0.7, height=0.4];
+    SBI -- SMC;
+    SMC -- Privacy;
+    Privacy -- SBI;
+  }
+  
+}
+```
+
+## My research
+
+:::: {.columns}
+
+::: {.column width="60%"}
+
+::: {.nonincremental}
+
+**Statistics**
+
+- Bayesian modelling[^1] [^2]
+- Efficient computation[^3] [^4] [^5]
+- Approximate models^3^ ^4^
+
+:::
+
+:::
+
+::: {.column width="40%"}
+
+```{dot}
+graph G {
+  layout=neato;
+  subgraph main {
+    node [fixedsize=true, width=0.7, height=0.4];
+    SBI -- SMC;
+  }
+  
+}
+```
+
+:::
+
+::::
+
+[^1]: @oflaherty2021teen _Demography_
+[^2]: @bon2019polling _JRSS A_
+[^3]: @bon2021dasmc _Stat & Comp_
+[^4]: @bon2025cal _JMLR_
+[^5]: @bon2025rbsmc _arXiv_
+
+## My research
+
+:::: {.columns}
+
+::: {.column width="60%"}
+
+::: {.nonincremental}
+
+**Privacy**
+
+- Federated & transfer learning[^6] [^7]
+- Private (Bayesian) computation[^8]
+- Approximate models[^9]
+
+:::
+
+:::
+
+::: {.column width="40%"}
+
+```{dot}
+graph G {
+  layout=neato;
+  subgraph main {
+    node [fixedsize=true, width=0.7, height=0.4];
+    Privacy -- SMC;
+    Privacy -- SBI;
+  }
+  
+}
+```
+
+:::
+
+::::
+
+[^6]: @hassan2024federated _arXiv_
+[^7]: @bretherton2026principled _Bayesian Analysis_
+[^8]: @bon2026priv _arXiv_
+[^9]: @bon2020acld _J Official Statistics_
+
+## My research
+
+```{dot}
+graph G {
+  layout=neato;
+  subgraph main {
+    node [fixedsize=true, width=0.7, height=0.4];
+    SBI;
+    SMC;
+    Privacy;
+    SBI -- SMC;
+    SMC -- Privacy;
+    Privacy -- SBI;
+  }
+  
+}
+```
+
+## Today's talk
+
+```{dot}
+graph G {
+  layout=neato;
+  subgraph main {
+    node [fixedsize=true, width=0.7, height=0.4];
+    SBI;
+    SMC;
+    Privacy [color="red"];
+    SBI -- SMC;
+    SMC -- Privacy;
+    Privacy -- SBI;
+  }
+  
+}
+```
