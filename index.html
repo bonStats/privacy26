@@ -192,7 +192,7 @@ Joshua J Bon
 <li>Differential privacy redux</li>
 <li>Privacy without noise</li>
 </ol>
-<p><strong>Bon</strong>, Bailie, Rousseau &amp; Robert (2026) <em>ICML 2026</em></p>
+<p>Bon, Bailie, Rousseau &amp; Robert (2026) <em>ICML 2026</em></p>
 <p><a href="https://arxiv.org/abs/2601.22945">arXiv 2601.22945</a></p>
 <aside><ol class="aside-footnotes"><li id="fn1"><p>Slides available https://bonstats.github.io/privacy26</p></li></ol></aside></section>
 <section>
@@ -279,7 +279,7 @@ Joshua J Bon
 <ol type="1">
 <li><strong>Composition</strong>:</li>
 </ol>
-<p>If releasing the mean and variance of a dataset is <span class="math inline">\epsilon</span>-DP respectively, then the joint release is <span class="math inline">2\epsilon</span>-DP.</p>
+<p>If releasing the mean and variance of a dataset are each <span class="math inline">\epsilon</span>-DP, then the joint release is <span class="math inline">2\epsilon</span>-DP.</p>
 <ol start="2" type="1">
 <li><strong>Post-processing</strong>:</li>
 </ol>
@@ -298,7 +298,7 @@ Joshua J Bon
 <li class="fragment">Approximate DP <span class="citation" data-cites="dwork2006approxdp">(<a href="#/references" role="doc-biblioref" onclick="">Dwork, Kenthapadi, et al. 2006</a>)</span></li>
 </ul>
 <div class="fragment">
-<p><span class="math display">m(x,S) \leq \exp\{\epsilon\} m(x^\prime, S)  + \delta</span> for all <span class="math inline">S \in \mathcal{S}</span>.</p>
+<p><span class="math display">M(x,S) \leq \exp\{\epsilon\} M(x^\prime, S)  + \delta</span> for all <span class="math inline">S \in \mathcal{S}</span>.</p>
 </div>
 </section>
 <section id="variants-of-dp-1" class="slide level2">
@@ -311,7 +311,7 @@ Joshua J Bon
 <li class="fragment">Many more!</li>
 </ul>
 <div class="fragment">
-<p>All related to Lipschitz interpretation</p>
+<p>Related to Lipschitz interpretation</p>
 </div>
 </section>
 <section id="pure-dp-semantics" class="slide level2">
@@ -345,14 +345,26 @@ Joshua J Bon
 <p>Our approach is a <strong>semantics-first</strong> understanding of data privacy, where</p>
 </div>
 <ul>
-<li class="fragment">Assumptions can be tested against real-world</li>
-<li class="fragment">Privacy definitions are easy to interpret, communicate and tailor, <em>because</em></li>
-<li class="fragment">Our framework is constructed from an agent-based game</li>
+<li class="fragment">Privacy definitions are systematically constructed from an <strong>agent-based game</strong></li>
+<li class="fragment">Game assumptions have real-world interpretations</li>
+<li class="fragment">Privacy definitions are easier to interpret, communicate and tailor</li>
+</ul>
+</section>
+<section id="what-else-is-in-the-paper" class="slide level2">
+<h2>What else is in the paper?</h2>
+<ul>
+<li class="fragment">Probabilistic and pure <strong>DP special cases</strong></li>
+<li class="fragment">Rényi and <span class="math inline">f</span>-divergence DP also by changing assumptions</li>
+<li class="fragment">Privacy developed for <strong>deterministic mechanisms</strong>:
+<ul>
+<li class="fragment">empirical mean</li>
+<li class="fragment">cell suppression</li>
+</ul></li>
 </ul>
 </section></section>
 <section>
-<section id="privacy-from-the-ground-up" class="title-slide slide level1 center">
-<h1>Privacy from the ground up</h1>
+<section id="privacy-from-the-ground-up-or-semantics-first" class="title-slide slide level1 center">
+<h1>Privacy from the ground up or “semantics first”</h1>
 
 </section>
 <section id="overview-of-statistical-data-privacy" class="slide level2">

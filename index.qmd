@@ -29,7 +29,7 @@ editor: source
 :::
 
 
-**Bon**, Bailie, Rousseau & Robert (2026) _ICML 2026_ 
+Bon, Bailie, Rousseau & Robert (2026) _ICML 2026_ 
 
 [arXiv 2601.22945 ](https://arxiv.org/abs/2601.22945)
 
@@ -184,7 +184,7 @@ Focusing on $\epsilon$-DP. Examples:
 
 1. **Composition**:
 
-If releasing the mean and variance of a dataset is $\epsilon$-DP respectively, then the joint release is $2\epsilon$-DP.
+If releasing the mean and variance of a dataset are each $\epsilon$-DP, then the joint release is $2\epsilon$-DP.
 
 2. **Post-processing**:
 
@@ -205,7 +205,7 @@ $$\inf_{x\sim x^\prime}\mathbb{P}_{x}\left[ m(x,T) \leq \exp\{\epsilon\} m(x^\pr
 - Approximate DP [@dwork2006approxdp]
 
 ::: {.fragment}
-$$m(x,S) \leq \exp\{\epsilon\} m(x^\prime, S)  + \delta$$
+$$M(x,S) \leq \exp\{\epsilon\} M(x^\prime, S)  + \delta$$
 for all $S \in \mathcal{S}$.
 :::
 
@@ -219,7 +219,7 @@ There are many variants and relaxations of DP.
 - Many more!
 
 :::{.fragment}
-All related to Lipschitz interpretation 
+Related to Lipschitz interpretation 
 :::
 
 ## Pure DP Semantics
@@ -244,11 +244,19 @@ Our approach is a **semantics-first** understanding of data privacy, where
 
 :::
 
-- Assumptions can be tested against real-world
-- Privacy definitions are easy to interpret, communicate and tailor, _because_
-- Our framework is constructed from an agent-based game
+- Privacy definitions are systematically constructed from an **agent-based game**
+- Game assumptions have real-world interpretations
+- Privacy definitions are easier to interpret, communicate and tailor
 
-# Privacy from the ground up
+## What else is in the paper?
+
+- Probabilistic and pure **DP special cases**
+- Rényi and $f$-divergence DP also by changing assumptions
+- Privacy developed for **deterministic mechanisms**:
+  - empirical mean
+  - cell suppression
+
+# Privacy from the ground up or "semantics first"
 
 ## Overview of statistical data privacy
 
