@@ -18,15 +18,13 @@ editor: source
 
 ## Today's talk[^sl]
 
-:::{.nonincremental}
 
-1. Differential privacy
-2. Privacy from the ground up
-3. Persuasive privacy
-4. Differential privacy redux
-5. Privacy without noise
+1. Differential privacy: _de facto_
+2. Privacy from the ground up: _semantics_
+3. Persuasive privacy: _not coercion_
+4. Differential privacy: _redux_
+5. Privacy without noise (?)
 
-:::
 
 
 Bon, Bailie, Rousseau & Robert (2026) _ICML 2026_ 
@@ -258,7 +256,7 @@ Our approach is a **semantics-first** understanding of data privacy, where
 
 # Privacy from the ground up or "semantics first"
 
-## Overview of statistical data privacy
+## Overview
 
 :::{.callout-tip}
 ## Sender
@@ -287,7 +285,7 @@ Statistic release $\longrightarrow$ adversarial decisions $\longrightarrow$ priv
 
 :::
 
-# Anatomy of statistical data privacy
+# An anatomy of data privacy
 
 ## The players
 
@@ -424,7 +422,7 @@ Receiver makes Bayesian decisions
 $\mathfrak{C}$ _may affect Receiver's data posterior. Here assumed not to._
 :::
 
-## Anatomy of statistical data privacy
+## An anatomy of data privacy
 
 ```{r dtp, engine = 'tikz',   fig.align = 'center', cache=TRUE}
 
@@ -567,7 +565,7 @@ $$
 :::
 
 
-## Anatomy of statistical data privacy
+## An anatomy of data privacy
 
 ```{r dtp5, engine = 'tikz',   fig.align = 'center', cache=TRUE, engine.opts = list(template = "tikz2pdf.tex")}
 
@@ -645,7 +643,7 @@ $$
 ```
 
 
-## Anatomy of statistical data privacy
+## An anatomy of data privacy
 
 ```{r dtp3, engine = 'tikz',   fig.align = 'center', cache=TRUE}
 
@@ -955,6 +953,19 @@ $$\inf_{x\sim x^\prime}\mathbb{P}_{x}\left[ m(x,T) \leq \exp\{\epsilon\} m(x^\pr
 - PrDP does have (Receiver) post-processing property
     - A simple fix: control Receiver's decision by including pre-processed statistic
 
+## Summary
+
+- Framework for purpose-driven privacy definitions (rigorously justified)
+  - All assumptions stated, anatomy used as backbone
+- Assessment of existing privacy guarantees with game theory
+- New interpretations of post-processing property
+  - Easy fix for PrDP post-processing
+- Established that privacy guarantees possible for deterministic algorithms
+
+# Thank you!
+
+# Appendix
+
 ## Privacy for deterministic mechanisms
 
 - DP can't be defined for deterministic mechanisms
@@ -1004,14 +1015,6 @@ The average mechanism
   - e.g. MCMC without privacy perturbations (posterior summary statistics)
   - A "decomposition rule"
 
-## Summary
-
-- Framework for purpose-driven privacy definitions (rigorously justified)
-  - All assumptions stated, anatomy used as backbone
-- Assessment of existing privacy guarantees with game theory
-- New interpretations of post-processing property
-  - Easy fix for PrDP post-processing
-- Established that privacy guarantees possible for deterministic algorithms
 
 
 ## Ongoing work
@@ -1033,7 +1036,7 @@ The average mechanism
 
 
 
-# Thank you!
+
 
 
 ## References

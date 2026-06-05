@@ -186,11 +186,11 @@ Joshua J Bon
 <section id="todays-talksl" class="slide level2">
 <h2>Today’s talk<sup>1</sup></h2>
 <ol type="1">
-<li>Differential privacy</li>
-<li>Privacy from the ground up</li>
-<li>Persuasive privacy</li>
-<li>Differential privacy redux</li>
-<li>Privacy without noise</li>
+<li class="fragment">Differential privacy: <em>de facto</em></li>
+<li class="fragment">Privacy from the ground up: <em>semantics</em></li>
+<li class="fragment">Persuasive privacy: <em>not coercion</em></li>
+<li class="fragment">Differential privacy: <em>redux</em></li>
+<li class="fragment">Privacy without noise (?)</li>
 </ol>
 <p>Bon, Bailie, Rousseau &amp; Robert (2026) <em>ICML 2026</em></p>
 <p><a href="https://arxiv.org/abs/2601.22945">arXiv 2601.22945</a></p>
@@ -367,8 +367,8 @@ Joshua J Bon
 <h1>Privacy from the ground up or “semantics first”</h1>
 
 </section>
-<section id="overview-of-statistical-data-privacy" class="slide level2">
-<h2>Overview of statistical data privacy</h2>
+<section id="overview" class="slide level2">
+<h2>Overview</h2>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -416,8 +416,8 @@ Joshua J Bon
 </div>
 </section></section>
 <section>
-<section id="anatomy-of-statistical-data-privacy" class="title-slide slide level1 center">
-<h1>Anatomy of statistical data privacy</h1>
+<section id="an-anatomy-of-data-privacy" class="title-slide slide level1 center">
+<h1>An anatomy of data privacy</h1>
 
 </section>
 <section id="the-players" class="slide level2">
@@ -558,8 +558,8 @@ Joshua J Bon
 <p><span class="math inline">\mathfrak{C}</span> <em>may affect Receiver’s data posterior. Here assumed not to.</em></p>
 </div>
 </section>
-<section id="anatomy-of-statistical-data-privacy-1" class="slide level2">
-<h2>Anatomy of statistical data privacy</h2>
+<section id="an-anatomy-of-data-privacy-1" class="slide level2">
+<h2>An anatomy of data privacy</h2>
 
 <img data-src="index_files/figure-revealjs/dtp-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
 <section id="receivers-optimal-decision" class="slide level2">
@@ -668,12 +668,12 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 </div>
 </div>
 </section>
-<section id="anatomy-of-statistical-data-privacy-2" class="slide level2">
-<h2>Anatomy of statistical data privacy</h2>
+<section id="an-anatomy-of-data-privacy-2" class="slide level2">
+<h2>An anatomy of data privacy</h2>
 
 <img data-src="index_files/figure-revealjs/dtp5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="anatomy-of-statistical-data-privacy-3" class="slide level2">
-<h2>Anatomy of statistical data privacy</h2>
+<section id="an-anatomy-of-data-privacy-3" class="slide level2">
+<h2>An anatomy of data privacy</h2>
 
 <img data-src="index_files/figure-revealjs/dtp3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
 <section id="measuring-privacy" class="slide level2">
@@ -972,6 +972,31 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 </ul></li>
 </ul>
 </section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li class="fragment">Framework for purpose-driven privacy definitions (rigorously justified)
+<ul>
+<li class="fragment">All assumptions stated, anatomy used as backbone</li>
+</ul></li>
+<li class="fragment">Assessment of existing privacy guarantees with game theory</li>
+<li class="fragment">New interpretations of post-processing property
+<ul>
+<li class="fragment">Easy fix for PrDP post-processing</li>
+</ul></li>
+<li class="fragment">Established that privacy guarantees possible for deterministic algorithms</li>
+</ul>
+</section></section>
+<section id="thank-you" class="title-slide slide level1 center">
+<h1>Thank you!</h1>
+
+</section>
+
+<section>
+<section id="appendix" class="title-slide slide level1 center">
+<h1>Appendix</h1>
+
+</section>
 <section id="privacy-for-deterministic-mechanisms" class="slide level2">
 <h2>Privacy for deterministic mechanisms</h2>
 <ul>
@@ -1025,21 +1050,6 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 </ul></li>
 </ul>
 </section>
-<section id="summary" class="slide level2">
-<h2>Summary</h2>
-<ul>
-<li class="fragment">Framework for purpose-driven privacy definitions (rigorously justified)
-<ul>
-<li class="fragment">All assumptions stated, anatomy used as backbone</li>
-</ul></li>
-<li class="fragment">Assessment of existing privacy guarantees with game theory</li>
-<li class="fragment">New interpretations of post-processing property
-<ul>
-<li class="fragment">Easy fix for PrDP post-processing</li>
-</ul></li>
-<li class="fragment">Established that privacy guarantees possible for deterministic algorithms</li>
-</ul>
-</section>
 <section id="ongoing-work" class="slide level2">
 <h2>Ongoing work</h2>
 <p><strong>Short term</strong></p>
@@ -1056,11 +1066,6 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 <li class="fragment"><p>Privacy-utility trade-off</p></li>
 <li class="fragment"><p>Computation (SMC, SBI) versus privacy approximation trade-off</p></li>
 </ul>
-</section></section>
-<section>
-<section id="thank-you" class="title-slide slide level1 center">
-<h1>Thank you!</h1>
-
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
