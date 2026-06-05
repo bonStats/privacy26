@@ -16,8 +16,11 @@ editor: source
 ---
 
 
-## Today's talk[^sl]
+## Today's talk
 
+:::: {.columns}
+
+::: {.column width="65%"}
 
 1. Differential privacy: _de facto_
 2. Privacy from the ground up: _semantics_
@@ -26,14 +29,19 @@ editor: source
 5. Privacy without noise (?)
 
 
+:::
+
+::: {.column width="35%"}
+
+![](imgs/crossiant.jpg)
+
+:::
+
+::::
 
 Bon, Bailie, Rousseau & Robert (2026) _ICML 2026_ 
 
-[arXiv 2601.22945 ](https://arxiv.org/abs/2601.22945)
-
-
-
-[^sl]: Slides available https://bonstats.github.io/privacy26
+[arXiv 2601.22945](https://arxiv.org/abs/2601.22945) [bonstats.github.io/privacy26](https://bonstats.github.io/privacy26)
 
 
 # Differential privacy
@@ -244,7 +252,7 @@ Our approach is a **semantics-first** understanding of data privacy, where
 
 - Privacy definitions are systematically constructed from an **agent-based game**
 - Game assumptions have real-world interpretations
-- Privacy definitions are easier to interpret, communicate and tailor
+- Privacy easier to interpret, communicate and tailor
 
 ## What else is in the paper?
 
@@ -962,7 +970,23 @@ $$\inf_{x\sim x^\prime}\mathbb{P}_{x}\left[ m(x,T) \leq \exp\{\epsilon\} m(x^\pr
   - Easy fix for PrDP post-processing
 - Established that privacy guarantees possible for deterministic algorithms
 
-# Thank you!
+## Thank you!
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+![](imgs/boat-view.jpg)
+
+:::
+
+::: {.column width="50%"}
+
+![](imgs/sea-legs.jpg)
+
+:::
+
+::::
 
 # Appendix
 
