@@ -289,10 +289,6 @@ Our approach is a **semantics first** understanding of data privacy, where
 
 # Game-theoretic privacy
 
-## Privacy game {.hidden-title}
-
-{{< include diagram.qmd >}}
-
 ## Overview
 
 :::{.callout-tip}
@@ -329,11 +325,12 @@ Statistic release $\longrightarrow$ adversarial decisions $\longrightarrow$ priv
 ### Sender
 
 - Custodian of data
-- Will use mechanism to release information about data
+- Releases some statistic $T \sim M(x,\cdot)$
+- Chooses mechanism $M$
 
 ### Receiver
 
-- Makes decision based on revealed information
+- Makes decision based on $T$
 - Decision affects Sender's privacy
 
 ## Privacy function
@@ -456,81 +453,12 @@ Receiver makes Bayesian decisions
 3. Has loss function $\ell: \mathcal{D} \times \mathsf{X} \rightarrow \mathbb{R}$
 
 :::{.fragment}
-$\mathfrak{C}$ _may affect Receiver's data posterior. Here assumed not to._
+_Sharing $\mathfrak{C}$ does not affect Receiver's data posterior by Assumption 1._
 :::
 
-## An anatomy of data privacy
+## Privacy game {.hidden-title}
 
-```{r dtp, engine = 'tikz',   fig.align = 'center', cache=TRUE}
-
-\begin{tikzpicture}
-\usetikzlibrary{positioning}
-\usetikzlibrary{arrows.meta}
-\usetikzlibrary{fit}
-\usetikzlibrary{shapes}
-
-\tikzstyle{st} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=purple!30]
-\tikzstyle{ad} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=purple!30]
-\tikzstyle{pb} = [rectangle, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=teal!30]
-\tikzstyle{pbmech} = [diamond, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black, fill=teal!30]
-\tikzstyle{bayes} = [diamond, rounded corners, minimum width=2cm, minimum height=1cm,text centered, draw=black]
-\tikzstyle{desc} = [rectangle, minimum width=2.5cm, rounded corners, minimum height=0.6cm,text centered, fill=gray!10]
-\tikzstyle{greybox} = [draw=gray, rounded corners, inner sep=0.5cm, thick]
-\tikzstyle{publicbox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=teal!30]
-\tikzstyle{privatebox} = [rectangle, rounded corners, minimum width=0.5cm, minimum height=0.5cm,text centered, draw=black, fill=purple!30]
-
-% Statistician
-\node (sdata) [st] {$x$};
-\node (sdatad) [desc, left=0pt of sdata] {Data};
-\node (mech) [pbmech, below=0.5cm of sdata] {$M$};
-\node (mechd) [desc, left=0pt of mech] {Mechanism};
-\node (sstat) [pb, below=0.5cm of mech] {$T$};
-\node (sstatd) [desc, left=0pt of sstat] {Statistic};
-\node (spriv) [st, below=1cm of sstat] {$\rho(d,x)$};
-\node (sprivd) [desc, left=0pt of spriv] {Privacy};
-
-% Adversary
-\node (adata) [ad, right=3cm of sdata] {$Q$};
-\node (adatad) [desc, right=0pt of adata] {Data prior};
-\node (apost) [ad, right=3cm of sstat] {$Q_T$};
-\node (apostd) [desc, right=0pt of apost] {Data posterior};
-\node (aact) [ad, below=1cm of apost] {$d$};
-\node (aactd) [desc, right=0pt of aact] {Decision};
-\node (aloss) [ad, below=1cm of aact] {$\ell$};
-\node (alossd) [desc, right=0pt of aloss] {Loss};
-
-% info
-\node (public) [publicbox, below=1.5cm of sprivd, xshift=-1.5cm] {};
-\node (publicd) [desc, right=0pt of public] {Shared};
-\node (private) [privatebox, right=0.5cm of publicd] {};
-\node (privated) [desc, right=0pt of private] {Private};
-
-
-% Statistician
-\draw[thick, -] (sdata) -- (mech);
-\draw[thick, -Latex] (mech) -- (sstat);
-
-
-% Adversary
-\draw[thick, -Latex] (adata) -- (apost);
-\draw[thick, -Latex] (apost) -- (aact);
-\draw[thick, -Latex] (aloss) -- (aact);
-
-%Cross
-\draw[thick, -Latex] (mech) -- (apost);
-\draw[thick, -Latex] (sstat) -- (apost);
-\draw[thick, -Latex] (aact) -- (spriv);
-
-% boxes
-\node[greybox, fit=(sdata) (sdatad) (sstat) (sstatd) (spriv) (sprivd)] (statbox) {};
-\node[greybox, fit=(adata) (adatad) (apost) (apostd) (aact) (aactd) (aloss) (alossd)] (advbox) {};
-
-\node[anchor=south east, xshift=-0.9cm] at (statbox.north) {Sender};
-\node[anchor=south east] at (advbox.north) {Receiver model};
-
-\end{tikzpicture}
-
-```
+{{< include diagram.qmd >}}
 
 ## Receiver's optimal decision
 

@@ -366,6 +366,198 @@ Joshua J Bon
 <h1>Game-theoretic privacy</h1>
 
 </section>
+<section id="overview" class="slide level2">
+<h2>Overview</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Sender</strong></p>
+</div>
+<div class="callout-content">
+<div class="fragment">
+<p>Government agency release <strong>small area statistics</strong> on a disease</p>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Receiver</strong></p>
+</div>
+<div class="callout-content">
+<div class="fragment">
+<p>Insurance company <strong>raises premiums</strong> using inferred disease prevalence in a small town</p>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Effect on data privacy</strong></p>
+</div>
+<div class="callout-content">
+<div class="fragment">
+<p>Statistic release <span class="math inline">\longrightarrow</span> adversarial decisions <span class="math inline">\longrightarrow</span> privacy effect</p>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="an-anatomy-of-data-privacy" class="title-slide slide level1 center">
+<h1>An anatomy of data privacy</h1>
+
+</section>
+<section id="the-players" class="slide level2">
+<h2>The players</h2>
+<h3 id="sender-1">Sender</h3>
+<ul>
+<li class="fragment">Custodian of data</li>
+<li class="fragment">Releases some statistic <span class="math inline">T \sim M(x,\cdot)</span></li>
+<li class="fragment">Chooses mechanism <span class="math inline">M</span></li>
+</ul>
+<h3 id="receiver-1">Receiver</h3>
+<ul>
+<li class="fragment">Makes decision based on <span class="math inline">T</span></li>
+<li class="fragment">Decision affects Sender’s privacy</li>
+</ul>
+</section>
+<section id="privacy-function" class="slide level2">
+<h2>Privacy function</h2>
+<p>Sender’s privacy measured with a <strong>privacy function</strong></p>
+<p><span class="math display">\rho:\mathcal{D} \times \mathsf{X} \rightarrow \mathbb{R}</span></p>
+<ul>
+<li class="fragment"><p>Receiver’s decision <span class="math inline">\quad d_i \in \mathcal{D}</span></p></li>
+<li class="fragment"><p>Data value <span class="math inline">\quad x \in \mathsf{X}</span></p></li>
+</ul>
+<div class="fragment">
+<p><span class="math inline">\rho</span> orders preferences of decisions for a given dataset</p>
+</div>
+<ul>
+<li class="fragment">If <span class="math inline">d_1</span> is preferred to <span class="math inline">d_2</span> then <span class="math inline">\rho(d_1,x) &gt; \rho(d_2,x)</span></li>
+</ul>
+</section>
+<section id="example-1-privacy-function" class="slide level2">
+<h2>Example 1: Privacy function</h2>
+<p>For some fixed <span class="math inline">\kappa&gt;0</span>,</p>
+<p><span class="math display">\rho(d,x) = \begin{cases}
+  0, &amp; \text{if } x \in d, \vert d \vert &lt; \kappa\\
+  1, &amp; \text{otherwise},
+\end{cases}</span></p>
+<ul>
+<li><p><span class="math inline">x \in \mathsf{X} = \mathbb{R}</span></p></li>
+<li><p><span class="math inline">d \in \mathcal{D} = \{[a,b]:a,b\in \mathbb{R}, a\leq b\}</span></p></li>
+</ul>
+</section>
+<section id="example-2-privacy-function" class="slide level2">
+<h2>Example 2: Privacy function</h2>
+<p><br></p>
+<p><span class="math display">\rho(d,x) = -\log d(x)</span></p>
+<ul>
+<li><p><span class="math inline">x \in \mathsf{X} = \mathbb{R}</span></p></li>
+<li><p><span class="math inline">d \in \mathcal{D} = \{\text{probability density functions on } \mathbb{R}\}</span></p></li>
+</ul>
+</section>
+<section id="the-statistic" class="slide level2">
+<h2>The statistic</h2>
+<p>A statistic <span class="math inline">T \in \mathsf{T}</span> is output from a mechanism <span class="math inline">M</span> given <span class="math inline">x</span></p>
+<p><span class="math display">T \sim M(x,\cdot)</span></p>
+<ul>
+<li class="fragment"><span class="math inline">M:\mathcal{T} \times \mathsf{X} \rightarrow [0,1]</span> for <span class="math inline">(\mathsf{T},\mathcal{T})</span> measurable space</li>
+</ul>
+</section>
+<section id="the-statistic-1" class="slide level2">
+<h2>The statistic</h2>
+<p><span class="math inline">M</span> can be deterministic or randomised</p>
+<ul>
+<li class="fragment">Summary statistics <span class="math inline">\quad\tau:\mathsf{X}\rightarrow\mathsf{T}</span>
+<ul>
+<li class="fragment"><span class="math inline">M(x,\cdot) = \delta_{\tau(x)}(\cdot)</span></li>
+</ul></li>
+<li class="fragment">Noisy summary statistics
+<ul>
+<li class="fragment"><span class="math inline">M(x,\cdot) = \mathcal{N}(~\cdot \mid  \tau(x), \sigma^2)</span></li>
+</ul></li>
+<li class="fragment">Composition of multiple mechanisms</li>
+</ul>
+</section>
+<section id="the-statistic-2" class="slide level2">
+<h2>The statistic</h2>
+<p><span class="math inline">M</span> can be deterministic or randomised</p>
+<ul>
+<li class="fragment">Result of optimisation
+<ul>
+<li class="fragment">MLE: <span class="math inline">\quad M(x,\cdot) = \delta_{\tau(x)}(\cdot)</span></li>
+<li class="fragment"><span class="math inline">\tau(x) = \arg\max_{\theta \in \Theta} \log L(x \mid \theta)</span></li>
+</ul></li>
+<li class="fragment">Monte Carlo output
+<ul>
+<li class="fragment">MCMC: <span class="math inline">\quad M(x,\mathrm{d}t_{1:N}) = \prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)</span></li>
+</ul></li>
+<li class="fragment">Noisy optimisation
+<ul>
+<li class="fragment">SGD: <span class="math inline">\quad M(x,\mathrm{d}t_N) = \int_{\mathsf{T}_{-n}}\prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="transparency" class="slide level2">
+<h2>Transparency</h2>
+<p><strong>Privacy class</strong>: A set of mechanisms that satisfy a given privacy definition.</p>
+<div class="fragment">
+<p>If <span class="math inline">\mathfrak{C}</span> is the privacy class generated by “<span class="math inline">\text{D}</span>” then</p>
+<p><span class="math display">M \in \mathfrak{C} \Longleftrightarrow M~\text{satisfies}~\text{D}</span></p>
+</div>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Assumption 1: Transparency</strong></p>
+</div>
+<div class="callout-content">
+<p>Sender shares the mechanism <span class="math inline">M</span> and privacy class <span class="math inline">\mathfrak{C}</span>, for which <span class="math inline">M \in \mathfrak{C}</span>, with Receiver. Further, the definitions of <span class="math inline">M</span> and <span class="math inline">\mathfrak{C}</span> do not depend on the data.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="receiver-2" class="slide level2">
+<h2>Receiver</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Assumption 2: Bayesian adversary</strong></p>
+</div>
+<div class="callout-content">
+<p>Receiver makes Bayesian decisions</p>
+</div>
+</div>
+</div>
+<ol type="1">
+<li class="fragment">Holds a prior distribution over the data <span class="math inline">Q</span></li>
+<li class="fragment">Constructs a posterior distribution <span class="math inline">Q_T</span> from <span class="math inline">(M,T)</span></li>
+<li class="fragment">Has loss function <span class="math inline">\ell: \mathcal{D} \times \mathsf{X} \rightarrow \mathbb{R}</span></li>
+</ol>
+<div class="fragment">
+<p><em>Sharing <span class="math inline">\mathfrak{C}</span> does not affect Receiver’s data posterior by Assumption 1.</em></p>
+</div>
+</section>
 <section id="privacy-game" class="slide level2 hidden-title">
 <h2>Privacy game</h2>
 <div class="tikz-wrap">
@@ -1340,201 +1532,6 @@ Joshua J Bon
           display:block!important;
       }</style></aside>
 </section>
-<section id="overview" class="slide level2">
-<h2>Overview</h2>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Sender</strong></p>
-</div>
-<div class="callout-content">
-<div class="fragment">
-<p>Government agency release <strong>small area statistics</strong> on a disease</p>
-</div>
-</div>
-</div>
-</div>
-<div class="callout callout-warning callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Receiver</strong></p>
-</div>
-<div class="callout-content">
-<div class="fragment">
-<p>Insurance company <strong>raises premiums</strong> using inferred disease prevalence in a small town</p>
-</div>
-</div>
-</div>
-</div>
-<div class="callout callout-important callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Effect on data privacy</strong></p>
-</div>
-<div class="callout-content">
-<div class="fragment">
-<p>Statistic release <span class="math inline">\longrightarrow</span> adversarial decisions <span class="math inline">\longrightarrow</span> privacy effect</p>
-</div>
-</div>
-</div>
-</div>
-</section></section>
-<section>
-<section id="an-anatomy-of-data-privacy" class="title-slide slide level1 center">
-<h1>An anatomy of data privacy</h1>
-
-</section>
-<section id="the-players" class="slide level2">
-<h2>The players</h2>
-<h3 id="sender-1">Sender</h3>
-<ul>
-<li class="fragment">Custodian of data</li>
-<li class="fragment">Will use mechanism to release information about data</li>
-</ul>
-<h3 id="receiver-1">Receiver</h3>
-<ul>
-<li class="fragment">Makes decision based on revealed information</li>
-<li class="fragment">Decision affects Sender’s privacy</li>
-</ul>
-</section>
-<section id="privacy-function" class="slide level2">
-<h2>Privacy function</h2>
-<p>Sender’s privacy measured with a <strong>privacy function</strong></p>
-<p><span class="math display">\rho:\mathcal{D} \times \mathsf{X} \rightarrow \mathbb{R}</span></p>
-<ul>
-<li class="fragment"><p>Receiver’s decision <span class="math inline">\quad d_i \in \mathcal{D}</span></p></li>
-<li class="fragment"><p>Data value <span class="math inline">\quad x \in \mathsf{X}</span></p></li>
-</ul>
-<div class="fragment">
-<p><span class="math inline">\rho</span> orders preferences of decisions for a given dataset</p>
-</div>
-<ul>
-<li class="fragment">If <span class="math inline">d_1</span> is preferred to <span class="math inline">d_2</span> then <span class="math inline">\rho(d_1,x) &gt; \rho(d_2,x)</span></li>
-</ul>
-</section>
-<section id="example-1-privacy-function" class="slide level2">
-<h2>Example 1: Privacy function</h2>
-<p>For some fixed <span class="math inline">\kappa&gt;0</span>,</p>
-<p><span class="math display">\rho(d,x) = \begin{cases}
-  0, &amp; \text{if } x \in d, \vert d \vert &lt; \kappa\\
-  1, &amp; \text{otherwise},
-\end{cases}</span></p>
-<ul>
-<li><p><span class="math inline">x \in \mathsf{X} = \mathbb{R}</span></p></li>
-<li><p><span class="math inline">d \in \mathcal{D} = \{[a,b]:a,b\in \mathbb{R}, a\leq b\}</span></p></li>
-</ul>
-</section>
-<section id="example-2-privacy-function" class="slide level2">
-<h2>Example 2: Privacy function</h2>
-<p><br></p>
-<p><span class="math display">\rho(d,x) = -\log d(x)</span></p>
-<ul>
-<li><p><span class="math inline">x \in \mathsf{X} = \mathbb{R}</span></p></li>
-<li><p><span class="math inline">d \in \mathcal{D} = \{\text{probability density functions on } \mathbb{R}\}</span></p></li>
-</ul>
-</section>
-<section id="the-statistic" class="slide level2">
-<h2>The statistic</h2>
-<p>A statistic <span class="math inline">T \in \mathsf{T}</span> is output from a mechanism <span class="math inline">M</span> given <span class="math inline">x</span></p>
-<p><span class="math display">T \sim M(x,\cdot)</span></p>
-<ul>
-<li class="fragment"><span class="math inline">M:\mathcal{T} \times \mathsf{X} \rightarrow [0,1]</span> for <span class="math inline">(\mathsf{T},\mathcal{T})</span> measurable space</li>
-</ul>
-</section>
-<section id="the-statistic-1" class="slide level2">
-<h2>The statistic</h2>
-<p><span class="math inline">M</span> can be deterministic or randomised</p>
-<ul>
-<li class="fragment">Summary statistics <span class="math inline">\quad\tau:\mathsf{X}\rightarrow\mathsf{T}</span>
-<ul>
-<li class="fragment"><span class="math inline">M(x,\cdot) = \delta_{\tau(x)}(\cdot)</span></li>
-</ul></li>
-<li class="fragment">Noisy summary statistics
-<ul>
-<li class="fragment"><span class="math inline">M(x,\cdot) = \mathcal{N}(~\cdot \mid  \tau(x), \sigma^2)</span></li>
-</ul></li>
-<li class="fragment">Composition of multiple mechanisms</li>
-</ul>
-</section>
-<section id="the-statistic-2" class="slide level2">
-<h2>The statistic</h2>
-<p><span class="math inline">M</span> can be deterministic or randomised</p>
-<ul>
-<li class="fragment">Result of optimisation
-<ul>
-<li class="fragment">MLE: <span class="math inline">\quad M(x,\cdot) = \delta_{\tau(x)}(\cdot)</span></li>
-<li class="fragment"><span class="math inline">\tau(x) = \arg\max_{\theta \in \Theta} \log L(x \mid \theta)</span></li>
-</ul></li>
-<li class="fragment">Monte Carlo output
-<ul>
-<li class="fragment">MCMC: <span class="math inline">\quad M(x,\mathrm{d}t_{1:N}) = \prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)</span></li>
-</ul></li>
-<li class="fragment">Noisy optimisation
-<ul>
-<li class="fragment">SGD: <span class="math inline">\quad M(x,\mathrm{d}t_N) = \int_{\mathsf{T}_{-n}}\prod_{i=1}^N K(\mathrm{d}t_{i} \mid t_{i-1}, x)</span></li>
-</ul></li>
-</ul>
-</section>
-<section id="transparency" class="slide level2">
-<h2>Transparency</h2>
-<p><strong>Privacy class</strong>: A set of mechanisms that satisfy a given privacy definition.</p>
-<div class="fragment">
-<p>If <span class="math inline">\mathfrak{C}</span> is the privacy class generated by “<span class="math inline">\text{D}</span>” then</p>
-<p><span class="math display">M \in \mathfrak{C} \Longleftrightarrow M~\text{satisfies}~\text{D}</span></p>
-</div>
-<div class="fragment">
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Assumption 1: Transparency</strong></p>
-</div>
-<div class="callout-content">
-<p>Sender shares the mechanism <span class="math inline">M</span> and privacy class <span class="math inline">\mathfrak{C}</span>, for which <span class="math inline">M \in \mathfrak{C}</span>, with Receiver. Further, the definitions of <span class="math inline">M</span> and <span class="math inline">\mathfrak{C}</span> do not depend on the data.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="receiver-2" class="slide level2">
-<h2>Receiver</h2>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Assumption 2: Bayesian adversary</strong></p>
-</div>
-<div class="callout-content">
-<p>Receiver makes Bayesian decisions</p>
-</div>
-</div>
-</div>
-<ol type="1">
-<li class="fragment">Holds a prior distribution over the data <span class="math inline">Q</span></li>
-<li class="fragment">Constructs a posterior distribution <span class="math inline">Q_T</span> from <span class="math inline">(M,T)</span></li>
-<li class="fragment">Has loss function <span class="math inline">\ell: \mathcal{D} \times \mathsf{X} \rightarrow \mathbb{R}</span></li>
-</ol>
-<div class="fragment">
-<p><span class="math inline">\mathfrak{C}</span> <em>may affect Receiver’s data posterior. Here assumed not to.</em></p>
-</div>
-</section>
-<section id="an-anatomy-of-data-privacy-1" class="slide level2">
-<h2>An anatomy of data privacy</h2>
-
-<img data-src="index_files/figure-revealjs/dtp-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
 <section id="receivers-optimal-decision" class="slide level2">
 <h2>Receiver’s optimal decision</h2>
 <p>From Assumption 1:</p>
@@ -1641,11 +1638,11 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 </div>
 </div>
 </section>
-<section id="an-anatomy-of-data-privacy-2" class="slide level2">
+<section id="an-anatomy-of-data-privacy-1" class="slide level2">
 <h2>An anatomy of data privacy</h2>
 
 <img data-src="index_files/figure-revealjs/dtp5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="an-anatomy-of-data-privacy-3" class="slide level2">
+<section id="an-anatomy-of-data-privacy-2" class="slide level2">
 <h2>An anatomy of data privacy</h2>
 
 <img data-src="index_files/figure-revealjs/dtp3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
