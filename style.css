@@ -34,3 +34,7 @@
 .redacted::selection {
   background-color: black; /* Prevents the text from appearing when highlighted */
 }
+
+.hidden-title h2 {
+  display: none !important;
+}

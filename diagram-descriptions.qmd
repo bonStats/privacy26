@@ -1,5 +1,3 @@
-::: {.tikz-descriptions}
-
 ::: {.tikz-desc data-node="sdata"}
 **$x$ — Private data.** The sender's raw data, held privately and never shared.
 :::
@@ -42,6 +40,4 @@
 
 ::: {.tikz-desc data-node="advbox"}
 **Receiver.** The receiver subsystem: prior $\to$ posterior $\to$ decision, with assumed loss.
-:::
-
 :::

@@ -46,9 +46,11 @@ editor: source
 
 ::: {.column width="65%"}
 
-:::{.callout-tip}
+::: {.callout-tip}
+
 ## True or False?
 _This is a very good croissant._
+
 :::
 
 1. Best croissant of my life
@@ -286,6 +288,10 @@ Our approach is a **semantics first** understanding of data privacy, where
   - cell suppression
 
 # Game-theoretic privacy
+
+## Privacy game {.hidden-title}
+
+{{< include diagram.qmd >}}
 
 ## Overview
 

@@ -1,20 +1,3 @@
----
-format:
-  revealjs:
-    embed-resources: true
-    theme: white
-    width: 1100
-    height: 700
-    margin: 0.04
-    center: true
-    controls: false
-    progress: false
-engine: knitr
-pagetitle: "Interactive privacy / decision diagram"
----
-
-##
-
 ```{r tikz-svg, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
 # Find the TikZ source (kept next to this .qmd)
 src <- "diagram.tex"
@@ -57,8 +40,15 @@ svg <- paste(readLines(file.path(build, "fig.svg"), warn = FALSE), collapse = "\
 svg <- sub("<svg ", "<svg class='tikz-diagram' ", svg, fixed = TRUE)
 svg <- sub(" width='[^']*'", "", svg)
 svg <- sub(" height='[^']*'", "", svg)
-cat('<div class="tikz-wrap">', svg, '</div>',
-    '<div id="tikz-info" class="tikz-info"></div>', sep = "\n")
+
+# Emit as a Pandoc raw-HTML block so the <div>/<svg> are passed through verbatim
+# (not parsed as fenced Divs -> avoids the "Div ... unclosed" warning). The fence
+# is built with strrep() to keep literal backticks out of this chunk's source.
+fence <- strrep("`", 3)
+cat(paste0(fence, "{=html}"),
+    '<div class="tikz-wrap">', svg, '</div>',
+    '<div id="tikz-info" class="tikz-info"></div>',
+    fence, sep = "\n")
 ```
 
 {{< include diagram-descriptions.qmd >}}
@@ -67,7 +57,8 @@ cat('<div class="tikz-wrap">', svg, '</div>',
 <style>
 .reveal .tikz-wrap { max-width: 100%; margin: 0 auto; }
 .reveal svg.tikz-diagram { width: 100%; height: auto; max-height: 540px; display: block; margin: 0 auto; }
-.reveal .tikz-descriptions { position: absolute; left: -10000px; top: 0; width: 920px; }
+.reveal .tikz-desc { position: absolute; left: -10000px; top: 0; width: 920px; }
+.reveal .tikz-info .tikz-desc { position: static; left: auto; top: auto; width: auto; }
 .reveal .hotspot.active { cursor: pointer; }
 .reveal .hotspot.active path { transition: fill-opacity .12s ease, fill .12s ease; }
 .reveal .hotspot.active:hover path { fill: #f59e0b; fill-opacity: .28; }

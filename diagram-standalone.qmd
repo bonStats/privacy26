@@ -1,0 +1,19 @@
+---
+format:
+  revealjs:
+    embed-resources: true
+    theme: white
+    width: 1100
+    height: 700
+    margin: 0.04
+    center: true
+    controls: false
+    progress: false
+    css: style.css
+engine: knitr
+pagetitle: "Interactive privacy / decision diagram"
+---
+
+## Privacy game {.hidden-title}
+
+{{< include diagram.qmd >}}
