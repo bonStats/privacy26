@@ -1,8 +1,8 @@
 ---
 title: "Persuasive Privacy"
-subtitle: "Chalmers University of Technology, 5^th^ June 2026"
+subtitle: "ISBA World Meeting, 30^th^ June 2026"
 author: "Joshua J Bon"
-institute: "Adelaide University"
+institute: "Adelaide University*"
 bibliography: refs.bib
 format:
   revealjs:
@@ -20,14 +20,41 @@ editor: source
 
 :::: {.columns}
 
-::: {.column width="65%"}
+::: {.column width="50%"}
 
-1. Differential privacy: _de facto_
-2. Privacy from the ground up: _semantics_
-3. Persuasive privacy: _not coercion_
-4. Differential privacy: _redux_
+1. Differential privacy
+2. Privacy from the ground up
+3. Persuasive privacy^[Bon, Bailie, Rousseau & Robert (2026) _ICML 2026_ 
+[arXiv 2601.22945](https://arxiv.org/abs/2601.22945) [bonstats.github.io/privacy26](https://bonstats.github.io/privacy26)]
+4. Differential privacy redux
 5. Privacy without noise (?)
 
+
+:::
+
+::: {.column width="50%"}
+
+![](imgs/leshouches.png)
+
+:::
+
+::::
+
+## A Game of Privacy
+
+:::: {.columns}
+
+::: {.column width="65%"}
+
+:::{.callout-tip}
+## True or False?
+_This is a very good croissant._
+:::
+
+1. Best croissant of my life
+2. Fête du Pain
+3. 1er Prix du Meilleur Crossiant au Beurre du Grand Paris
+4. I am lactose intolerant
 
 :::
 
@@ -38,10 +65,6 @@ editor: source
 :::
 
 ::::
-
-Bon, Bailie, Rousseau & Robert (2026) _ICML 2026_ 
-
-[arXiv 2601.22945](https://arxiv.org/abs/2601.22945) [bonstats.github.io/privacy26](https://bonstats.github.io/privacy26)
 
 
 # Differential privacy
@@ -242,7 +265,7 @@ Related to Lipschitz interpretation
 
 - DP Semantics are post-hoc explanations
 - Deterministic mechanisms are not covered by DP
-  - What about the mean of a large dataset?
+- DP for MCMC is [c o o k e d]{.redacted}
 
 ::: {.fragment}
 

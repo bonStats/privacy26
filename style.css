@@ -24,3 +24,13 @@
 .cell-output-display > div:not(.quarto-figure) figure svg {
   max-width: 100% !important;
 }
+
+.redacted {
+  background-color: black;
+  color: black;
+  border-radius: 4px; /* Optional: gives a slightly blurred/styled edge */
+}
+
+.redacted::selection {
+  background-color: black; /* Prevents the text from appearing when highlighted */
+}
