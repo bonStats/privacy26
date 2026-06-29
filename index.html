@@ -184,20 +184,20 @@ Joshua J Bon
 
 </section>
 <section id="todays-talk" class="slide level2">
-<h2>Today’s talk</h2>
+<h2>Today’s talk<sup>1</sup></h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ol type="1">
 <li class="fragment">Differential privacy</li>
-<li class="fragment">Privacy from the ground up</li>
-<li class="fragment">Persuasive privacy<sup>1</sup></li>
+<li class="fragment"><del>Decision-theoretic privacy</del> Game-theoretic privacy</li>
+<li class="fragment">Persuasive privacy<sup>2</sup></li>
 <li class="fragment">Differential privacy redux</li>
 <li class="fragment">Privacy without noise (?)</li>
 </ol>
 </div><div class="column" style="width:50%;">
 <p><img data-src="imgs/leshouches.png"></p>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>Bon, Bailie, Rousseau &amp; Robert (2026) <em>ICML 2026</em> <a href="https://arxiv.org/abs/2601.22945">arXiv 2601.22945</a> <a href="https://bonstats.github.io/privacy26">bonstats.github.io/privacy26</a></p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Slides: <a href="https://bonstats.github.io/privacy26">bonstats.github.io/privacy26</a></p></li><li id="fn2"><p>Paper: Bon, Bailie, Rousseau &amp; Robert (2026) <em>ICML 2026</em> <a href="https://arxiv.org/abs/2601.22945">arXiv 2601.22945</a></p></li></ol></aside></section>
 <section id="a-game-of-privacy" class="slide level2">
 <h2>A Game of Privacy</h2>
 <div class="columns">
@@ -230,8 +230,8 @@ Joshua J Bon
 <h1>Differential privacy</h1>
 
 </section>
-<section id="dp-framework" class="slide level2">
-<h2>DP framework</h2>
+<section id="private-mechanisms" class="slide level2">
+<h2>Private mechanisms?</h2>
 <p><span class="math display">\text{Dataset}~x \overset{\text{release}}{\longrightarrow} \text{statistic}~T</span></p>
 <ul>
 <li class="fragment"><span class="math inline">T \sim M(x,\cdot)</span>, with some mechanism <span class="math inline">M</span></li>
@@ -246,12 +246,7 @@ Joshua J Bon
 <p><span class="math display">M(x,\cdot) = \mathcal{N}(\overline{x},\sigma^2)</span></p>
 </div>
 </section>
-<section id="dp-intuition" class="slide level2">
-<h2>DP Intuition</h2>
 
-<img data-src="index_files/figure-revealjs/unnamed-chunk-1-1.png" width="960" class="r-stretch"><p>To limit information leaked about data <span class="math inline">x</span> by statistic <span class="math inline">T</span>,</p>
-<p>control the sensitivity of the mechanism <span class="math inline">M(x,\cdot)</span> w.r.t. <span class="math inline">x</span>.</p>
-</section>
 <section id="dp-definition" class="slide level2">
 <h2>DP Definition</h2>
 <p>Borrow from Lipschitz continuity <span class="citation" data-cites="bailie2024general">(<a href="#/references" role="doc-biblioref" onclick="">Bailie and Gong 2024</a>)</span>.</p>
@@ -262,31 +257,7 @@ Joshua J Bon
 <p>for all <span class="math inline">x,x^\prime \in \mathcal{D}</span>.</p>
 </div>
 </section>
-<section id="dp-definition-1" class="slide level2">
-<h2>DP Definition</h2>
-<p>A mechanism <span class="math inline">M</span> is <span class="math inline">\epsilon</span>-DP if</p>
-<div class="fragment">
-<p><span class="math display">\sup_{S\in\mathcal{S}}\left\vert\ln\frac{M(x,S)}{M(x^\prime,S)}\right\vert \leq \epsilon</span></p>
-</div>
-<div class="fragment">
-<p>for all <span class="math inline">x,x^\prime \in \mathcal{D}</span>, differing by at most one element.</p>
-</div>
-<div class="fragment">
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Pure Differential Privacy</strong></p>
-</div>
-<div class="callout-content">
-<p><span class="math display">M(x,S) \leq \exp\{\epsilon\} M(x^\prime, S)</span> for all <span class="math inline">x \sim x^\prime</span> and <span class="math inline">S \in \mathcal{S}</span>.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
+
 <section id="some-dp-properties" class="slide level2">
 <h2>Some DP Properties</h2>
 <p>Focusing on (pure) <span class="math inline">\epsilon</span>-DP.</p>
@@ -370,7 +341,7 @@ Joshua J Bon
 <li class="fragment">DP for MCMC is <span class="redacted">c o o k e d</span></li>
 </ul>
 <div class="fragment">
-<p>Our approach is a <strong>semantics-first</strong> understanding of data privacy, where</p>
+<p>Our approach is a <strong>semantics first</strong> understanding of data privacy, where</p>
 </div>
 <ul>
 <li class="fragment">Privacy definitions are systematically constructed from an <strong>agent-based game</strong></li>
@@ -391,8 +362,8 @@ Joshua J Bon
 </ul>
 </section></section>
 <section>
-<section id="privacy-from-the-ground-up-or-semantics-first" class="title-slide slide level1 center">
-<h1>Privacy from the ground up or “semantics first”</h1>
+<section id="game-theoretic-privacy" class="title-slide slide level1 center">
+<h1>Game-theoretic privacy</h1>
 
 </section>
 <section id="overview" class="slide level2">
@@ -728,7 +699,7 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
 <li class="fragment">A “privacy score”</li>
 </ul></li>
 </ul>
-<aside><ol class="aside-footnotes"><li id="fn2"><p><span class="citation" data-cites="grunwald2004game">Grünwald and Dawid (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span></p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn3"><p><span class="citation" data-cites="grunwald2004game">Grünwald and Dawid (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span></p></li></ol></aside></section>
 <section id="measuring-privacy-1" class="slide level2">
 <h2>Measuring privacy</h2>
 <div class="callout callout-note callout-titled callout-style-default">

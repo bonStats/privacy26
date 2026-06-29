@@ -16,16 +16,16 @@ editor: source
 ---
 
 
-## Today's talk
+## Today's talk^[Slides: [bonstats.github.io/privacy26](https://bonstats.github.io/privacy26)]
 
 :::: {.columns}
 
 ::: {.column width="50%"}
 
 1. Differential privacy
-2. Privacy from the ground up
-3. Persuasive privacy^[Bon, Bailie, Rousseau & Robert (2026) _ICML 2026_ 
-[arXiv 2601.22945](https://arxiv.org/abs/2601.22945) [bonstats.github.io/privacy26](https://bonstats.github.io/privacy26)]
+2. ~~Decision-theoretic privacy~~ Game-theoretic privacy
+3. Persuasive privacy^[Paper: Bon, Bailie, Rousseau & Robert (2026) _ICML 2026_ 
+[arXiv 2601.22945](https://arxiv.org/abs/2601.22945)]
 4. Differential privacy redux
 5. Privacy without noise (?)
 
@@ -69,7 +69,7 @@ _This is a very good croissant._
 
 # Differential privacy
 
-## DP framework
+## Private mechanisms?
 
 $$\text{Dataset}~x \overset{\text{release}}{\longrightarrow} \text{statistic}~T$$
 
@@ -85,7 +85,7 @@ $$\text{Dataset}~x \overset{\text{release}}{\longrightarrow} \text{statistic}~T$
 $$M(x,\cdot) = \mathcal{N}(\overline{x},\sigma^2)$$
 :::
 
-## DP Intuition
+## DP Intuition {visibility="hidden"}
 
 ```{r}
 library(dplyr)
@@ -162,7 +162,7 @@ $$d_\text{P}[M(x,\cdot),M(x^\prime,\cdot)] \leq \epsilon~d_\text{X}[x,x^\prime]$
 for all $x,x^\prime \in \mathcal{D}$.
 :::
 
-## DP Definition
+## DP Definition {visibility="hidden"}
 
 A mechanism $M$ is $\epsilon$-DP if
 
@@ -177,7 +177,7 @@ for all $x,x^\prime \in \mathcal{D}$, differing by at most one element.
 ::: {.fragment}
 
 :::{.callout-note}
-## Pure Differential Privacy 
+## Pure Differential Privacy {visibility="hidden"}
 
 $$M(x,S) \leq \exp\{\epsilon\} M(x^\prime, S)$$
 for all $x \sim x^\prime$ and $S \in \mathcal{S}$.
@@ -269,7 +269,7 @@ Related to Lipschitz interpretation
 
 ::: {.fragment}
 
-Our approach is a **semantics-first** understanding of data privacy, where
+Our approach is a **semantics first** understanding of data privacy, where
 
 :::
 
@@ -285,7 +285,7 @@ Our approach is a **semantics-first** understanding of data privacy, where
   - empirical mean
   - cell suppression
 
-# Privacy from the ground up or "semantics first"
+# Game-theoretic privacy
 
 ## Overview
 
