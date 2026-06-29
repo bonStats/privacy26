@@ -1,0 +1,47 @@
+::: {.tikz-descriptions}
+
+::: {.tikz-desc data-node="sdata"}
+**$x$ — Private data.** The sender's raw data, held privately and never shared.
+:::
+
+::: {.tikz-desc data-node="mech"}
+**$M$ — Mechanism.** A (randomised) mechanism applied to the data $x$ to produce the output $T = M(x)$.
+:::
+
+::: {.tikz-desc data-node="sstat"}
+**$T$ — Output.** The released statistic produced by the mechanism and shared with the receiver.
+:::
+
+::: {.tikz-desc data-node="strans"}
+**$\mathfrak{C}$ — Guarantee.** The privacy guarantee / transcript accompanying the output.
+:::
+
+::: {.tikz-desc data-node="spriv"}
+**$\rho$ — Privacy.** The privacy loss, derived from the data $x$ and the receiver's decision $d$.
+:::
+
+::: {.tikz-desc data-node="adata"}
+**$Q$ — Data-prior.** The receiver's assumed prior over the data.
+:::
+
+::: {.tikz-desc data-node="apost"}
+**$Q_T$ — Data-posterior.** The receiver's posterior given the shared output, $Q_T = Q(\,\cdot \mid T)$.
+:::
+
+::: {.tikz-desc data-node="aact"}
+**$d$ — Decision.** The receiver's decision, formed from the posterior $Q_T$ and the loss $\ell$.
+:::
+
+::: {.tikz-desc data-node="aloss"}
+**$\ell$ — Loss.** The receiver's assumed loss function.
+:::
+
+::: {.tikz-desc data-node="statbox"}
+**Sender.** The sender subsystem: data $\to$ mechanism $\to$ output $\to$ guarantee $\to$ privacy.
+:::
+
+::: {.tikz-desc data-node="advbox"}
+**Receiver.** The receiver subsystem: prior $\to$ posterior $\to$ decision, with assumed loss.
+:::
+
+:::

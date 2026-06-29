@@ -1,0 +1,147 @@
+---
+format:
+  revealjs:
+    embed-resources: true
+    theme: white
+    width: 1100
+    height: 700
+    margin: 0.04
+    center: true
+    controls: false
+    progress: false
+engine: knitr
+pagetitle: "Interactive privacy / decision diagram"
+---
+
+##
+
+```{r tikz-svg, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+# Find the TikZ source (kept next to this .qmd)
+src <- "diagram.tex"
+if (!file.exists(src)) {
+  inp <- tryCatch(knitr::current_input(dir = TRUE), error = function(e) NA_character_)
+  if (!is.na(inp)) src <- file.path(dirname(inp), "diagram.tex")
+}
+if (!file.exists(src))
+  stop("Cannot find 'diagram.tex'. Keep it in the same folder as this .qmd.")
+
+tools <- Sys.which(c("latex", "dvisvgm"))
+if (any(tools == ""))
+  stop("Not on PATH (as Quarto sees it): ",
+       paste(names(tools)[tools == ""], collapse = ", "),
+       ". Install TeX Live / TinyTeX, then restart.")
+
+build <- tempfile("tikz"); dir.create(build)
+fig <- file.path(build, "fig.tex")
+ok <- file.copy(normalizePath(src), fig, overwrite = TRUE)
+if (!isTRUE(ok)) stop("Could not copy diagram.tex into the build directory.")
+
+dvi_log <- system2("latex",
+  c("-interaction=nonstopmode", "-halt-on-error",
+    paste0("-output-directory=", build), fig),
+  stdout = TRUE, stderr = TRUE)
+if (!file.exists(file.path(build, "fig.dvi")))
+  stop("latex could not build diagram.tex (often a missing package). Try:\n",
+       "  tinytex::tlmgr_install(c('standalone','pgf','xcolor','amsmath','amsfonts'))\n",
+       "Last lines of the log:\n", paste(utils::tail(dvi_log, 15), collapse = "\n"))
+
+svg_log <- system2("dvisvgm",
+  c("--no-fonts", paste0("--output=", file.path(build, "fig.svg")),
+    file.path(build, "fig.dvi")),
+  stdout = TRUE, stderr = TRUE)
+if (!file.exists(file.path(build, "fig.svg")))
+  stop("dvisvgm could not convert the DVI. Last lines:\n",
+       paste(utils::tail(svg_log, 15), collapse = "\n"))
+
+svg <- paste(readLines(file.path(build, "fig.svg"), warn = FALSE), collapse = "\n")
+svg <- sub("<svg ", "<svg class='tikz-diagram' ", svg, fixed = TRUE)
+svg <- sub(" width='[^']*'", "", svg)
+svg <- sub(" height='[^']*'", "", svg)
+cat('<div class="tikz-wrap">', svg, '</div>',
+    '<div id="tikz-info" class="tikz-info"></div>', sep = "\n")
+```
+
+{{< include diagram-descriptions.qmd >}}
+
+```{=html}
+<style>
+.reveal .tikz-wrap { max-width: 100%; margin: 0 auto; }
+.reveal svg.tikz-diagram { width: 100%; height: auto; max-height: 540px; display: block; margin: 0 auto; }
+.reveal .tikz-descriptions { position: absolute; left: -10000px; top: 0; width: 920px; }
+.reveal .hotspot.active { cursor: pointer; }
+.reveal .hotspot.active path { transition: fill-opacity .12s ease, fill .12s ease; }
+.reveal .hotspot.active:hover path { fill: #f59e0b; fill-opacity: .28; }
+.reveal .hotspot.active.selected path { fill: #2563eb; fill-opacity: .30; }
+.reveal .hotspot.active.container:hover path { fill: #f59e0b; fill-opacity: .06; stroke: #f59e0b; stroke-width: 2; }
+.reveal .hotspot.active.container.selected path { fill: #2563eb; fill-opacity: .07; stroke: #2563eb; stroke-width: 2; }
+.reveal .tikz-info {
+  max-width: 100%; margin: .5rem auto 0; padding: .45rem .7rem;
+  border: 1px solid #d4d4d8; border-left: 4px solid #2563eb; border-radius: 6px;
+  background: #fafafa; color: #18181b; font-size: .46em; line-height: 1.35;
+  text-align: left; min-height: 2.4em;
+}
+.reveal .tikz-info p { margin: 0; }
+.reveal .tikz-info .ti-hint { color: #71717a; font-style: italic; }
+</style>
+<script>
+(function () {
+  function init() {
+    const info = document.getElementById('tikz-info');
+    const spots = document.querySelectorAll('.hotspot');
+    if (!info) return;
+
+    const blocks = {};
+    document.querySelectorAll('.tikz-desc[data-node]').forEach(function (b) {
+      blocks['node-' + b.getAttribute('data-node')] = b;
+    });
+
+    const hint = document.createElement('span');
+    hint.className = 'ti-hint';
+    hint.textContent = 'Hover a node to inspect it; click to pin.';
+
+    let pinned = null;
+    function typeset() {                 // defensive: render math if not already typeset
+      if (window.MathJax && MathJax.typesetPromise) { MathJax.typesetPromise([info]).catch(function(){}); }
+      else if (window.renderMathInElement) { try { renderMathInElement(info); } catch (e) {} }
+    }
+    function show(id) {
+      const b = blocks[id];
+      if (!b) { info.replaceChildren(hint); return; }
+      info.replaceChildren(b);           // MOVE the rendered node into the panel
+      typeset();
+    }
+    function showHint() { info.replaceChildren(hint); }
+    showHint();
+
+    spots.forEach(function (g) {
+      if (!blocks[g.id]) return;         // only described nodes are interactive
+      g.classList.add('active');
+      g.addEventListener('mouseenter', function () { show(g.id); });
+      g.addEventListener('mouseleave', function () { if (pinned) show(pinned); else showHint(); });
+      g.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        if (pinned === g.id) {
+          g.classList.remove('selected'); pinned = null; showHint();
+        } else {
+          spots.forEach(s => s.classList.remove('selected'));
+          g.classList.add('selected'); pinned = g.id; show(g.id);
+        }
+        document.dispatchEvent(new CustomEvent('tikznode', { detail: { id: g.id, selected: pinned === g.id } }));
+      });
+    });
+  }
+  // Run after the math engine has finished its initial pass when possible.
+  function start() {
+    if (window.MathJax && MathJax.startup && MathJax.startup.promise) MathJax.startup.promise.then(init);
+    else init();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+</script>
+```
+
+::: {.notes}
+Descriptions come from `descriptions.md` (Markdown + LaTeX). Only nodes with a
+block are interactive. Hover to inspect, click to pin; selections emit `tikznode`.
+:::
