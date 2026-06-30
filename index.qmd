@@ -88,7 +88,7 @@ $$\text{Dataset}~x \overset{\text{release}}{\longrightarrow} \text{statistic}~T$
 $$M(x,\cdot) = \mathcal{N}(\overline{x},\sigma^2)$$
 :::
 
-## DP Intuition {visibility="hidden"}
+## DP Intuition
 
 ```{r}
 library(dplyr)
@@ -153,7 +153,7 @@ control the sensitivity of the mechanism $M(x,\cdot)$ w.r.t. $x$.
 
 
 
-## DP Definition
+## DP Definition {visibility="hidden"}
 
 Borrow from Lipschitz continuity [@bailie2024general].
 
@@ -447,7 +447,7 @@ definitions of $M$ and $\mathfrak{C}$ do not depend on the data.
 
 :::{.callout-note}
 ## Assumption 2: Bayesian adversary
-Receiver makes Bayesian decisions
+Receiver is Bayes rational
 :::
 
 1. Holds a prior distribution over the data $Q$
@@ -629,11 +629,11 @@ where $\mathbb{P}_x$ is w.r.t. $T \sim M(x,\cdot)$.
 ## Why "persuasive"?
 
 ::: {.fragment}
-_Sender chooses a mechanism that **persuades** Receiver to make decisions limiting privacy loss.._
+_Sender chooses a mechanism that **persuades** Receiver to make decisions limiting privacy loss._
 :::
 
 ::: {.fragment}
-Related to Bayesian persuasion [@kamenica2011bayesian] however,
+Related to **Bayesian persuasion**^[@kamenica2011bayesian] but...
 :::
 
 - asymmetry between Sender and Receiver
@@ -642,19 +642,11 @@ Related to Bayesian persuasion [@kamenica2011bayesian] however,
 
 ## Properties of Persuasive Privacy
 
-1. **Composition**
+1. **Composition** $$M_i \in \mathfrak{C} \Rightarrow M_1 \otimes M_2 \in \mathfrak{C}^\prime$$
 
-2. **Receiver post-processing**
+2. **Receiver post-processing** $$M \in \mathfrak{C} \Rightarrow M \otimes K \in \mathfrak{C}$$
 
-:::{.fragment}
-:::{.callout-note}
-## Definition: Receiver Post-Processing
-
-A guarantee $\mathrm{D}$ satisfies the receiver post-processing property if $M \in \mathfrak{C}(\mathrm{D})$ implies that $M\otimes K \in \mathfrak{C}(\mathrm{D})$ for all Markov kernels $K$ independent of the data $x$.
-:::
-:::
-
-3. Do not satisfy (Sender) post-processing
+3. **Does not** satisfy (Sender) post-processing $$M \in \mathfrak{C} \Rightarrow M K \in \mathfrak{C}$$
 
 ## Returning to DP
 
@@ -753,14 +745,29 @@ The average mechanism
 
 ## An invitation to (Bayesian) privacy
 
+:::: {.columns}
+
+::: {.column width="65%"}
+
 - $Q \in \mathcal{Q}_x$ **BNP**
 - $M(x,\cdot)$ **BayesComp**
 - $S(P,x)$ **BayesComp**, **Applied Bayes**
 
+::: {.fragment}
 
-## Thank you!
+**Thank you!**
+
+:::
+
+:::
+
+::: {.column width="35%"}
 
 ![](imgs/crossiant.jpg)
+
+:::
+
+::::
 
 
 # Appendix

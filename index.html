@@ -246,17 +246,13 @@ Joshua J Bon
 <p><span class="math display">M(x,\cdot) = \mathcal{N}(\overline{x},\sigma^2)</span></p>
 </div>
 </section>
+<section id="dp-intuition" class="slide level2">
+<h2>DP Intuition</h2>
 
-<section id="dp-definition" class="slide level2">
-<h2>DP Definition</h2>
-<p>Borrow from Lipschitz continuity <span class="citation" data-cites="bailie2024general">(<a href="#/references" role="doc-biblioref" onclick="">Bailie and Gong 2024</a>)</span>.</p>
-<div class="fragment">
-<p><span class="math display">d_\text{P}[M(x,\cdot),M(x^\prime,\cdot)] \leq \epsilon~d_\text{X}[x,x^\prime]</span></p>
-</div>
-<div class="fragment">
-<p>for all <span class="math inline">x,x^\prime \in \mathcal{D}</span>.</p>
-</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-1-1.png" width="960" class="r-stretch"><p>To limit information leaked about data <span class="math inline">x</span> by statistic <span class="math inline">T</span>,</p>
+<p>control the sensitivity of the mechanism <span class="math inline">M(x,\cdot)</span> w.r.t. <span class="math inline">x</span>.</p>
 </section>
+
 
 <section id="some-dp-properties" class="slide level2">
 <h2>Some DP Properties</h2>
@@ -545,7 +541,7 @@ Joshua J Bon
 <p><strong>Assumption 2: Bayesian adversary</strong></p>
 </div>
 <div class="callout-content">
-<p>Receiver makes Bayesian decisions</p>
+<p>Receiver is Bayes rational</p>
 </div>
 </div>
 </div>
@@ -1744,40 +1740,23 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 <section id="why-persuasive" class="slide level2">
 <h2>Why “persuasive”?</h2>
 <div class="fragment">
-<p><em>Sender chooses a mechanism that <strong>persuades</strong> Receiver to make decisions limiting privacy loss..</em></p>
+<p><em>Sender chooses a mechanism that <strong>persuades</strong> Receiver to make decisions limiting privacy loss.</em></p>
 </div>
 <div class="fragment">
-<p>Related to Bayesian persuasion <span class="citation" data-cites="kamenica2011bayesian">(<a href="#/references" role="doc-biblioref" onclick="">Kamenica and Gentzkow 2011</a>)</span> however,</p>
+<p>Related to <strong>Bayesian persuasion</strong><sup>1</sup> but…</p>
 </div>
 <ul>
 <li class="fragment">asymmetry between Sender and Receiver</li>
 <li class="fragment">utility functions of Sender and Receiver are related</li>
 <li class="fragment">Sender assesses decisions (mechanism) robustly: worst-case not expected value</li>
 </ul>
-</section>
+<aside><ol class="aside-footnotes"><li id="fn4"><p><span class="citation" data-cites="kamenica2011bayesian">Kamenica and Gentzkow (<a href="#/references" role="doc-biblioref" onclick="">2011</a>)</span></p></li></ol></aside></section>
 <section id="properties-of-persuasive-privacy" class="slide level2">
 <h2>Properties of Persuasive Privacy</h2>
 <ol type="1">
-<li class="fragment"><p><strong>Composition</strong></p></li>
-<li class="fragment"><p><strong>Receiver post-processing</strong></p></li>
-</ol>
-<div class="fragment">
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Definition: Receiver Post-Processing</strong></p>
-</div>
-<div class="callout-content">
-<p>A guarantee <span class="math inline">\mathrm{D}</span> satisfies the receiver post-processing property if <span class="math inline">M \in \mathfrak{C}(\mathrm{D})</span> implies that <span class="math inline">M\otimes K \in \mathfrak{C}(\mathrm{D})</span> for all Markov kernels <span class="math inline">K</span> independent of the data <span class="math inline">x</span>.</p>
-</div>
-</div>
-</div>
-</div>
-<ol start="3" type="1">
-<li class="fragment">Do not satisfy (Sender) post-processing</li>
+<li class="fragment"><p><strong>Composition</strong> <span class="math display">M_i \in \mathfrak{C} \Rightarrow M_1 \otimes M_2 \in \mathfrak{C}^\prime</span></p></li>
+<li class="fragment"><p><strong>Receiver post-processing</strong> <span class="math display">M \in \mathfrak{C} \Rightarrow M \otimes K \in \mathfrak{C}</span></p></li>
+<li class="fragment"><p><strong>Does not</strong> satisfy (Sender) post-processing <span class="math display">M \in \mathfrak{C} \Rightarrow M K \in \mathfrak{C}</span></p></li>
 </ol>
 </section>
 <section id="returning-to-dp" class="slide level2">
@@ -1893,16 +1872,20 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 </section>
 <section id="an-invitation-to-bayesian-privacy" class="slide level2">
 <h2>An invitation to (Bayesian) privacy</h2>
+<div class="columns">
+<div class="column" style="width:65%;">
 <ul>
 <li class="fragment"><span class="math inline">Q \in \mathcal{Q}_x</span> <strong>BNP</strong></li>
 <li class="fragment"><span class="math inline">M(x,\cdot)</span> <strong>BayesComp</strong></li>
 <li class="fragment"><span class="math inline">S(P,x)</span> <strong>BayesComp</strong>, <strong>Applied Bayes</strong></li>
 </ul>
-</section>
-<section id="thank-you" class="slide level2">
-<h2>Thank you!</h2>
-
-<img data-src="imgs/crossiant.jpg" class="r-stretch"></section></section>
+<div class="fragment">
+<p><strong>Thank you!</strong></p>
+</div>
+</div><div class="column" style="width:35%;">
+<p><img data-src="imgs/crossiant.jpg"></p>
+</div></div>
+</section></section>
 <section>
 <section id="appendix" class="title-slide slide level1 center">
 <h1>Appendix</h1>
