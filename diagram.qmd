@@ -68,7 +68,7 @@ cat(paste0(fence, "{=html}"),
 .reveal .tikz-info {
   max-width: 100%; margin: .5rem auto 0; padding: .45rem .7rem;
   border: 1px solid #d4d4d8; border-left: 4px solid #2563eb; border-radius: 6px;
-  background: #fafafa; color: #18181b; font-size: .46em; line-height: 1.35;
+  background: #fafafa; color: #18181b; font-size: 1em; line-height: 1.35;
   text-align: left; min-height: 2.4em;
 }
 .reveal .tikz-info p { margin: 0; }
@@ -88,7 +88,7 @@ cat(paste0(fence, "{=html}"),
 
     const hint = document.createElement('span');
     hint.className = 'ti-hint';
-    hint.textContent = 'Hover a node to inspect it; click to pin.';
+    hint.textContent = ''; <!-- Hover a node to inspect it; click to pin. -->
 
     let pinned = null;
     function typeset() {                 // defensive: render math if not already typeset

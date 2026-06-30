@@ -192,7 +192,7 @@ Joshua J Bon
 <li class="fragment"><del>Decision-theoretic privacy</del> Game-theoretic privacy</li>
 <li class="fragment">Persuasive privacy<sup>2</sup></li>
 <li class="fragment">Differential privacy redux</li>
-<li class="fragment">Privacy without noise (?)</li>
+<li class="fragment">Privacy without noise</li>
 </ol>
 </div><div class="column" style="width:50%;">
 <p><img data-src="imgs/leshouches.png"></p>
@@ -361,13 +361,32 @@ Joshua J Bon
 </ul></li>
 </ul>
 </section></section>
-<section>
 <section id="game-theoretic-privacy" class="title-slide slide level1 center">
 <h1>Game-theoretic privacy</h1>
 
 </section>
-<section id="overview" class="slide level2">
-<h2>Overview</h2>
+
+<section>
+<section id="an-anatomy-of-data-privacy" class="title-slide slide level1 center">
+<h1>An anatomy of data privacy</h1>
+
+</section>
+<section id="the-players" class="slide level2">
+<h2>The players</h2>
+<h3 id="sender">Sender</h3>
+<ul>
+<li class="fragment">Custodian of data</li>
+<li class="fragment">Releases some statistic <span class="math inline">T \sim M(x,\cdot)</span></li>
+<li class="fragment">Chooses mechanism <span class="math inline">M</span></li>
+</ul>
+<h3 id="receiver">Receiver</h3>
+<ul>
+<li class="fragment">Makes decision based on <span class="math inline">T</span></li>
+<li class="fragment">Decision affects Sender’s privacy</li>
+</ul>
+</section>
+<section id="the-players-1" class="slide level2">
+<h2>The players</h2>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -413,25 +432,6 @@ Joshua J Bon
 </div>
 </div>
 </div>
-</section></section>
-<section>
-<section id="an-anatomy-of-data-privacy" class="title-slide slide level1 center">
-<h1>An anatomy of data privacy</h1>
-
-</section>
-<section id="the-players" class="slide level2">
-<h2>The players</h2>
-<h3 id="sender-1">Sender</h3>
-<ul>
-<li class="fragment">Custodian of data</li>
-<li class="fragment">Releases some statistic <span class="math inline">T \sim M(x,\cdot)</span></li>
-<li class="fragment">Chooses mechanism <span class="math inline">M</span></li>
-</ul>
-<h3 id="receiver-1">Receiver</h3>
-<ul>
-<li class="fragment">Makes decision based on <span class="math inline">T</span></li>
-<li class="fragment">Decision affects Sender’s privacy</li>
-</ul>
 </section>
 <section id="privacy-function" class="slide level2">
 <h2>Privacy function</h2>
@@ -1410,37 +1410,48 @@ Joshua J Bon
 </div>
 <div id="tikz-info" class="tikz-info"></div>
 <div class="tikz-desc" data-node="sdata">
-<p><strong><span class="math inline">x</span> — Private data.</strong> The sender’s raw data, held privately and never shared.</p>
+<p><strong>Private data</strong>: Sender’s sensitive data, held privately and never shared.</p>
+<p><span class="math display">x \in \mathsf{X}</span></p>
 </div>
 <div class="tikz-desc" data-node="mech">
-<p><strong><span class="math inline">M</span> — Mechanism.</strong> A (randomised) mechanism applied to the data <span class="math inline">x</span> to produce the output <span class="math inline">T = M(x)</span>.</p>
+<p><strong>Mechanism</strong>: A (deterministic or randomised) mechanism applied by Sender to the data <span class="math inline">x</span> to produce the output.</p>
 </div>
 <div class="tikz-desc" data-node="sstat">
-<p><strong><span class="math inline">T</span> — Output.</strong> The released statistic produced by the mechanism and shared with the receiver.</p>
+<p><strong>Statistic</strong>: The released statistic produced by the mechanism and shared with the receiver.</p>
+<p><span class="math display">T \sim M(x, \cdot)</span></p>
 </div>
 <div class="tikz-desc" data-node="strans">
-<p><strong><span class="math inline">\mathfrak{C}</span> — Guarantee.</strong> The privacy guarantee / transcript accompanying the output.</p>
+<p><strong>Privacy guarantee</strong>: We are trying to construct this. If it is independent of the data, it will not affect the data-posterior.</p>
 </div>
 <div class="tikz-desc" data-node="spriv">
-<p><strong><span class="math inline">\rho</span> — Privacy.</strong> The privacy loss, derived from the data <span class="math inline">x</span> and the receiver’s decision <span class="math inline">d</span>.</p>
+<p><strong>Privacy function</strong>: The realised privacy is</p>
+<p><span class="math display">
+\rho(d^{Q_T},x)
+</span></p>
 </div>
 <div class="tikz-desc" data-node="adata">
-<p><strong><span class="math inline">Q</span> — Data-prior.</strong> The receiver’s assumed prior over the data.</p>
+<p><strong>Data-prior</strong> <span class="math inline">Q</span> the receiver’s assumed prior over the data.</p>
+<p><span class="math display">Q \in \mathcal{P}(\mathsf{X})</span></p>
 </div>
 <div class="tikz-desc" data-node="apost">
-<p><strong><span class="math inline">Q_T</span> — Data-posterior.</strong> The receiver’s posterior given the shared output, <span class="math inline">Q_T = Q(\,\cdot \mid T)</span>.</p>
+<p><strong>Data-posterior.</strong> Receiver’s posterior given the release of <span class="math inline">T</span>.</p>
+<p><span class="math display">Q_T = Q(\,\cdot \mid T,M,\mathfrak{C}) = Q(\,\cdot \mid T,M)</span></p>
+<p>Knowledge of <span class="math inline">\mathfrak{C}</span> does not affect the <span class="math inline">Q_T</span> by <em>Assumption 1</em>.</p>
 </div>
 <div class="tikz-desc" data-node="aact">
-<p><strong><span class="math inline">d</span> — Decision.</strong> The receiver’s decision, formed from the posterior <span class="math inline">Q_T</span> and the loss <span class="math inline">\ell</span>.</p>
+<p><strong>Receiver decision</strong>: <span class="math inline">d</span>, formed by posterior <span class="math inline">Q_T</span> and loss <span class="math inline">\ell</span>.</p>
+<p><span class="math display">
+d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \ell(d,z)]
+</span></p>
 </div>
 <div class="tikz-desc" data-node="aloss">
-<p><strong><span class="math inline">\ell</span> — Loss.</strong> The receiver’s assumed loss function.</p>
+<p><strong>Receiver loss</strong>: Receiver’s loss function.</p>
 </div>
 <div class="tikz-desc" data-node="statbox">
-<p><strong>Sender.</strong> The sender subsystem: data <span class="math inline">\to</span> mechanism <span class="math inline">\to</span> output <span class="math inline">\to</span> guarantee <span class="math inline">\to</span> privacy.</p>
+<p><strong>Sender</strong>: Chooses <span class="math inline">M</span> to persuade the Receiver to make decisions that do not affect (Sender’s) privacy.</p>
 </div>
 <div class="tikz-desc" data-node="advbox">
-<p><strong>Receiver.</strong> The receiver subsystem: prior <span class="math inline">\to</span> posterior <span class="math inline">\to</span> decision, with assumed loss.</p>
+<p><strong>Receiver</strong>: Assumed to be a Bayesian agent (<em>Assumption 2</em>).</p>
 </div>
 <style>
 .reveal .tikz-wrap { max-width: 100%; margin: 0 auto; }
@@ -1456,7 +1467,7 @@ Joshua J Bon
 .reveal .tikz-info {
   max-width: 100%; margin: .5rem auto 0; padding: .45rem .7rem;
   border: 1px solid #d4d4d8; border-left: 4px solid #2563eb; border-radius: 6px;
-  background: #fafafa; color: #18181b; font-size: .46em; line-height: 1.35;
+  background: #fafafa; color: #18181b; font-size: 1em; line-height: 1.35;
   text-align: left; min-height: 2.4em;
 }
 .reveal .tikz-info p { margin: 0; }
@@ -1476,7 +1487,7 @@ Joshua J Bon
 
     const hint = document.createElement('span');
     hint.className = 'ti-hint';
-    hint.textContent = 'Hover a node to inspect it; click to pin.';
+    hint.textContent = ''; <!-- Hover a node to inspect it; click to pin. -->
 
     let pinned = null;
     function typeset() {                 // defensive: render math if not already typeset
@@ -1545,8 +1556,8 @@ Joshua J Bon
 </div>
 <div class="callout-content">
 <p><span class="math display">
-d^{P} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \ell(d,z)]
-</span></p>
+d^{P} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim P}[ \ell(d,z)]
+</span> under belief <span class="math inline">P \in \{Q,Q_T\}</span></p>
 </div>
 </div>
 </div>
@@ -1585,110 +1596,21 @@ d^{P} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \ell(d,z)]
 <li class="fragment">Interpretation 2: data-averaged <strong>worst-case</strong> for Sender</li>
 </ul>
 </section>
-<section id="receiver-model-1" class="slide level2">
-<h2>Receiver model</h2>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Assumption 4: Adversarial prior class</strong></p>
-</div>
-<div class="callout-content">
-<p>Let the data-prior <span class="math inline">Q \in \mathcal{Q}_x</span></p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>Implies privacy outcome in terms of</p>
-</div>
-<div class="fragment">
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Receiver’s decision</strong></p>
-</div>
-<div class="callout-content">
-<p><span class="math display">
-d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \rho(d,z)]
-</span></p>
-</div>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Privacy outcome</strong></p>
-</div>
-<div class="callout-content">
-<p><span class="math display">
-\inf_{Q \in \mathcal{Q}_x} \rho(d^{Q_T},x)
-</span></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="an-anatomy-of-data-privacy-1" class="slide level2">
-<h2>An anatomy of data privacy</h2>
-
-<img data-src="index_files/figure-revealjs/dtp5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="an-anatomy-of-data-privacy-2" class="slide level2">
-<h2>An anatomy of data privacy</h2>
-
-<img data-src="index_files/figure-revealjs/dtp3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="measuring-privacy" class="slide level2">
-<h2>Measuring privacy</h2>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Privacy outcome</strong></p>
-</div>
-<div class="callout-content">
-<p><span class="math display">
-\inf_{Q \in \mathcal{Q}_x} \rho(d^{Q_T},x)
-</span></p>
-</div>
-</div>
-</div>
+<section id="realised-privacy-outcome" class="slide level2">
+<h2>Realised privacy outcome</h2>
+<p>Let <span class="math inline">S: \mathcal{P} \times \mathsf{X} \rightarrow \mathbb{R}</span> such that</p>
+<p><span class="math display">S(P,x) = \rho(d^{P},x)</span></p>
 <ul>
-<li class="fragment">Let <span class="math inline">S: \mathcal{P} \times \mathsf{X} \rightarrow \mathbb{R}</span> such that <span class="math inline">S(Q_T,x) = \rho(d^{Q_T},x)</span></li>
-<li class="fragment"><span class="math inline">S</span> is a (negatively-orientated) proper scoring rule<sup>1</sup>
+<li class="fragment">If <span class="math inline">\ell = \rho</span>, the realised privacy value is a (negatively-orientated) <strong>proper scoring rule</strong><sup>1</sup>
 <ul>
-<li class="fragment">A “privacy score”</li>
+<li class="fragment">A <em>privacy score</em></li>
 </ul></li>
 </ul>
 <aside><ol class="aside-footnotes"><li id="fn3"><p><span class="citation" data-cites="grunwald2004game">Grünwald and Dawid (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span></p></li></ol></aside></section>
-<section id="measuring-privacy-1" class="slide level2">
-<h2>Measuring privacy</h2>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Privacy outcome</strong></p>
-</div>
-<div class="callout-content">
-<p><span class="math display">
-\inf_{Q \in \mathcal{Q}_x} S(Q_T,x)
-</span></p>
-</div>
-</div>
-</div>
+<section id="privacy-scores" class="slide level2">
+<h2>Privacy scores</h2>
 <ul>
+<li class="fragment">We continue with privacy scores (equivalence)</li>
 <li class="fragment">Use known proper scoring rules to measure privacy outcome</li>
 <li class="fragment">Create new proper scoring rules from <span class="math inline">\rho</span></li>
 <li class="fragment">For example when <span class="math inline">d</span> is a PDF/PMF:</li>
@@ -1741,83 +1663,37 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 
 -->
 </section>
-<section id="measuring-privacy-2" class="slide level2">
+<section id="measuring-privacy" class="slide level2">
 <h2>Measuring privacy</h2>
+<p>Relative privacy <span class="math inline">\Delta(Q,T,x) = S(Q,x) - S(Q_T,x)</span></p>
+<div class="fragment">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Privacy outcome</strong></p>
+<p><strong>Assumption 4</strong></p>
 </div>
 <div class="callout-content">
-<p><span class="math display">
-\inf_{Q \in \mathcal{Q}_x} S(Q_T,x)
-</span></p>
+<p>For a given <span class="math inline">Q</span> and <span class="math inline">x</span>, Sender considers a mechanism <span class="math inline">M</span> private only if</p>
+<p><span class="math display">\mathbb{P}_x\left[\Delta(Q,T,x) \leq \kappa \right] \geq 1 - \delta,</span></p>
+</div>
 </div>
 </div>
 </div>
 <ul>
-<li class="fragment">This is an absolute measure of privacy</li>
-<li class="fragment">We will look at a relative measure of privacy</li>
+<li class="fragment">Maximum acceptable privacy loss <span class="math inline">\kappa \geq 0</span></li>
+<li class="fragment">Small probability of failure <span class="math inline">0 \leq \delta \ll 1</span></li>
+<li class="fragment">Probability <span class="math inline">\mathbb{P}_x</span> is w.r.t. <span class="math inline">M(x,\cdot)</span></li>
 </ul>
 </section>
-<section id="measuring-privacy-3" class="slide level2">
-<h2>Measuring privacy</h2>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Relative privacy outcome</strong></p>
-</div>
-<div class="callout-content">
-<p><span class="math display">
-\inf_{Q \in \mathcal{Q}_x} \left[ S(Q_T,x) - S(Q,x) \right]
-</span></p>
-</div>
-</div>
-</div>
+<section id="sender-is-robust" class="slide level2">
+<h2>Sender is robust</h2>
+<p>To be robust, sender should assess</p>
 <ul>
-<li class="fragment">Considers Receiver’s information gain</li>
-<li class="fragment">Sender’s relative privacy change (worst-case)</li>
-</ul>
-</section>
-<section id="measuring-privacy-4" class="slide level2">
-<h2>Measuring privacy</h2>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Relative privacy outcome</strong></p>
-</div>
-<div class="callout-content">
-<p><span class="math display">
-\inf_{Q \in \mathcal{Q}_x} \left[ S(Q_T,x) - S(Q,x) \right]
-</span></p>
-</div>
-</div>
-</div>
-<p>But…</p>
-<ul>
-<li class="fragment"><span class="math inline">Q_T</span> may be random since <span class="math inline">T\sim M(x, \cdot)</span></li>
-</ul>
-</section></section>
-<section>
-<section id="persuasive-privacy" class="title-slide slide level1 center">
-<h1>Persuasive privacy</h1>
-
-</section>
-<section id="a-privacy-definition" class="slide level2">
-<h2>A privacy definition</h2>
-<ul>
-<li class="fragment"><p>Let <span class="math inline">\mathcal{Q}_x \subset \mathscr{P}(\mathsf{X},\mathcal{X})</span></p></li>
-<li class="fragment"><p><span class="math inline">M: \mathcal{T}\times \mathsf{X} \rightarrow \mathbb{R}_+</span> be a mechanism,</p></li>
-<li class="fragment"><p><span class="math inline">S</span> be a privacy score, constants <span class="math inline">\kappa \geq 0</span>, <span class="math inline">0\leq\delta \ll 1</span>.</p></li>
+<li class="fragment">“Realistic” data-priors <span class="math inline">Q</span></li>
+<li class="fragment">All <span class="math inline">x \in \mathsf{X}</span> (also required by <em>Assumption 1</em>)</li>
 </ul>
 <div class="fragment">
 <div class="callout callout-note callout-titled callout-style-default">
@@ -1826,18 +1702,23 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Definition: Persuasive Privacy</strong></p>
+<p><strong>Assumption 5</strong></p>
 </div>
 <div class="callout-content">
-<p>We say <span class="math inline">M</span> is <span class="math inline">(\mathcal{Q}_x, S, \kappa, \delta)</span>-PP if</p>
-<p><span class="math display">\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q, x) - S(Q_{T}, x) \leq \kappa \right] \geq 1 - \delta,</span></p>
-<p>where <span class="math inline">\mathbb{P}_x</span> is w.r.t. <span class="math inline">T \sim M(x,\cdot)</span>.</p>
+<p>Sender considers <span class="math inline">M</span> private if</p>
+<p><span class="math display">\mathbb{P}_x\left[\Delta(Q,T,x) \leq \kappa \right] \geq 1 - \delta</span></p>
+<p>holds uniformly for all data-priors <span class="math inline">Q \in \mathcal{Q}_x \subset \mathcal{P}(\mathsf{X})</span> and datasets <span class="math inline">x \in \mathsf{X}</span>.</p>
 </div>
 </div>
 </div>
 </div>
+</section></section>
+<section>
+<section id="persuasive-privacy" class="title-slide slide level1 center">
+<h1>Persuasive privacy</h1>
+
 </section>
-<section id="a-privacy-definition-1" class="slide level2">
+<section id="a-privacy-definition" class="slide level2">
 <h2>A privacy definition</h2>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -1849,13 +1730,13 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 </div>
 <div class="callout-content">
 <p>We say <span class="math inline">M</span> is <span class="math inline">(\mathcal{Q}_x, S, \kappa, \delta)</span>-PP if</p>
-<p><span class="math display">\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q, x) - S(Q_{T}, x) \leq \kappa \right] \geq 1 - \delta,</span></p>
+<p><span class="math display">\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[\Delta(Q,T, x) \leq \kappa \right] \geq 1 - \delta,</span></p>
 <p>where <span class="math inline">\mathbb{P}_x</span> is w.r.t. <span class="math inline">T \sim M(x,\cdot)</span>.</p>
 </div>
 </div>
 </div>
 <ul>
-<li class="fragment">Change in privacy: <span class="math inline">S(Q, x) - S(Q_{T}, x)</span></li>
+<li class="fragment">Change in privacy: <span class="math inline">\Delta(Q,T, x) = S(Q, x) - S(Q_{T}, x)</span></li>
 <li class="fragment">Maximum allowable privacy change: <span class="math inline">\kappa</span></li>
 <li class="fragment">Maximum probability of leakage: <span class="math inline">\delta\quad</span></li>
 </ul>
@@ -1866,7 +1747,7 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 <p><em>Sender chooses a mechanism that <strong>persuades</strong> Receiver to make decisions limiting privacy loss..</em></p>
 </div>
 <div class="fragment">
-<p>Similar to Bayesian persuasion <span class="citation" data-cites="kamenica2011bayesian">(<a href="#/references" role="doc-biblioref" onclick="">Kamenica and Gentzkow 2011</a>)</span> However,</p>
+<p>Related to Bayesian persuasion <span class="citation" data-cites="kamenica2011bayesian">(<a href="#/references" role="doc-biblioref" onclick="">Kamenica and Gentzkow 2011</a>)</span> however,</p>
 </div>
 <ul>
 <li class="fragment">asymmetry between Sender and Receiver</li>
@@ -1942,35 +1823,6 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 </ul></li>
 </ul>
 </section>
-<section id="summary" class="slide level2">
-<h2>Summary</h2>
-<ul>
-<li class="fragment">Framework for purpose-driven privacy definitions (rigorously justified)
-<ul>
-<li class="fragment">All assumptions stated, anatomy used as backbone</li>
-</ul></li>
-<li class="fragment">Assessment of existing privacy guarantees with game theory</li>
-<li class="fragment">New interpretations of post-processing property
-<ul>
-<li class="fragment">Easy fix for PrDP post-processing</li>
-</ul></li>
-<li class="fragment">Established that privacy guarantees possible for deterministic algorithms</li>
-</ul>
-</section>
-<section id="thank-you" class="slide level2">
-<h2>Thank you!</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><img data-src="imgs/boat-view.jpg"></p>
-</div><div class="column" style="width:50%;">
-<p><img data-src="imgs/sea-legs.jpg"></p>
-</div></div>
-</section></section>
-<section>
-<section id="appendix" class="title-slide slide level1 center">
-<h1>Appendix</h1>
-
-</section>
 <section id="privacy-for-deterministic-mechanisms" class="slide level2">
 <h2>Privacy for deterministic mechanisms</h2>
 <ul>
@@ -2023,6 +1875,38 @@ In addition, it is *strictly* proper if $S(P,P) = S(P,Q) \Leftrightarrow P = Q$.
 <li class="fragment">A “decomposition rule”</li>
 </ul></li>
 </ul>
+</section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li class="fragment">Framework for purpose-driven privacy definitions (rigorously justified)
+<ul>
+<li class="fragment">All assumptions stated, anatomy used as backbone</li>
+</ul></li>
+<li class="fragment">Assessment of existing privacy guarantees with game theory</li>
+<li class="fragment">New interpretations of post-processing property
+<ul>
+<li class="fragment">Easy fix for PrDP post-processing</li>
+</ul></li>
+<li class="fragment">Established that privacy guarantees possible for <strong>deterministic algorithms</strong></li>
+</ul>
+</section>
+<section id="an-invitation-to-bayesian-privacy" class="slide level2">
+<h2>An invitation to (Bayesian) privacy</h2>
+<ul>
+<li class="fragment"><span class="math inline">Q \in \mathcal{Q}_x</span> <strong>BNP</strong></li>
+<li class="fragment"><span class="math inline">M(x,\cdot)</span> <strong>BayesComp</strong></li>
+<li class="fragment"><span class="math inline">S(P,x)</span> <strong>BayesComp</strong>, <strong>Applied Bayes</strong></li>
+</ul>
+</section>
+<section id="thank-you" class="slide level2">
+<h2>Thank you!</h2>
+
+<img data-src="imgs/crossiant.jpg" class="r-stretch"></section></section>
+<section>
+<section id="appendix" class="title-slide slide level1 center">
+<h1>Appendix</h1>
+
 </section>
 <section id="ongoing-work" class="slide level2">
 <h2>Ongoing work</h2>

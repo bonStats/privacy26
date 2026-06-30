@@ -1,43 +1,63 @@
 ::: {.tikz-desc data-node="sdata"}
-**$x$ — Private data.** The sender's raw data, held privately and never shared.
+**Private data**: Sender's sensitive data, held privately and never shared.
+
+$$x \in \mathsf{X}$$
 :::
 
 ::: {.tikz-desc data-node="mech"}
-**$M$ — Mechanism.** A (randomised) mechanism applied to the data $x$ to produce the output $T = M(x)$.
+**Mechanism**: A (deterministic or randomised) mechanism applied by Sender to the data $x$ to produce the output.
 :::
 
 ::: {.tikz-desc data-node="sstat"}
-**$T$ — Output.** The released statistic produced by the mechanism and shared with the receiver.
+**Statistic**: The released statistic produced by the mechanism and shared with the receiver.
+
+$$T \sim M(x, \cdot)$$
 :::
 
 ::: {.tikz-desc data-node="strans"}
-**$\mathfrak{C}$ — Guarantee.** The privacy guarantee / transcript accompanying the output.
+**Privacy guarantee**: We are trying to construct this. If it is independent of the data, it will not affect the data-posterior.
 :::
 
 ::: {.tikz-desc data-node="spriv"}
-**$\rho$ — Privacy.** The privacy loss, derived from the data $x$ and the receiver's decision $d$.
+**Privacy function**: The realised privacy is
+
+$$
+\rho(d^{Q_T},x)
+$$
 :::
 
 ::: {.tikz-desc data-node="adata"}
-**$Q$ — Data-prior.** The receiver's assumed prior over the data.
+**Data-prior** $Q$ the receiver's assumed prior over the data.
+
+$$Q \in \mathcal{P}(\mathsf{X})$$
 :::
 
 ::: {.tikz-desc data-node="apost"}
-**$Q_T$ — Data-posterior.** The receiver's posterior given the shared output, $Q_T = Q(\,\cdot \mid T)$.
+**Data-posterior.** Receiver's posterior given the release of $T$.
+
+$$Q_T = Q(\,\cdot \mid T,M,\mathfrak{C}) = Q(\,\cdot \mid T,M)$$
+
+Knowledge of $\mathfrak{C}$ does not affect the $Q_T$ by _Assumption 1_.
 :::
 
 ::: {.tikz-desc data-node="aact"}
-**$d$ — Decision.** The receiver's decision, formed from the posterior $Q_T$ and the loss $\ell$.
+**Receiver decision**: $d$, formed by posterior $Q_T$ and loss $\ell$.
+
+$$
+d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \ell(d,z)]
+$$
+
 :::
 
 ::: {.tikz-desc data-node="aloss"}
-**$\ell$ — Loss.** The receiver's assumed loss function.
+**Receiver loss**: Receiver's loss function. 
+
 :::
 
 ::: {.tikz-desc data-node="statbox"}
-**Sender.** The sender subsystem: data $\to$ mechanism $\to$ output $\to$ guarantee $\to$ privacy.
+**Sender**: Chooses $M$ to persuade the Receiver to make decisions that do not affect (Sender's) privacy.
 :::
 
 ::: {.tikz-desc data-node="advbox"}
-**Receiver.** The receiver subsystem: prior $\to$ posterior $\to$ decision, with assumed loss.
+**Receiver**: Assumed to be a Bayesian agent (_Assumption 2_).
 :::
