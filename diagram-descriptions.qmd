@@ -24,7 +24,12 @@ $$T \sim M(x, \cdot)$$
 
 <br>
 
-_Assumption 1_ Definition $\mathfrak{C}$ does not depend on $M$ nor $x$.
+:::{.callout-note}
+## Assumption 1
+
+Sender shares the mechanism $M$ and privacy class $\mathfrak{C}$ with Receiver. Further, the definitions of $M$ and $\mathfrak{C}$ do not depend on the data.
+
+:::
 
 :::
 
@@ -34,7 +39,23 @@ _Assumption 1_ Definition $\mathfrak{C}$ does not depend on $M$ nor $x$.
 $$
 \rho(d^{Q_T},x)
 $$
+
+<br> <br>
+
+::: {.callout-note}
+## Proper scoring representation
+
+Define $S: \mathcal{P} \times \mathsf{X} \rightarrow \mathbb{R}$ as
+
+$$
+S(P,x) = \rho(d^{P},x),
+$$
+if $\ell = \rho$ and then $S$ is a (negatively-orientated) proper scoring rule.
+
 :::
+
+:::
+
 
 ::: {.tikz-desc data-node="adata"}
 **Data-prior** $Q$ the receiver's assumed prior over the data.
@@ -45,7 +66,7 @@ $$Q \in \mathcal{P}(\mathsf{X})$$
 ::: {.tikz-desc data-node="apost"}
 **Data-posterior.** Receiver's posterior given the release of $T$.
 
-$$Q_T = Q(\,\cdot \mid T,M,\mathfrak{C}) = Q(\,\cdot \mid T,M)$$
+$$Q_T = Q(\,\cdot \mid T)$$
 
 :::
 
@@ -59,23 +80,40 @@ $$
 :::
 
 ::: {.tikz-desc data-node="aloss"}
-**Receiver loss**: Receiver's loss function. 
+**Receiver loss**: Receiver's loss function for decision making. 
 
 <br>
-_Assumption 3_ $\qquad \ell = \rho$
+
+::: {.callout-note}
+## Assumption 3
+
+Receiver's targets the privacy function of Sender, that is $\ell = \rho$.
+
+:::
 
 :::
 
 ::: {.tikz-desc data-node="statbox"}
 **Sender**: Holds $x$ and chooses $M$ to persuade Receiver.
 
-<br> <br> <br> <br> 
+<br> <br> <br> <br>
 
-_Assumption 4 & 5_: Sender considers $M$ private if 
+::: {.callout-note}
+## Assumption 4
 
-$$\mathbb{P}_x\left[\Delta(Q,T,x) \leq \kappa \right] \geq 1 - \delta$$
+For a given $Q$ and $x$, Sender considers a mechanism $M$ private only if
 
-holds uniformly for all data-priors $Q \in \mathcal{Q}_x \subset \mathcal{P}(\mathsf{X})$ and datasets $x \in \mathsf{X}$.
+$$\mathbb{P}_x\left[S(Q,x) - S(Q_T,x) \leq \kappa \right] \geq 1 - \delta.$${#eq-tailproob}
+:::
+
+::: {.callout-note}
+## Assumption 5
+
+Let $\mathcal{Q}_x \subset \mathcal{P}(\mathsf{X})$ be some class of prior distributions over the dataset. 
+
+Sender considers $M$ private if [-@eq-tailproob] holds uniformly for all data-priors $Q \in \mathcal{Q}_x$ and datasets $x \in \mathsf{X}$.
+
+:::
 
 :::
 
@@ -84,5 +122,11 @@ holds uniformly for all data-priors $Q \in \mathcal{Q}_x \subset \mathcal{P}(\ma
 
 <br>
 
-_Assumption 2_: Receiver is a Bayesian agent.
+
+::: {.callout-note}
+## Assumption 2
+
+Receiver is Bayes rational.
+:::
+
 :::
