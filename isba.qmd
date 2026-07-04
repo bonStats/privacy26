@@ -1,6 +1,6 @@
 ---
 title: "Persuasive Privacy"
-subtitle: "ISBA Satellite Meeting, 5^th^ July 2026"
+subtitle: "ISBA World Meeting, 30^th^ June 2026"
 author: "Joshua J Bon"
 institute: "Adelaide University*"
 bibliography: refs.bib
@@ -24,7 +24,7 @@ editor: source
 ::: {.column width="50%"}
 
 1. Differential privacy
-2. Game-theoretic privacy
+2. ~~Decision-theoretic privacy~~ Game-theoretic privacy
 3. Persuasive privacy^[Paper: Bon, Bailie, Rousseau & Robert (2026) _ICML 2026_ 
 [arXiv 2601.22945](https://arxiv.org/abs/2601.22945)]
 4. Differential privacy redux
@@ -45,33 +45,25 @@ editor: source
 
 :::: {.columns}
 
-::: {.column width="40%"}
+::: {.column width="65%"}
 
 ::: {.callout-tip}
 
 ## True or False?
-_I've met a sumo wrestler._
+_This is a very good croissant._
 
 :::
 
-![](imgs/palace.jpg){.fragment width="500"}
+1. Best croissant of my life
+2. Fête du Pain
+3. 1er Prix du Meilleur Crossiant au Beurre du Grand Paris
+4. I am lactose intolerant
 
 :::
 
-::: {.column width="60%"}
+::: {.column width="35%"}
 
-::: {.r-stack}
-![](imgs/niseko.JPG){.fragment .fade-in width="450"}
-
-![](imgs/shibuya.JPG){.fragment  width="550"}
-
-![](imgs/sumo-morning.JPG){.fragment  width="450"}
-
-![](imgs/sumo-night.JPG){.fragment width="550"}
-
-![](imgs/sumo-josh.JPG){.fragment width="450"}
-
-:::
+![](imgs/crossiant.jpg)
 
 :::
 
@@ -161,7 +153,7 @@ control the sensitivity of the mechanism $M(x,\cdot)$ w.r.t. $x$.
 
 
 
-## DP Definition
+## DP Definition {visibility="hidden"}
 
 Borrow from Lipschitz continuity [@bailie2024general].
 
@@ -173,7 +165,7 @@ $$d_\text{P}[M(x,\cdot),M(x^\prime,\cdot)] \leq \epsilon~d_\text{X}[x,x^\prime]$
 for all $x,x^\prime \in \mathcal{D}$.
 :::
 
-## DP Definition
+## DP Definition {visibility="hidden"}
 
 A mechanism $M$ is $\epsilon$-DP if
 
@@ -188,7 +180,7 @@ for all $x,x^\prime \in \mathcal{D}$, differing by at most one element.
 ::: {.fragment}
 
 :::{.callout-note}
-## Pure Differential Privacy
+## Pure Differential Privacy {visibility="hidden"}
 
 $$M(x,S) \leq \exp\{\epsilon\} M(x^\prime, S)$$
 for all $x \sim x^\prime$ and $S \in \mathcal{S}$.
@@ -271,15 +263,6 @@ Related to Lipschitz interpretation
   - Posterior-to-posterior ratio controlled [@kasiviswanathan2014semantics]
 - Game theory 
   - Controls expected utility [@zhang2021more]
-  
-## DP and MCMC
-
-**Via post-processing**
-
-$$y^\prime_i = y_i + \varepsilon_i \qquad \text{or} \qquad  T^\prime = \frac{1}{n}\sum_{i=1}^n T(y_i) + \varepsilon$$
-
-- Target approximate posterior $\pi(\theta\mid T)$
-- Exact Use ABC or Insufficient Gibbs [@luciano2024insufficient]
 
 ## Limitations of DP
 

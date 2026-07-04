@@ -169,7 +169,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Persuasive Privacy</h1>
-  <p class="subtitle">ISBA World Meeting, 30<sup>th</sup> June 2026</p>
+  <p class="subtitle">ISBA Satellite Meeting, 5<sup>th</sup> July 2026</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -189,7 +189,7 @@ Joshua J Bon
 <div class="column" style="width:50%;">
 <ol type="1">
 <li class="fragment">Differential privacy</li>
-<li class="fragment"><del>Decision-theoretic privacy</del> Game-theoretic privacy</li>
+<li class="fragment">Game-theoretic privacy</li>
 <li class="fragment">Persuasive privacy<sup>2</sup></li>
 <li class="fragment">Differential privacy redux</li>
 <li class="fragment">Privacy without noise</li>
@@ -201,7 +201,7 @@ Joshua J Bon
 <section id="a-game-of-privacy" class="slide level2">
 <h2>A Game of Privacy</h2>
 <div class="columns">
-<div class="column" style="width:65%;">
+<div class="column" style="width:40%;">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -211,18 +211,19 @@ Joshua J Bon
 <p><strong>True or False?</strong></p>
 </div>
 <div class="callout-content">
-<p><em>This is a very good croissant.</em></p>
+<p><em>I’ve met a sumo wrestler.</em></p>
 </div>
 </div>
 </div>
-<ol type="1">
-<li class="fragment">Best croissant of my life</li>
-<li class="fragment">Fête du Pain</li>
-<li class="fragment">1er Prix du Meilleur Crossiant au Beurre du Grand Paris</li>
-<li class="fragment">I am lactose intolerant</li>
-</ol>
-</div><div class="column" style="width:35%;">
-<p><img data-src="imgs/crossiant.jpg"></p>
+<p><img data-src="imgs/palace.jpg" class="fragment" width="500"></p>
+</div><div class="column" style="width:60%;">
+<div class="r-stack">
+<p><img data-src="imgs/niseko.JPG" class="fragment fade-in" width="450"></p>
+<p><img data-src="imgs/shibuya.JPG" class="fragment" width="550"></p>
+<p><img data-src="imgs/sumo-morning.JPG" class="fragment" width="450"></p>
+<p><img data-src="imgs/sumo-night.JPG" class="fragment" width="550"></p>
+<p><img data-src="imgs/sumo-josh.JPG" class="fragment" width="450"></p>
+</div>
 </div></div>
 </section>
 <section>
@@ -252,8 +253,41 @@ Joshua J Bon
 <img data-src="index_files/figure-revealjs/unnamed-chunk-1-1.png" width="960" class="r-stretch"><p>To limit information leaked about data <span class="math inline">x</span> by statistic <span class="math inline">T</span>,</p>
 <p>control the sensitivity of the mechanism <span class="math inline">M(x,\cdot)</span> w.r.t. <span class="math inline">x</span>.</p>
 </section>
-
-
+<section id="dp-definition" class="slide level2">
+<h2>DP Definition</h2>
+<p>Borrow from Lipschitz continuity <span class="citation" data-cites="bailie2024general">(<a href="#/references" role="doc-biblioref" onclick="">Bailie and Gong 2024</a>)</span>.</p>
+<div class="fragment">
+<p><span class="math display">d_\text{P}[M(x,\cdot),M(x^\prime,\cdot)] \leq \epsilon~d_\text{X}[x,x^\prime]</span></p>
+</div>
+<div class="fragment">
+<p>for all <span class="math inline">x,x^\prime \in \mathcal{D}</span>.</p>
+</div>
+</section>
+<section id="dp-definition-1" class="slide level2">
+<h2>DP Definition</h2>
+<p>A mechanism <span class="math inline">M</span> is <span class="math inline">\epsilon</span>-DP if</p>
+<div class="fragment">
+<p><span class="math display">\sup_{S\in\mathcal{S}}\left\vert\ln\frac{M(x,S)}{M(x^\prime,S)}\right\vert \leq \epsilon</span></p>
+</div>
+<div class="fragment">
+<p>for all <span class="math inline">x,x^\prime \in \mathcal{D}</span>, differing by at most one element.</p>
+</div>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Pure Differential Privacy</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">M(x,S) \leq \exp\{\epsilon\} M(x^\prime, S)</span> for all <span class="math inline">x \sim x^\prime</span> and <span class="math inline">S \in \mathcal{S}</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
 <section id="some-dp-properties" class="slide level2">
 <h2>Some DP Properties</h2>
 <p>Focusing on (pure) <span class="math inline">\epsilon</span>-DP.</p>
@@ -328,6 +362,16 @@ Joshua J Bon
 <li class="fragment">Controls expected utility <span class="citation" data-cites="zhang2021more">(<a href="#/references" role="doc-biblioref" onclick="">Zhang et al. 2021</a>)</span></li>
 </ul></li>
 </ul>
+</section>
+<section id="dp-and-mcmc" class="slide level2">
+<h2>DP and MCMC</h2>
+<ol type="1">
+<li class="fragment">DP guarantee via post-processing</li>
+</ol>
+<ol type="a">
+<li class="fragment">Perturb data for DP guarantee</li>
+<li class="fragment">Generate MCMC samples (ignore noise or <span class="citation" data-cites="luciano2024insufficient">Luciano, Robert, and Ryder (<a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span>)</li>
+</ol>
 </section>
 <section id="limitations-of-dp" class="slide level2">
 <h2>Limitations of DP</h2>
@@ -1931,6 +1975,9 @@ Kamenica, Emir, and Matthew Gentzkow. 2011. <span>“Bayesian Persuasion.”</sp
 </div>
 <div id="ref-kasiviswanathan2014semantics" class="csl-entry" role="listitem">
 Kasiviswanathan, Shiva P, and Adam Smith. 2014. <span>“On the ’Semantics’ of Differential Privacy: A Bayesian Formulation.”</span> <em>Journal of Privacy and Confidentiality</em> 6 (1).
+</div>
+<div id="ref-luciano2024insufficient" class="csl-entry" role="listitem">
+Luciano, Antoine, Christian P Robert, and Robin J Ryder. 2024. <span>“Insufficient Gibbs Sampling.”</span> <em>Statistics and Computing</em> 34 (4): 126.
 </div>
 <div id="ref-wasserman2010statistical" class="csl-entry" role="listitem">
 Wasserman, Larry, and Shuheng Zhou. 2010. <span>“A Statistical Framework for Differential Privacy.”</span> <em>Journal of the American Statistical Association</em> 105 (489): 375–89.
