@@ -4,6 +4,7 @@ subtitle: "ISBA Satellite Meeting, 5^th^ July 2026"
 author: "Joshua J Bon"
 institute: "Adelaide University*"
 bibliography: refs.bib
+csl: begel.csl
 format:
   revealjs:
     html-math-method: katex
@@ -24,11 +25,10 @@ editor: source
 ::: {.column width="50%"}
 
 1. Differential privacy
-2. Game-theoretic privacy
-3. Persuasive privacy^[Paper: Bon, Bailie, Rousseau & Robert (2026) _ICML 2026_ 
-[arXiv 2601.22945](https://arxiv.org/abs/2601.22945)]
-4. Differential privacy redux
-5. Privacy without noise
+2. DP and MCMC
+3. Persuasive privacy^[Paper: Bon, Bailie, Rousseau & Robert (2026) _ICML 2026_ [arXiv 2601.22945](https://arxiv.org/abs/2601.22945)]
+4. A game-theoretic justification
+5. Private discussion
 
 
 :::
@@ -267,25 +267,91 @@ Related to Lipschitz interpretation
 - Hypothesis testing
   - Type I & II error controlled by $\epsilon$ [@wasserman2010statistical]
 - Bayesian evidence
-  - Prior-to-posterior ratio controlled [@dwork2006calibrating]
-  - Posterior-to-posterior ratio controlled [@kasiviswanathan2014semantics]
+  - Prior-to-posterior or posterior-to-posterior ratio controlled [@dwork2006calibrating;@kasiviswanathan2014semantics]
 - Game theory 
   - Controls expected utility [@zhang2021more]
   
+::: {.fragment}
+
+[Semantics are post hoc!]{style="color:red;"}
+
+:::
+
 ## DP and MCMC
+
+::: {.callout-note}
+
+## Private MCMC
+
+Want to privately sample from $\pi(\theta\mid T)$ using MCMC
+:::
+
+:::{.fragment}
+**Via post-processing**
+:::
+
+1. Determine DP guarantee for $$T^\prime = \frac{1}{n}\sum_{i=1}^n T(y_i) + \varepsilon$$
+2. Sample from approximate target $\pi(\theta\mid T = T^\prime)$
+
+
+## DP and MCMC
+
+::: {.callout-note}
+
+## Private MCMC
+
+Want to privately sample from $\pi(\theta\mid T)$ using MCMC
+:::
 
 **Via post-processing**
 
-$$y^\prime_i = y_i + \varepsilon_i \qquad \text{or} \qquad  T^\prime = \frac{1}{n}\sum_{i=1}^n T(y_i) + \varepsilon$$
+_Or some "exact" alternatives:_
 
-- Target approximate posterior $\pi(\theta\mid T)$
-- Exact Use ABC or Insufficient Gibbs [@luciano2024insufficient]
+- Sample from noisy-ABC posterior [@fearnhead2012constructing]
+
+- Target posterior of new summary statistic: noisy-ABC + Insufficient Gibbs [@luciano2024insufficient]
+
+::: {.fragment}
+
+[Statistical efficiency loss]{style="color:red;"} and [no extra privacy]{style="color:red;"} from sampling
+
+:::
+
+
+## DP and MCMC
+
+**Via composition**
+
+::: {.fragment} 
+
+If $M$ is $\pi$-invariant MCMC kernel
+
+:::
+
+1. Establish DP for one sample from $M$
+2. Use (advanced) composition property for $N$ samples
+
+- But privacy degrades in $\mathcal{O}(N)$ or $\mathcal{O}(\sqrt{N})$
+
+
+::: {.fragment}
+
+[Antithetical to monitoring convergence]{style="color:red;"} and prohibits large $N$
+
+:::
+
+::: {.fragment}
+_Non-exact alternative:_ Generalised Bayes [@jewson2023differentially]
+
+:::
 
 ## Limitations of DP
 
 - DP Semantics are post-hoc explanations
-- Deterministic mechanisms are not covered by DP
 - DP for MCMC is [c o o k e d]{.redacted}
+- Deterministic mechanisms are not covered by DP
+
+## Limitations of DP
 
 ::: {.fragment}
 
@@ -304,24 +370,8 @@ Our approach is a **semantics first** understanding of data privacy, where
 - Privacy developed for **deterministic mechanisms**:
   - empirical mean
   - cell suppression
-
-# Game-theoretic privacy
-
-# An anatomy of data privacy
-
-## The players
-
-### Sender
-
-- Custodian of data
-- Releases some statistic $T \sim M(x,\cdot)$
-- Chooses mechanism $M$
-
-### Receiver
-
-- Makes decision based on $T$
-- Decision affects Sender's privacy
-
+  
+# Persuasive Privacy
 
 ## The players
 
@@ -351,6 +401,46 @@ Statistic release $\longrightarrow$ adversarial decisions $\longrightarrow$ priv
 :::
 
 :::
+
+## Privacy game {.hidden-title .scrollable}
+
+{{< include diagram.qmd >}}
+
+## A privacy definition
+
+:::{.callout-note}
+## Definition: Persuasive Privacy
+
+We say $M$ is $(\mathcal{Q}_x, S, \kappa, \delta)$-PP if
+
+$$\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x\left[S(Q, x) - S(Q_{T}, x) \leq \kappa \right] \geq 1 - \delta,$$
+
+where $\mathbb{P}_x$ is w.r.t. $T \sim M(x,\cdot)$.
+
+:::
+
+- Maximum allowable privacy change: $\kappa$
+- Maximum probability of leakage: $\delta\quad$
+
+# Game-theoretic privacy
+
+# An anatomy of data privacy
+
+## The players
+
+### Sender
+
+- Custodian of data
+- Releases some statistic $T \sim M(x,\cdot)$
+- Chooses mechanism $M$
+
+### Receiver
+
+- Makes decision based on $T$
+- Decision affects Sender's privacy
+
+
+
 
 ## Privacy function
 
@@ -475,9 +565,7 @@ Receiver is Bayes rational
 _Sharing $\mathfrak{C}$ does not affect Receiver's data posterior by Assumption 1._
 :::
 
-## Privacy game {.hidden-title}
 
-{{< include diagram.qmd >}}
 
 ## Receiver's optimal decision
 

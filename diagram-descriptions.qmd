@@ -5,17 +5,27 @@ $$x \in \mathsf{X}$$
 :::
 
 ::: {.tikz-desc data-node="mech"}
-**Mechanism**: A (deterministic or randomised) mechanism applied by Sender to the data $x$ to produce the output.
+**Mechanism**: A (deterministic or randomised) mechanism.
+
+$$M: (\mathsf{X}, \mathcal{T}) \rightarrow [0,1]$$
+
+Markov kernel w.r.t. measurable space $(\mathsf{T}, \mathcal{T})$.
+
 :::
 
 ::: {.tikz-desc data-node="sstat"}
-**Statistic**: The released statistic produced by the mechanism and shared with the receiver.
+**Statistic**: Generated from mechanism and shared with Receiver.
 
 $$T \sim M(x, \cdot)$$
 :::
 
 ::: {.tikz-desc data-node="strans"}
-**Privacy guarantee**: We are trying to construct this. If it is independent of the data, it will not affect the data-posterior.
+**Privacy guarantee**: Shared with Receiver for transparency.
+
+<br>
+
+_Assumption 1_ Definition $\mathfrak{C}$ does not depend on $M$ nor $x$.
+
 :::
 
 ::: {.tikz-desc data-node="spriv"}
@@ -37,7 +47,6 @@ $$Q \in \mathcal{P}(\mathsf{X})$$
 
 $$Q_T = Q(\,\cdot \mid T,M,\mathfrak{C}) = Q(\,\cdot \mid T,M)$$
 
-Knowledge of $\mathfrak{C}$ does not affect the $Q_T$ by _Assumption 1_.
 :::
 
 ::: {.tikz-desc data-node="aact"}
@@ -52,12 +61,28 @@ $$
 ::: {.tikz-desc data-node="aloss"}
 **Receiver loss**: Receiver's loss function. 
 
+<br>
+_Assumption 3_ $\qquad \ell = \rho$
+
 :::
 
 ::: {.tikz-desc data-node="statbox"}
-**Sender**: Chooses $M$ to persuade the Receiver to make decisions that do not affect (Sender's) privacy.
+**Sender**: Holds $x$ and chooses $M$ to persuade Receiver.
+
+<br> <br> <br> <br> 
+
+_Assumption 4 & 5_: Sender considers $M$ private if 
+
+$$\mathbb{P}_x\left[\Delta(Q,T,x) \leq \kappa \right] \geq 1 - \delta$$
+
+holds uniformly for all data-priors $Q \in \mathcal{Q}_x \subset \mathcal{P}(\mathsf{X})$ and datasets $x \in \mathsf{X}$.
+
 :::
 
 ::: {.tikz-desc data-node="advbox"}
-**Receiver**: Assumed to be a Bayesian agent (_Assumption 2_).
+**Receiver**: Holds prior $Q$ over (unknown) data $x$.
+
+<br>
+
+_Assumption 2_: Receiver is a Bayesian agent.
 :::
