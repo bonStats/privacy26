@@ -49,7 +49,7 @@ editor: source
 
 ::: {.callout-tip}
 
-## True or False?
+## What's your prior probability?
 _I've met a sumo wrestler._
 
 :::
