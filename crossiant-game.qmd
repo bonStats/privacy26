@@ -1,0 +1,35 @@
+## A Game of Privacy
+
+:::: {.columns}
+
+::: {.column width="60%"}
+
+::: {.callout-tip}
+## What is your prior probability?
+_I did not eat any croissants last time I visited Paris._
+
+:::
+
+1. Last visit May 2026 for 3 weeks
+2. I attended Fête du Pain
+3. I am not vegan
+4. I am lactose intolerant
+
+:::
+
+
+
+::: {.column width="40%"}
+
+::: {.r-stack}
+
+![](imgs/pain-tour.png){width="380"}
+
+![](imgs/crossiant.jpg){.fragment .fade-in width="500"}
+
+:::
+
+:::
+
+
+::::

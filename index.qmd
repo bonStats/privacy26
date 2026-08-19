@@ -41,41 +41,7 @@ editor: source
 
 ::::
 
-## A Game of Privacy
-
-:::: {.columns}
-
-::: {.column width="40%"}
-
-::: {.callout-tip}
-
-## What is your prior probability?
-_I've met a sumo wrestler._
-
-:::
-
-![](imgs/palace.jpg){.fragment width="500"}
-
-:::
-
-::: {.column width="60%"}
-
-::: {.r-stack}
-![](imgs/niseko.JPG){.fragment .fade-in width="450"}
-
-![](imgs/shibuya.JPG){.fragment  width="550"}
-
-![](imgs/sumo-morning.JPG){.fragment  width="450"}
-
-![](imgs/sumo-night.JPG){.fragment width="550"}
-
-![](imgs/sumo-josh.JPG){.fragment width="450"}
-
-:::
-
-:::
-
-::::
+{{< include crossiant-game.qmd >}}
 
 ## Why "persuasive"?
 
