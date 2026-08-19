@@ -1,6 +1,6 @@
 ---
 title: "Persuasive Privacy"
-subtitle: "ISBA Satellite Meeting, 5^th^ July 2026"
+subtitle: "Monash, 20^th^ August 2026"
 author: "Joshua J Bon"
 institute: "Adelaide University*"
 bibliography: refs.bib
