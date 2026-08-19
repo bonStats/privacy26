@@ -23,7 +23,7 @@ _I did not eat any croissants last time I visited Paris._
 
 ::: {.r-stack}
 
-![](imgs/pain-tour.png){width="380"}
+![](imgs/pain-tour.jpg){width="380"}
 
 ![](imgs/crossiant.jpg){.fragment .fade-in width="500"}
 
