@@ -586,6 +586,45 @@ Joshua J Bon
 </div>
 </div>
 </section>
+<section id="privacy-function" class="slide level2">
+<h2>Privacy function</h2>
+<p>Sender’s privacy measured with a <strong>privacy function</strong></p>
+<p><span class="math display">\rho:\mathcal{D} \times \mathsf{X} \rightarrow \mathbb{R}</span></p>
+<ul>
+<li class="fragment"><p>Receiver’s decision <span class="math inline">\quad d_i \in \mathcal{D}</span></p></li>
+<li class="fragment"><p>Data value <span class="math inline">\quad x \in \mathsf{X}</span></p></li>
+</ul>
+<div class="fragment">
+<p><span class="math inline">\rho</span> orders preferences of decisions for a given dataset</p>
+</div>
+<ul>
+<li class="fragment">If <span class="math inline">d_1</span> is preferred to <span class="math inline">d_2</span> then <span class="math inline">\rho(d_1,x) &gt; \rho(d_2,x)</span></li>
+</ul>
+</section>
+<section id="example-1-privacy-function" class="slide level2">
+<h2>Example 1: Privacy function</h2>
+<p>For some fixed <span class="math inline">\kappa&gt;0</span>,</p>
+<p><span class="math display">\rho(d,x) = \begin{cases}
+  0, &amp; \text{if } x \in d, \vert d \vert &lt; \kappa\\
+  1, &amp; \text{otherwise},
+\end{cases}</span></p>
+<ul>
+<li><p><span class="math inline">x \in \mathsf{X} = \mathbb{R}</span></p></li>
+<li><p><span class="math inline">d \in \mathcal{D} = \{[a,b]:a,b\in \mathbb{R}, a\leq b\}</span></p></li>
+</ul>
+</section>
+<section id="example-2-privacy-function" class="slide level2">
+<h2>Example 2: Privacy function</h2>
+<p><br></p>
+<p><span class="math display">\rho(d,x) = -\log d(x)</span></p>
+<ul>
+<li><p><span class="math inline">x \in \mathsf{X} = \mathbb{R}</span></p></li>
+<li><p><span class="math inline">d \in \mathcal{D} = \{\text{probability density functions on } \mathbb{R}\}</span></p></li>
+</ul>
+<div class="fragment">
+<p>Privacy functions or <strong>scores</strong> chosen to be <span style="color:red;">fit for purpose</span></p>
+</div>
+</section>
 <section id="privacy-game" class="slide level2 hidden-title scrollable">
 <h2>Privacy game</h2>
 <div class="tikz-wrap">
@@ -1681,45 +1720,6 @@ d^{Q_T} \in \arg\inf_{d \in \mathcal{D}} \mathbb{E}_{z \sim Q_T}[ \ell(d,z)]
 <li class="fragment">Maximum allowable privacy change: <span class="math inline">\kappa</span></li>
 <li class="fragment">Maximum probability of leakage: <span class="math inline">\delta\quad</span></li>
 </ul>
-</section>
-<section id="privacy-function" class="slide level2">
-<h2>Privacy function</h2>
-<p>Sender’s privacy measured with a <strong>privacy function</strong></p>
-<p><span class="math display">\rho:\mathcal{D} \times \mathsf{X} \rightarrow \mathbb{R}</span></p>
-<ul>
-<li class="fragment"><p>Receiver’s decision <span class="math inline">\quad d_i \in \mathcal{D}</span></p></li>
-<li class="fragment"><p>Data value <span class="math inline">\quad x \in \mathsf{X}</span></p></li>
-</ul>
-<div class="fragment">
-<p><span class="math inline">\rho</span> orders preferences of decisions for a given dataset</p>
-</div>
-<ul>
-<li class="fragment">If <span class="math inline">d_1</span> is preferred to <span class="math inline">d_2</span> then <span class="math inline">\rho(d_1,x) &gt; \rho(d_2,x)</span></li>
-</ul>
-</section>
-<section id="example-1-privacy-function" class="slide level2">
-<h2>Example 1: Privacy function</h2>
-<p>For some fixed <span class="math inline">\kappa&gt;0</span>,</p>
-<p><span class="math display">\rho(d,x) = \begin{cases}
-  0, &amp; \text{if } x \in d, \vert d \vert &lt; \kappa\\
-  1, &amp; \text{otherwise},
-\end{cases}</span></p>
-<ul>
-<li><p><span class="math inline">x \in \mathsf{X} = \mathbb{R}</span></p></li>
-<li><p><span class="math inline">d \in \mathcal{D} = \{[a,b]:a,b\in \mathbb{R}, a\leq b\}</span></p></li>
-</ul>
-</section>
-<section id="example-2-privacy-function" class="slide level2">
-<h2>Example 2: Privacy function</h2>
-<p><br></p>
-<p><span class="math display">\rho(d,x) = -\log d(x)</span></p>
-<ul>
-<li><p><span class="math inline">x \in \mathsf{X} = \mathbb{R}</span></p></li>
-<li><p><span class="math inline">d \in \mathcal{D} = \{\text{probability density functions on } \mathbb{R}\}</span></p></li>
-</ul>
-<div class="fragment">
-<p>Privacy functions or <strong>scores</strong> chosen to be <span style="color:red;">fit for purpose</span></p>
-</div>
 </section>
 <section id="properties-of-persuasive-privacy" class="slide level2">
 <h2>Properties of Persuasive Privacy</h2>
