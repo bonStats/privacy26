@@ -353,7 +353,16 @@ _Non-exact alternative:_ Generalised Bayes [@jewson2023differentially]
 
 - DP Semantics are post-hoc explanations
 - DP for MCMC is [c o o k e d]{.redacted}
-- Deterministic mechanisms are not covered by DP
+- Deterministic mechanisms are not covered by DP and variants
+
+## [DAO 216-26](https://www.commerce.gov/opog/disclosure-avoidance-statistical-products)
+
+::: {.nostretch}
+
+<iframe src="imgs/dao_216_26.pdf" width="100%" height="500px" style="border: none;"></iframe>
+
+:::
+
 
 ## Limitations of DP
 
