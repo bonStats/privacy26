@@ -635,11 +635,11 @@ The average mechanism
 ::: {.column width="65%"}
 
 - $Q \in \mathcal{Q}_x$
-  - **BNP**
+  - **Bayesian nonparametrics**
 - $M(x,\cdot)$
-  - **Comp. Bayes**
+  - **Computational Bayes**
 - $S(P,x)$
-  - **Comp. Bayes**, **Applied Bayes**
+  - **Computational** and **Applied Bayes**
 - Post-processing theory
   - **Stochastic processes**
 
