@@ -6,7 +6,7 @@
 
 ::: {.callout-tip}
 ## What is your prior probability?
-_Josh did not eat any croissants last visit to Paris._
+_I (Josh) ate at least one croissant during my last visit to Paris._
 
 :::
 
