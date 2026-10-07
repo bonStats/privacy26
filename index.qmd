@@ -28,7 +28,7 @@ editor: source
 2. Intro to DP
 3. DP and MCMC
 4. Persuasive privacy^[Paper: Bon, Bailie, Rousseau & Robert (2026) _ICML 2026_ [arXiv 2601.22945](https://arxiv.org/abs/2601.22945)]
-5. Return to DP
+5. Examples
 6. Discussion
 
 
@@ -573,13 +573,13 @@ $$M(x,\cdot) = \delta_{\bar x}(\cdot)$$
 
 ## Privacy for deterministic mechanisms
 
-Use class of Gaussian distributions
+Use class of Gaussian distributions $\mathcal{G}_{x}^{r} =$
 
 :::{.fragment}
 
-$$\mathcal{G}_{x}^{r} = \left\{ \mathcal{N}(\mu,\Sigma): \frac{(\bar{x}-\bar{\mu})^2}{\overline{\Sigma}} \leq r_1 , c_\Phi \leq r_2 \left(1- \frac{\sigma_i^2}{\Vert\sigma \Vert_2^2} \right) \right\}$$
+$$\left\{ \mathcal{N}(\mu,\Sigma): \frac{(\bar{x}-\bar{\mu})^2}{\overline{\Sigma}} \leq r_1 , c_\Phi \leq r_2 \left(1- \frac{\sigma_i^2}{\Vert\sigma \Vert_2^2} \right) \right\}$$
 
-for $r_1 > 0$ and $r_2 > 1$. 
+for some $r_1 > 0$ and $r_2 > 1$. 
 
 :::
 
@@ -604,9 +604,8 @@ The average mechanism
 :::
 
 - Possible to have a rigorous guarantee for a deterministic mechanism
-- Opens path for privacy guarantees for convergent iterative algorithms
-  - e.g. MCMC without privacy perturbations (posterior summary statistics)
-  - A "decomposition rule"
+- Important for DAO 216-26
+- Opens doors for downstream privacy guarantees
   
   
 # Discussion 
@@ -635,10 +634,14 @@ The average mechanism
 
 ::: {.column width="65%"}
 
-- $Q \in \mathcal{Q}_x$ **BNP**
-- $M(x,\cdot)$ **BayesComp**
-- $S(P,x)$ **BayesComp**, **Applied Bayes**
-- Post-processing **MV-Martingales**??
+- $Q \in \mathcal{Q}_x$
+  - **BNP**
+- $M(x,\cdot)$
+  - **Comp. Bayes**
+- $S(P,x)$
+  - **Comp. Bayes**, **Applied Bayes**
+- Post-processing theory
+  - **Stochastic processes**
 
 ::: {.fragment}
 
