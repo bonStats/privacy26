@@ -1,6 +1,6 @@
 ---
 title: "Persuasive Privacy"
-subtitle: "QUT, 7^th^ October 2026"
+subtitle: "University of Wollongong, 5^th^ Nov 2026"
 author: "Joshua J Bon"
 institute: "Adelaide University*"
 bibliography: refs.bib
